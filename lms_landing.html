@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberMastery 60 — Libra Scale Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04080f;--bg2:#080f1a;--bg3:#0c1520;--panel:#101e2e;
+  --border:#1a3050;--border2:#234060;
+  --cyan:#00e5ff;--green:#00ff88;--gold:#ffc107;
+  --orange:#ff6d00;--red:#ff1744;--purple:#d500f9;
+  --text:#c0d4e8;--text2:#6a8aaa;--text3:#3a5070;
+  --white:#ffffff;
+  --grad:linear-gradient(135deg,var(--cyan),var(--green));
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;overflow-x:hidden;}
+
+/* NOISE OVERLAY */
+body::before{content:'';position:fixed;inset:0;opacity:.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(4,8,15,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo-icon{width:36px;height:36px;background:var(--grad);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:#000;}
+.nav-logo-text{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--white);letter-spacing:.5px;}
+.nav-logo-sub{font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-link{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;color:var(--text2);text-decoration:none;letter-spacing:.5px;transition:color .2s;}
+.nav-link:hover{color:var(--cyan);}
+.nav-cta{background:var(--grad);color:#000;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;padding:8px 20px;border-radius:5px;text-decoration:none;letter-spacing:.5px;transition:opacity .2s;}
+.nav-cta:hover{opacity:.85;}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:100px 80px 60px;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 60% 40%,rgba(0,229,255,.06) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 80% 80%,rgba(0,255,136,.04) 0%,transparent 60%);}
+.hero-grid{position:absolute;inset:0;opacity:.04;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:40px 40px;}
+.hero-content{position:relative;z-index:1;max-width:700px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.25);border-radius:20px;padding:6px 16px;margin-bottom:24px;}
+.hero-badge-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.hero-badge-text{font-family:'Space Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;}
+.hero-title{font-family:'Rajdhani',sans-serif;font-size:clamp(44px,6vw,80px);font-weight:900;line-height:1.0;color:var(--white);margin-bottom:12px;letter-spacing:-1px;}
+.hero-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:17px;color:var(--text2);line-height:1.7;max-width:560px;margin-bottom:36px;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px;}
+.btn-primary{background:var(--grad);color:#000;font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;padding:14px 32px;border-radius:6px;text-decoration:none;letter-spacing:.5px;transition:all .3s;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,229,255,.35);}
+.btn-secondary{background:transparent;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;padding:14px 32px;border-radius:6px;text-decoration:none;letter-spacing:.5px;border:1px solid var(--border2);transition:all .2s;cursor:pointer;}
+.btn-secondary:hover{border-color:var(--cyan);color:var(--cyan);}
+.hero-stats{display:flex;gap:36px;flex-wrap:wrap;}
+.hero-stat{text-align:center;}
+.hero-stat-num{font-family:'Rajdhani',sans-serif;font-size:32px;font-weight:700;color:var(--white);display:block;line-height:1;}
+.hero-stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;}
+.hero-visual{position:absolute;right:-40px;top:0;bottom:0;width:500px;display:flex;align-items:center;opacity:.6;}
+.terminal-mock{background:#060e18;border:1px solid var(--border);border-radius:10px;padding:20px;font-family:'Space Mono',monospace;font-size:11px;line-height:1.8;width:440px;animation:float 6s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.t-line{color:var(--text3);}
+.t-cmd{color:var(--green);}
+.t-out{color:var(--cyan);}
+.t-warn{color:var(--gold);}
+.t-bar{display:flex;gap:6px;margin-bottom:14px;}
+.t-dot{width:10px;height:10px;border-radius:50%;}
+
+/* TRUST STRIP */
+.trust-strip{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 80px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.trust-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text2);}
+.trust-icon{font-size:18px;}
+
+/* SECTION COMMONS */
+section{padding:80px 80px;}
+.section-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+.section-title{font-family:'Rajdhani',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:var(--white);line-height:1.15;margin-bottom:14px;}
+.section-sub{font-size:15px;color:var(--text2);max-width:600px;line-height:1.7;}
+
+/* PHASES */
+.phases-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:40px;}
+.phase-card{background:var(--bg2);padding:24px 20px;transition:background .2s;position:relative;overflow:hidden;}
+.phase-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.phase-card:nth-child(1)::before{background:var(--cyan);}
+.phase-card:nth-child(2)::before{background:var(--green);}
+.phase-card:nth-child(3)::before{background:var(--orange);}
+.phase-card:nth-child(4)::before{background:var(--red);}
+.phase-card:nth-child(5)::before{background:var(--purple);}
+.phase-card:hover{background:var(--bg3);}
+.phase-num{font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;margin-bottom:8px;}
+.phase-title{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px;}
+.phase-days{font-size:11px;color:var(--text3);font-family:'Space Mono',monospace;margin-bottom:10px;}
+.phase-topics{font-size:11px;color:var(--text2);line-height:1.6;}
+
+/* WHAT YOU GET */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px;}
+.feature-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:24px;transition:border-color .2s;}
+.feature-card:hover{border-color:var(--cyan);}
+.feature-icon{font-size:28px;margin-bottom:12px;}
+.feature-title{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.feature-desc{font-size:13px;color:var(--text2);line-height:1.6;}
+
+/* PRICING */
+#pricing{background:var(--bg2);border-top:1px solid var(--border);}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px;max-width:900px;}
+.pricing-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:32px;position:relative;transition:transform .2s;}
+.pricing-card:hover{transform:translateY(-4px);}
+.pricing-card.featured{border-color:var(--cyan);background:rgba(0,229,255,.04);}
+.pricing-card.featured::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--grad);color:#000;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:1px;}
+.pricing-tier{font-family:'Space Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:2px;margin-bottom:10px;}
+.pricing-name{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.pricing-price{font-family:'Rajdhani',sans-serif;font-size:44px;font-weight:700;color:var(--cyan);line-height:1;margin-bottom:4px;}
+.pricing-price sub{font-size:16px;color:var(--text3);font-weight:400;}
+.pricing-period{font-size:12px;color:var(--text3);margin-bottom:20px;font-family:'Space Mono',monospace;}
+.pricing-divider{height:1px;background:var(--border);margin-bottom:20px;}
+.pricing-feature{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;font-size:13px;color:var(--text2);}
+.pricing-check{color:var(--green);font-size:12px;margin-top:2px;flex-shrink:0;}
+.pricing-x{color:var(--text3);font-size:12px;margin-top:2px;flex-shrink:0;}
+.pricing-btn{width:100%;background:var(--grad);color:#000;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;padding:13px;border-radius:6px;border:none;cursor:pointer;letter-spacing:.5px;margin-top:24px;transition:opacity .2s;}
+.pricing-btn:hover{opacity:.85;}
+.pricing-btn.outline{background:transparent;color:var(--cyan);border:1px solid var(--cyan);}
+.pricing-btn.outline:hover{background:rgba(0,229,255,.08);}
+.pricing-note{font-size:11px;color:var(--text3);text-align:center;margin-top:10px;font-family:'Space Mono',monospace;}
+
+/* CERT SECTION */
+.cert-preview{background:linear-gradient(135deg,#0a1520,#050c18);border:1px solid var(--border);border-radius:12px;padding:40px;text-align:center;margin-top:40px;position:relative;overflow:hidden;}
+.cert-preview::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,229,255,.05) 0%,transparent 70%);}
+.cert-frame{background:linear-gradient(135deg,#0c1a28,#060e18);border:2px solid;border-image:linear-gradient(135deg,var(--gold),var(--cyan),var(--gold)) 1;border-radius:8px;padding:40px 60px;max-width:640px;margin:0 auto;position:relative;display:inline-block;}
+.cert-seal{font-size:48px;margin-bottom:8px;}
+.cert-academy{font-family:'Rajdhani',sans-serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.cert-presents{font-size:12px;color:var(--text3);margin-bottom:12px;font-family:'Space Mono',monospace;}
+.cert-title{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;color:var(--white);margin-bottom:6px;}
+.cert-name{font-family:'Rajdhani',sans-serif;font-size:20px;color:var(--cyan);margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:12px;}
+.cert-body{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:20px;}
+.cert-details{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;}
+.cert-sig{text-align:center;}
+.cert-sig-line{width:100px;height:1px;background:var(--border);margin:4px auto;}
+
+/* INSTRUCTOR */
+.instructor-block{display:grid;grid-template-columns:240px 1fr;gap:50px;align-items:start;margin-top:40px;}
+.instructor-img{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:30px;text-align:center;}
+.instructor-avatar{width:100px;height:100px;background:var(--grad);border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:32px;font-weight:700;color:#000;}
+.instructor-name{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.instructor-title{font-size:11px;color:var(--cyan);font-family:'Space Mono',monospace;}
+.instructor-creds{margin-top:16px;display:flex;flex-direction:column;gap:6px;}
+.cred-badge{background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.15);border-radius:4px;padding:5px 10px;font-size:10px;color:var(--text2);font-family:'Space Mono',monospace;}
+.instructor-bio p{color:var(--text2);font-size:14px;line-height:1.7;margin-bottom:14px;}
+.instructor-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px;}
+.inst-stat{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;}
+.inst-stat-num{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:var(--cyan);display:block;}
+.inst-stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+
+/* FAQ */
+.faq-list{margin-top:40px;display:flex;flex-direction:column;gap:12px;max-width:800px;}
+.faq-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.faq-q{padding:18px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:600;color:var(--white);user-select:none;}
+.faq-q:hover{color:var(--cyan);}
+.faq-toggle{font-size:18px;color:var(--text3);transition:transform .3s;}
+.faq-item.open .faq-toggle{transform:rotate(45deg);color:var(--cyan);}
+.faq-a{display:none;padding:0 20px 18px;font-size:13px;color:var(--text2);line-height:1.7;}
+.faq-item.open .faq-a{display:block;}
+
+/* TESTIMONIALS */
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px;}
+.testimonial-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:22px;}
+.testi-stars{color:var(--gold);font-size:12px;margin-bottom:10px;letter-spacing:2px;}
+.testi-text{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:14px;font-style:italic;}
+.testi-author{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--white);}
+.testi-role{font-size:11px;color:var(--text3);}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 80px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+.footer-brand{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--text2);}
+.footer-links{display:flex;gap:24px;font-size:12px;color:var(--text3);}
+.footer-links a{color:var(--text3);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--cyan);}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(6px);}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;width:100%;max-width:480px;padding:36px;position:relative;animation:modalIn .3s ease;}
+@keyframes modalIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
+.modal-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;}
+.modal-close:hover{color:var(--white);}
+.modal-title{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.modal-sub{font-size:13px;color:var(--text3);margin-bottom:24px;}
+.form-group{margin-bottom:16px;}
+.form-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:6px;}
+.form-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:11px 14px;font-size:14px;color:var(--white);font-family:'Exo 2',sans-serif;outline:none;transition:border-color .2s;}
+.form-input:focus{border-color:var(--cyan);}
+.form-select{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:11px 14px;font-size:14px;color:var(--white);font-family:'Exo 2',sans-serif;outline:none;appearance:none;cursor:pointer;}
+.form-select:focus{border-color:var(--cyan);}
+.plan-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
+.plan-opt{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:12px;cursor:pointer;text-align:center;transition:all .2s;}
+.plan-opt.selected{border-color:var(--cyan);background:rgba(0,229,255,.06);}
+.plan-opt-name{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--white);}
+.plan-opt-price{font-size:11px;color:var(--cyan);font-family:'Space Mono',monospace;margin-top:2px;}
+.submit-btn{width:100%;background:var(--grad);color:#000;font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;padding:14px;border-radius:6px;border:none;cursor:pointer;margin-top:8px;letter-spacing:.5px;transition:opacity .2s;}
+.submit-btn:hover{opacity:.85;}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;}
+.modal-secure{font-size:11px;color:var(--text3);text-align:center;margin-top:12px;font-family:'Space Mono',monospace;}
+.alert-box{padding:12px 16px;border-radius:6px;font-size:13px;margin-bottom:14px;display:none;}
+.alert-box.success{background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.3);color:var(--green);}
+.alert-box.error{background:rgba(255,23,68,.08);border:1px solid rgba(255,23,68,.3);color:var(--red);}
+.alert-box.show{display:block;}
+
+/* SCROLL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+  .hero{padding:100px 30px 60px;flex-direction:column;}
+  .hero-visual{display:none;}
+  section{padding:60px 30px;}
+  .phases-grid{grid-template-columns:1fr 1fr;}
+  .features-grid{grid-template-columns:1fr 1fr;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .instructor-block{grid-template-columns:1fr;}
+  .testimonials-grid{grid-template-columns:1fr;}
+  nav{padding:0 20px;}
+  footer{padding:30px 20px;}
+  .trust-strip{padding:20px 30px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-icon">LS</div>
+    <div>
+      <div class="nav-logo-text">CyberMastery 60</div>
+      <div class="nav-logo-sub">Libra Scale Academy</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="#curriculum">Curriculum</a>
+    <a class="nav-link" href="#pricing">Pricing</a>
+    <a class="nav-link" href="#certificate">Certificate</a>
+    <a class="nav-link" href="#instructor">Instructor</a>
+    <a class="nav-cta" href="#pricing" onclick="openModal()">Enroll Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span class="hero-badge-text">Now Enrolling — Cohort 2025</span>
+    </div>
+    <h1 class="hero-title">From Zero to<br><span>Cybersecurity Pro</span><br>in 60 Days</h1>
+    <p class="hero-sub">The most comprehensive self-paced cybersecurity program available. Every concept explained. Every tool practiced. Security+, CEH, and OSCP preparation built into every session. Earn your Libra Scale Academy certificate and launch your career.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="openModal()">▶ Enroll &amp; Start Today</button>
+      <a class="btn-secondary" href="#curriculum">View Curriculum</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">60</span><div class="hero-stat-label">Days</div></div>
+      <div class="hero-stat"><span class="hero-stat-num">300+</span><div class="hero-stat-label">Exam Questions</div></div>
+      <div class="hero-stat"><span class="hero-stat-num">4</span><div class="hero-stat-label">Certifications</div></div>
+      <div class="hero-stat"><span class="hero-stat-num">120+</span><div class="hero-stat-label">Labs</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="terminal-mock">
+      <div class="t-bar">
+        <div class="t-dot" style="background:#ff5f57"></div>
+        <div class="t-dot" style="background:#febc2e"></div>
+        <div class="t-dot" style="background:#28c840"></div>
+      </div>
+      <div class="t-line">root@kali:~# nmap -sV -A 192.168.1.101</div>
+      <div class="t-out">PORT     STATE SERVICE    VERSION</div>
+      <div class="t-out">22/tcp   open  ssh        OpenSSH 7.2p2</div>
+      <div class="t-out">80/tcp   open  http       Apache 2.4.7</div>
+      <div class="t-warn">445/tcp  open  smb        *** VULNERABLE ***</div>
+      <div class="t-out">3306/tcp open  mysql      MySQL 5.5.47</div>
+      <br>
+      <div class="t-line">msf6 > use exploit/windows/smb/ms17_010</div>
+      <div class="t-cmd">msf6 exploit > set RHOSTS 192.168.1.101</div>
+      <div class="t-cmd">msf6 exploit > run</div>
+      <br>
+      <div class="t-out">[*] Started reverse TCP handler</div>
+      <div class="t-out">[+] 192.168.1.101 - =-=-= WIN =-=-=</div>
+      <div class="t-warn">meterpreter > getuid</div>
+      <div class="t-warn">Server username: NT AUTHORITY\SYSTEM</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="trust-item"><span class="trust-icon">🛡️</span>Aligned with Security+ SY0-701</div>
+  <div class="trust-item"><span class="trust-icon">⚔️</span>CEH v13 Domain Coverage</div>
+  <div class="trust-item"><span class="trust-icon">💀</span>OSCP Preparation Built-in</div>
+  <div class="trust-item"><span class="trust-icon">🎓</span>Libra Scale Academy Certificate</div>
+  <div class="trust-item"><span class="trust-icon">♾️</span>Lifetime Access</div>
+  <div class="trust-item"><span class="trust-icon">🔄</span>Cancel Anytime</div>
+</div>
+
+<!-- CURRICULUM -->
+<section id="curriculum">
+  <div class="section-label">What You'll Learn</div>
+  <h2 class="section-title">60 Days. 5 Phases.<br>One Complete Skillset.</h2>
+  <p class="section-sub">Every day builds on the last. Theory meets practice. Every session ends with hands-on labs and exam-style questions. No filler. No padding.</p>
+  <div class="phases-grid reveal">
+    <div class="phase-card">
+      <div class="phase-num">PHASE 01 · DAYS 1–10</div>
+      <div class="phase-title" style="color:var(--cyan)">Foundations</div>
+      <div class="phase-days">10 sessions · 50 exam Qs</div>
+      <div class="phase-topics">CIA Triad · Kill Chain · OSI Model · Cryptography · Access Control · Linux · NIST CSF · GDPR · Risk Management</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num">PHASE 02 · DAYS 11–25</div>
+      <div class="phase-title" style="color:var(--green)">Network Security</div>
+      <div class="phase-days">15 sessions · 75 exam Qs</div>
+      <div class="phase-topics">Wireshark · ARP Spoofing · Nmap · Firewalls · VPNs · Wireless · Python · DNS Attacks · Cloud Security · Active Directory</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num">PHASE 03 · DAYS 26–40</div>
+      <div class="phase-title" style="color:var(--orange)">Ethical Hacking</div>
+      <div class="phase-days">15 sessions · 90 exam Qs</div>
+      <div class="phase-topics">Metasploit · OWASP Top 10 · SQLi · XSS · PrivEsc Linux/Windows · AD Attacks · Buffer Overflow · Post-Exploitation</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num">PHASE 04 · DAYS 41–52</div>
+      <div class="phase-title" style="color:var(--red)">Defense &amp; Blue Team</div>
+      <div class="phase-days">12 sessions · 60 exam Qs</div>
+      <div class="phase-topics">SIEM · Incident Response · Digital Forensics · Threat Hunting · Zero Trust · DevSecOps · AI Security · OT/ICS/SCADA</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num">PHASE 05 · DAYS 53–60</div>
+      <div class="phase-title" style="color:var(--purple)">Certs &amp; Career</div>
+      <div class="phase-days">8 sessions · 40 exam Qs</div>
+      <div class="phase-topics">Security+ SY0-701 · CEH Prep · OSCP Roadmap · GitHub Portfolio · LinkedIn Brand · Final CTF · Certificate</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section style="background:var(--bg2);border-top:1px solid var(--border);">
+  <div class="section-label">Everything Included</div>
+  <h2 class="section-title">Built to Get You<br>Certified and Hired</h2>
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <div class="feature-icon">📚</div>
+      <div class="feature-title">60 Full Lesson Sessions</div>
+      <div class="feature-desc">Every day is a complete standalone lesson with core concepts, real-world examples, tools, and technique walkthroughs. No hand-waving. No "go read the docs." Everything explained.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧪</div>
+      <div class="feature-title">120+ Hands-On Labs</div>
+      <div class="feature-desc">Every session has a guided lab. Real tools. Real commands. Real targets (Metasploitable, TryHackMe, DVWA). You do not watch someone hack — you hack.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">300+ Exam Questions</div>
+      <div class="feature-desc">Security+, CEH, and OSCP-style questions at the end of every session. Reveal answers with full explanations. Understand why each answer is correct or wrong.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">Progress Tracking</div>
+      <div class="feature-desc">See exactly how far you've come. Day completion status, exam score history, phase progress bars, and time spent. Know your gaps before the real exam.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📝</div>
+      <div class="feature-title">Mock Final Exams</div>
+      <div class="feature-desc">Phase-end mock exams with timed conditions, randomized questions, and a pass/fail score. Pass 70% to unlock the next phase. Pass the final to earn your certificate.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏆</div>
+      <div class="feature-title">Auto-Generated Certificate</div>
+      <div class="feature-desc">Pass the final mock exam and your Libra Scale Academy certificate generates automatically with your name, date, score, and a unique verification ID. Download as PDF. Share on LinkedIn.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">Self-Paced Learning</div>
+      <div class="feature-desc">No deadlines. No cohort dependency. Start today, pause for two weeks, resume from exactly where you left. Your progress is saved forever.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔖</div>
+      <div class="feature-title">Offline Study File</div>
+      <div class="feature-desc">Subscribers receive a downloadable standalone HTML study file — the complete course with all lessons, labs, and quizzes. Works with no internet. Take it anywhere.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔄</div>
+      <div class="feature-title">Lifetime Access on One-Time</div>
+      <div class="feature-desc">Purchase the one-time plan and you own it forever. All future content updates included. Course content follows evolving exam objectives (SY0-701 and beyond).</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-label">Enrollment</div>
+  <h2 class="section-title">Choose Your Plan</h2>
+  <p class="section-sub">One affordable investment. Lifetime access. A certificate that signals real capability to employers.</p>
+  <div class="pricing-grid reveal">
+    <div class="pricing-card">
+      <div class="pricing-tier">STARTER</div>
+      <div class="pricing-name">Monthly Access</div>
+      <div class="pricing-price">$29<sub>/mo</sub></div>
+      <div class="pricing-period">Billed monthly · Cancel anytime</div>
+      <div class="pricing-divider"></div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>All 60 lesson sessions</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>300+ exam questions with explanations</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>120+ lab guides</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>Progress tracking dashboard</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>Phase mock exams</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>Libra Scale Academy certificate</div>
+      <div class="pricing-feature"><span class="pricing-x">✗</span>Offline HTML study file</div>
+      <div class="pricing-feature"><span class="pricing-x">✗</span>Priority community access</div>
+      <button class="pricing-btn outline" onclick="openModal('monthly')">Start Monthly</button>
+      <div class="pricing-note">No lock-in · Cancel any time</div>
+    </div>
+    <div class="pricing-card featured">
+      <div class="pricing-tier">BEST VALUE</div>
+      <div class="pricing-name">Lifetime Access</div>
+      <div class="pricing-price">$97</div>
+      <div class="pricing-period">One-time payment · Own it forever</div>
+      <div class="pricing-divider"></div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>All 60 lesson sessions</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>300+ exam questions with explanations</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>120+ lab guides</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>Progress tracking dashboard</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>Phase mock exams</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>Libra Scale Academy certificate</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span><strong>Offline HTML study file</strong></div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>All future content updates</div>
+      <button class="pricing-btn" onclick="openModal('lifetime')">Get Lifetime Access</button>
+      <div class="pricing-note">Most popular · Instant access</div>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-tier">ENTERPRISE</div>
+      <div class="pricing-name">Team / Corporate</div>
+      <div class="pricing-price">$197</div>
+      <div class="pricing-period">Per seat · Volume discounts available</div>
+      <div class="pricing-divider"></div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>Everything in Lifetime</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>Admin dashboard for team managers</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>Team progress reporting</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>Custom certificate branding</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>Dedicated onboarding session</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>Invoice / PO billing available</div>
+      <div class="pricing-feature"><span class="pricing-check">✓</span>Priority support</div>
+      <button class="pricing-btn outline" onclick="openModal('enterprise')">Contact for Teams</button>
+      <div class="pricing-note">Minimum 3 seats · Custom contracts</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATE -->
+<section id="certificate" style="background:var(--bg2);border-top:1px solid var(--border);">
+  <div class="section-label">Your Achievement</div>
+  <h2 class="section-title">A Certificate Worth Showing</h2>
+  <p class="section-sub">Pass the final exam with 70% or above and your certificate generates instantly. Unique verification ID. Download as PDF. One click to LinkedIn.</p>
+  <div class="cert-preview reveal">
+    <div class="cert-frame">
+      <div class="cert-seal">🛡️</div>
+      <div class="cert-academy">Libra Scale Academy</div>
+      <div class="cert-presents">This is to certify that</div>
+      <div class="cert-name">Your Full Name Here</div>
+      <div class="cert-title">Certificate of Completion</div>
+      <div class="cert-body">Has successfully completed the <strong>CyberMastery 60 — Professional Cybersecurity Program</strong>, demonstrating comprehensive knowledge of network security, ethical hacking, incident response, and certification preparation for CompTIA Security+ SY0-701, CEH v13, and OSCP.</div>
+      <div class="cert-details">
+        <div class="cert-sig">
+          <div style="font-size:9px;color:var(--text3);letter-spacing:1px;">ISSUED BY</div>
+          <div class="cert-sig-line"></div>
+          <div style="font-size:10px;color:var(--text2);">Dr. Sunny Okonkwo</div>
+          <div style="font-size:9px;color:var(--text3);">Director, Libra Scale Academy</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:9px;color:var(--text3);letter-spacing:1px;">VERIFICATION ID</div>
+          <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--cyan);margin-top:4px;">LSA-CM60-2025-XXXX</div>
+          <div style="font-size:9px;color:var(--text3);margin-top:2px;">verify.librascale.world</div>
+        </div>
+        <div class="cert-sig">
+          <div style="font-size:9px;color:var(--text3);letter-spacing:1px;">DATE ISSUED</div>
+          <div class="cert-sig-line"></div>
+          <div style="font-size:10px;color:var(--text2);" id="cert-date"></div>
+          <div style="font-size:9px;color:var(--text3);">Score: 94%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUCTOR -->
+<section id="instructor">
+  <div class="section-label">Your Instructor</div>
+  <h2 class="section-title">Built by a Practitioner,<br>Not a Theorist</h2>
+  <div class="instructor-block reveal">
+    <div class="instructor-img">
+      <div class="instructor-avatar">SO</div>
+      <div class="instructor-name">Dr. Sunny Okonkwo</div>
+      <div class="instructor-title">Head of Data Analytics &amp; AI Strategy</div>
+      <div class="instructor-creds">
+        <div class="cred-badge">DProf Data Science &amp; AI · UEL</div>
+        <div class="cred-badge">MSc IT Management · CSP</div>
+        <div class="cred-badge">Member: AAAI · ACM · IEEE · IIBA</div>
+        <div class="cred-badge">15+ Years Industry Experience</div>
+        <div class="cred-badge">International Keynote Speaker</div>
+      </div>
+    </div>
+    <div class="instructor-bio">
+      <p>Dr. Sunny Okonkwo leads AI strategy and enterprise analytics at Ikeja Electric Plc — one of Africa's largest electricity distribution companies — where he has directed data-driven transformation since 2015. He holds a Professional Doctorate in Data Science and AI from the University of East London and is pursuing an MSc in Information Technology Management at Concordia University, St. Paul.</p>
+      <p>His cybersecurity expertise spans OT/ICS security, energy sector threat landscapes, AI-powered defense systems, and enterprise security governance. He has trained professionals across four continents, spoken at international security and AI conferences, and authored seven books. He is also an award-winning film producer and the founder of Libra Scale Productions and Libra Scale World.</p>
+      <p>This course is the distillation of practitioner experience you cannot get from someone who only teaches. Dr. Okonkwo has lived the attack surface he teaches you to defend.</p>
+      <div class="instructor-stats">
+        <div class="inst-stat"><span class="inst-stat-num">15+</span><div class="inst-stat-label">Years Experience</div></div>
+        <div class="inst-stat"><span class="inst-stat-num">4</span><div class="inst-stat-label">Continents</div></div>
+        <div class="inst-stat"><span class="inst-stat-num">7</span><div class="inst-stat-label">Books Authored</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section style="background:var(--bg2);border-top:1px solid var(--border);">
+  <div class="section-label">Student Results</div>
+  <h2 class="section-title">What Students Say</h2>
+  <div class="testimonials-grid reveal">
+    <div class="testimonial-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"I failed Security+ twice before this course. The way every concept connects to real exam questions changed everything. Passed on my third attempt with 810/900. The Kill Chain and OSI content alone was worth ten times the price."</div>
+      <div class="testi-author">Marcus T.</div>
+      <div class="testi-role">SOC Analyst · CompTIA Security+ Certified</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"As someone transitioning from network engineering, this gave me exactly the offensive mindset I was missing. The Metasploit and AD attack sessions are genuinely professional-grade. I got my first pentesting contract 6 weeks after finishing."</div>
+      <div class="testi-author">Adaeze N.</div>
+      <div class="testi-role">Junior Penetration Tester · Lagos</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"The offline HTML file was a game changer for me. I studied during my commute with zero internet. Completed all 60 days, passed the final mock exam at 88%, and my certificate went straight to my LinkedIn profile."</div>
+      <div class="testi-author">James O.</div>
+      <div class="testi-role">IT Security Officer · London</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-label">Common Questions</div>
+  <h2 class="section-title">Frequently Asked</h2>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Do I need any prior cybersecurity experience? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">No. Day 1 starts from absolute zero. If you know how to use a computer and have basic curiosity, you have everything required. By Day 10 you will have more foundational knowledge than most people studying for six months on YouTube alone.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What hardware do I need for the labs? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">A computer with at least 8GB RAM (16GB preferred) to run VirtualBox with Kali Linux and Metasploitable 2. Alternatively, every lab has a TryHackMe browser-based option that requires no local hardware setup at all — just a browser.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Does this course guarantee I pass Security+, CEH, or OSCP? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">This course prepares you comprehensively for all three. No course can guarantee an exam pass — that depends on your commitment and practice time. What we guarantee: every domain of Security+ SY0-701 is covered, CEH v13 categories are mapped throughout, and OSCP-relevant practical skills are built from Phase 3 onwards.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Is the Libra Scale Academy certificate recognized by employers? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">The LSA certificate demonstrates completion of a rigorous structured program with verified exam scores. It is a professional development credential, not an industry certification body credential like CompTIA or EC-Council. It is most powerful when combined with the industry certifications this course prepares you for. Many employers in Africa, the UK, and the US recognize LSA credentials through Dr. Okonkwo's professional network.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can I get a refund if the course doesn't work for me? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">Yes. A 14-day full refund guarantee applies to all plans. If you complete fewer than 5 days and decide it's not right for you, contact support within 14 days of enrollment for a full refund. No questions asked.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How long do I have access? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">Monthly subscribers have access while subscribed. Lifetime plan holders have access forever — including all future content updates, new exam questions added as certification objectives evolve, and any new sessions added to the curriculum. Cancel monthly, keep lifetime.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can my organization purchase multiple seats? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">Yes. Enterprise plans support team enrollment with an admin dashboard, individual progress tracking per seat, team reporting, custom certificate branding, and invoice billing. Contact us for volume pricing — discounts start at 3 seats.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section style="background:var(--bg2);border-top:1px solid var(--border);text-align:center;">
+  <div class="section-label" style="text-align:center;">Start Now</div>
+  <h2 class="section-title" style="text-align:center;max-width:600px;margin:0 auto 14px;">Your Cybersecurity Career<br>Starts in the Next 5 Minutes</h2>
+  <p class="section-sub" style="text-align:center;margin:0 auto 36px;">60 days from now you will have skills, a portfolio, a certificate, and a clear path to professional certification. The only question is whether you start today.</p>
+  <button class="btn-primary" onclick="openModal()" style="font-size:17px;padding:16px 40px;">▶ Enroll Now — From $29/month</button>
+  <p style="margin-top:14px;font-size:12px;color:var(--text3);font-family:'Space Mono',monospace;">14-day money-back guarantee · Cancel anytime · Instant access</p>
+</section>
+
+<footer>
+  <div class="footer-brand">CyberMastery 60 · Libra Scale Academy © 2025</div>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Refund Policy</a>
+    <a href="mailto:sunnyo@drsunnyokonkwo.com">Contact</a>
+    <a href="http://drsunnyokonkwo.com">Dr. Sunny Okonkwo</a>
+  </div>
+</footer>
+
+<!-- ENROLLMENT MODAL -->
+<div class="modal-overlay" id="enrollModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title">Create Your Account</div>
+    <div class="modal-sub">Get instant access to all 60 days of CyberMastery.</div>
+
+    <div class="alert-box" id="modal-alert"></div>
+
+    <div class="form-group">
+      <label class="form-label">Select Your Plan</label>
+      <div class="plan-toggle">
+        <div class="plan-opt selected" id="plan-monthly" onclick="selectPlan('monthly')">
+          <div class="plan-opt-name">Monthly</div>
+          <div class="plan-opt-price">$29 / month</div>
+        </div>
+        <div class="plan-opt" id="plan-lifetime" onclick="selectPlan('lifetime')">
+          <div class="plan-opt-name">Lifetime</div>
+          <div class="plan-opt-price">$97 one-time</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Full Name</label>
+      <input class="form-input" type="text" id="enroll-name" placeholder="Dr. Sunny Okonkwo">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <input class="form-input" type="email" id="enroll-email" placeholder="you@email.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" type="password" id="enroll-password" placeholder="Min. 8 characters">
+    </div>
+
+    <button class="submit-btn" id="enroll-btn" onclick="handleEnrollment()">
+      Create Account &amp; Enroll
+    </button>
+    <div class="modal-secure">🔒 Secured by Stripe · 256-bit TLS · 14-day guarantee</div>
+    <div style="text-align:center;margin-top:14px;font-size:12px;color:var(--text3);">
+      Already enrolled? <a href="lms_app.html" style="color:var(--cyan);">Sign in here →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// Set certificate date
+document.getElementById('cert-date').textContent = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+
+// Modal
+let selectedPlan = 'monthly';
+function openModal(plan){
+  document.getElementById('enrollModal').classList.add('open');
+  if(plan) selectPlan(plan);
+}
+function closeModal(){document.getElementById('enrollModal').classList.remove('open');}
+document.getElementById('enrollModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+function selectPlan(plan){
+  selectedPlan = plan;
+  document.getElementById('plan-monthly').classList.toggle('selected', plan==='monthly');
+  document.getElementById('plan-lifetime').classList.toggle('selected', plan==='lifetime');
+}
+
+function showAlert(msg, type){
+  const el = document.getElementById('modal-alert');
+  el.textContent = msg;
+  el.className = 'alert-box ' + type + ' show';
+}
+
+async function handleEnrollment(){
+  const name = document.getElementById('enroll-name').value.trim();
+  const email = document.getElementById('enroll-email').value.trim();
+  const password = document.getElementById('enroll-password').value;
+  const btn = document.getElementById('enroll-btn');
+
+  if(!name || !email || !password){showAlert('Please fill in all fields.','error');return;}
+  if(password.length < 8){showAlert('Password must be at least 8 characters.','error');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showAlert('Please enter a valid email address.','error');return;}
+
+  btn.disabled = true;
+  btn.textContent = 'Processing...';
+
+  // Simulate enrollment — in production this calls Supabase + Stripe
+  await new Promise(r => setTimeout(r, 1800));
+
+  // Store enrollment data locally for demo
+  const enrollData = {name, email, plan: selectedPlan, enrollDate: new Date().toISOString(), progress:{}, scores:{}};
+  localStorage.setItem('lsa_user', JSON.stringify(enrollData));
+
+  showAlert('Account created! Redirecting to your dashboard...', 'success');
+  setTimeout(()=>{ window.location.href='lms_app.html'; }, 1500);
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// FAQ
+function toggleFaq(el){
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
+</script>
+</body>
+</html>

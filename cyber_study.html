@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberMastery 60 — Complete Study Reference | Libra Scale Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04080f;--bg2:#080f1a;--bg3:#0c1520;
+  --border:#1a3050;--border2:#234060;
+  --cyan:#00e5ff;--green:#00ff88;--gold:#ffc107;
+  --orange:#ff6d00;--red:#ff1744;--purple:#d500f9;
+  --text:#c0d4e8;--text2:#6a8aaa;--text3:#3a5070;
+  --white:#ffffff;
+  --p1:#00e5ff;--p2:#00ff88;--p3:#ff6d00;--p4:#ff1744;--p5:#d500f9;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;font-size:15px;line-height:1.7;overflow-x:hidden;}
+
+/* HEADER */
+.hdr{background:linear-gradient(135deg,#060a0f,#0a1520);border-bottom:1px solid var(--border);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;backdrop-filter:blur(12px);}
+.hdr-left{display:flex;align-items:center;gap:12px;}
+.hdr-logo{width:38px;height:38px;background:linear-gradient(135deg,var(--cyan),var(--green));border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:#000;}
+.hdr-title{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:var(--white);letter-spacing:.5px;}
+.hdr-sub{font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;}
+.hdr-stats{display:flex;gap:20px;}
+.hdr-stat{text-align:center;}
+.hdr-stat-n{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--cyan);}
+.hdr-stat-l{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;}
+.progress-wrap{display:flex;align-items:center;gap:8px;}
+.prog-bar{width:120px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:2px;transition:width .4s;}
+.prog-label{font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);}
+
+/* LAYOUT */
+.layout{display:flex;min-height:calc(100vh - 70px);}
+
+/* SIDEBAR */
+.sidebar{width:248px;min-width:248px;background:var(--bg2);border-right:1px solid var(--border);position:sticky;top:70px;height:calc(100vh - 70px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.sidebar::-webkit-scrollbar{width:3px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border);}
+.sb-top{padding:10px 12px;border-bottom:1px solid var(--border);}
+.sb-search{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:7px 10px;font-size:11px;color:var(--text);font-family:'Exo 2',sans-serif;outline:none;}
+.sb-search:focus{border-color:var(--cyan);}
+.sb-nav{padding:8px 12px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:2px;}
+.sb-nav-btn{padding:6px 10px;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;border-radius:4px;transition:all .15s;letter-spacing:.3px;}
+.sb-nav-btn:hover,.sb-nav-btn.active{background:rgba(0,229,255,.07);color:var(--cyan);}
+.phase-grp{border-bottom:1px solid var(--border);}
+.phase-hdr{padding:9px 12px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;}
+.phase-hdr:hover{background:rgba(255,255,255,.02);}
+.phase-lbl{font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+.phase-arr{font-size:8px;color:var(--text3);transition:transform .25s;}
+.phase-grp.open .phase-arr{transform:rotate(180deg);}
+.phase-days-list{display:none;}
+.phase-grp.open .phase-days-list{display:block;}
+.day-item{display:flex;align-items:center;padding:6px 12px 6px 20px;cursor:pointer;gap:8px;border-left:2px solid transparent;transition:all .12s;}
+.day-item:hover{background:rgba(255,255,255,.025);}
+.day-item.active{border-left-color:var(--cyan);background:rgba(0,229,255,.06);}
+.day-item.done{opacity:.6;}
+.d-num{font-family:'Space Mono',monospace;font-size:8px;color:var(--text3);min-width:26px;}
+.d-name{font-size:10px;color:var(--text2);line-height:1.3;flex:1;}
+.day-item.active .d-name{color:var(--white);}
+.d-tick{font-size:9px;color:var(--green);}
+
+/* MAIN */
+.main{flex:1;min-width:0;}
+.page{display:none;}
+.page.active{display:block;animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* DAY HEADER */
+.day-hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:22px 44px;position:sticky;top:70px;z-index:100;}
+.dh-meta{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.dh-badge{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 10px;font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);}
+.dh-phase{border-radius:3px;padding:3px 9px;font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+.dh-title{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;color:var(--white);line-height:1.2;margin-bottom:4px;}
+.dh-tagline{font-size:13px;color:var(--text2);margin-bottom:12px;}
+.dh-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.dh-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:4px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;letter-spacing:.3px;transition:all .15s;}
+.dh-btn:hover{border-color:var(--cyan);color:var(--cyan);}
+.dh-btn.primary{background:linear-gradient(135deg,var(--cyan),var(--green));color:#000;border:none;}
+.dh-btn.primary:hover{opacity:.85;}
+.dh-btn.done{background:rgba(0,255,136,.08);border-color:var(--green);color:var(--green);}
+
+/* LESSON BODY */
+.lesson{max-width:840px;margin:0 auto;padding:32px 44px;}
+.lesson h2{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--white);margin:28px 0 10px;border-left:3px solid var(--cyan);padding-left:11px;}
+.lesson h3{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--cyan);margin:22px 0 8px;}
+.lesson h4{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--gold);margin:16px 0 5px;text-transform:uppercase;letter-spacing:1px;}
+.lesson p{margin-bottom:12px;color:var(--text);}
+.lesson strong{color:var(--white);}
+.lesson ul{margin:0 0 12px 20px;color:var(--text);}
+.lesson li{margin-bottom:5px;font-size:14px;}
+.callout{background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.15);border-left:3px solid var(--cyan);border-radius:0 5px 5px 0;padding:13px 16px;margin:16px 0;}
+.callout.warn{background:rgba(255,193,7,.04);border-color:rgba(255,193,7,.18);border-left-color:var(--gold);}
+.callout.danger{background:rgba(255,23,68,.04);border-color:rgba(255,23,68,.15);border-left-color:var(--red);}
+.callout.success{background:rgba(0,255,136,.04);border-color:rgba(0,255,136,.15);border-left-color:var(--green);}
+.ct{font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;color:var(--cyan);}
+.callout.warn .ct{color:var(--gold);}
+.callout.danger .ct{color:var(--red);}
+.callout.success .ct{color:var(--green);}
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+.ccard{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:14px;transition:border-color .15s;}
+.ccard:hover{border-color:var(--cyan);}
+.ccard-icon{font-size:20px;margin-bottom:6px;}
+.ccard-title{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.ccard-desc{font-size:11px;color:var(--text2);line-height:1.5;}
+.tw{overflow-x:auto;margin:16px 0;border-radius:6px;border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;}
+th{background:var(--bg3);color:var(--cyan);font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:9px 12px;text-align:left;border-bottom:1px solid var(--border);}
+td{padding:8px 12px;border-bottom:1px solid rgba(26,48,80,.35);font-size:12px;color:var(--text2);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.01);color:var(--text);}
+.cb{background:#040c14;border:1px solid var(--border);border-radius:5px;padding:16px;margin:16px 0;position:relative;overflow-x:auto;}
+.cb pre{font-family:'Space Mono',monospace;font-size:11px;color:var(--green);line-height:1.7;white-space:pre;}
+.cb-label{position:absolute;top:6px;right:9px;font-size:8px;color:var(--text3);font-family:'Space Mono',monospace;letter-spacing:1px;text-transform:uppercase;}
+.lab{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:0 6px 6px 0;padding:18px;margin:20px 0;}
+.lab-title{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+.lab-step{display:flex;gap:10px;margin-bottom:8px;align-items:flex-start;}
+.ls-num{background:var(--green);color:#000;font-family:'Space Mono',monospace;font-size:8px;font-weight:700;min-width:18px;height:18px;border-radius:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.ls-txt{font-size:12px;color:var(--text);line-height:1.6;}
+.kc{display:flex;overflow-x:auto;margin:16px 0;}
+.kc-s{background:var(--bg3);border:1px solid var(--border);border-right:none;padding:10px 12px;flex:1;min-width:80px;}
+.kc-s:last-child{border-right:1px solid var(--border);}
+.kc-n{font-family:'Space Mono',monospace;font-size:7px;color:var(--text3);margin-bottom:2px;}
+.kc-t{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;color:var(--cyan);margin-bottom:2px;}
+.kc-d{font-size:8px;color:var(--text3);line-height:1.3;}
+
+/* EXAM */
+.exam-wrap{background:var(--bg2);border-top:1px solid var(--border);padding:32px 44px;}
+.exam-head{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:3px;}
+.exam-sub{font-size:11px;color:var(--text3);margin-bottom:20px;font-family:'Space Mono',monospace;}
+.qcard{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:18px;margin-bottom:12px;}
+.qn{font-family:'Space Mono',monospace;font-size:8px;color:var(--text3);letter-spacing:1px;margin-bottom:6px;}
+.qt{font-size:13px;color:var(--white);font-weight:500;margin-bottom:12px;line-height:1.5;}
+.qopts{display:grid;gap:6px;}
+.qo{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:8px 12px;font-size:12px;color:var(--text2);cursor:pointer;transition:all .12s;display:flex;gap:8px;align-items:flex-start;}
+.qo:hover:not(.revealed){border-color:var(--cyan);color:var(--text);}
+.qo.correct{border-color:var(--green);background:rgba(0,255,136,.05);color:var(--green);}
+.qo.wrong{border-color:var(--red);background:rgba(255,23,68,.05);color:var(--red);}
+.qo.revealed{pointer-events:none;}
+.ql{font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:var(--text3);min-width:14px;}
+.qexp{background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.1);border-radius:4px;padding:9px 12px;margin-top:7px;font-size:11px;color:var(--text2);display:none;line-height:1.6;}
+.qexp.show{display:block;}
+
+/* OVERVIEW PAGE */
+.ov-wrap{padding:40px 44px;}
+.ov-hero{background:linear-gradient(135deg,#06091566,#0a152066);border:1px solid var(--border);border-radius:10px;padding:36px;margin-bottom:28px;position:relative;overflow:hidden;}
+.ov-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(0,229,255,.04),transparent);}
+.ov-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);border-radius:20px;padding:4px 12px;margin-bottom:14px;}
+.ov-badge span{width:5px;height:5px;background:var(--green);border-radius:50%;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.ov-badge-txt{font-family:'Space Mono',monospace;font-size:9px;color:var(--cyan);letter-spacing:1.5px;}
+.ov-title{font-family:'Rajdhani',sans-serif;font-size:clamp(32px,5vw,54px);font-weight:900;color:var(--white);line-height:1.0;margin-bottom:8px;}
+.ov-title em{background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+.ov-desc{font-size:14px;color:var(--text2);max-width:600px;margin-bottom:24px;line-height:1.7;}
+.ov-stats-row{display:flex;gap:28px;flex-wrap:wrap;}
+.ov-stat{text-align:center;}
+.ov-stat-n{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--white);}
+.ov-stat-l{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px;}
+.phases-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:28px;}
+.ph-card{background:var(--bg2);padding:18px 14px;cursor:pointer;position:relative;transition:background .15s;}
+.ph-card:hover{background:var(--bg3);}
+.ph-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.ph-card:nth-child(1)::before{background:var(--p1);}
+.ph-card:nth-child(2)::before{background:var(--p2);}
+.ph-card:nth-child(3)::before{background:var(--p3);}
+.ph-card:nth-child(4)::before{background:var(--p4);}
+.ph-card:nth-child(5)::before{background:var(--p5);}
+.ph-num{font-family:'Space Mono',monospace;font-size:8px;color:var(--text3);margin-bottom:6px;}
+.ph-title{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;margin-bottom:4px;}
+.ph-days{font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;margin-bottom:8px;}
+.ph-topics{font-size:10px;color:var(--text2);line-height:1.5;}
+.cert-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;}
+.cert-card{background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:16px;text-align:center;}
+.cert-icon{font-size:24px;margin-bottom:6px;}
+.cert-name{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--white);margin-bottom:3px;}
+.cert-timeline{font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;}
+.cert-cost{font-size:11px;color:var(--gold);margin-top:4px;}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.how-card{background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:16px;}
+.how-num{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--border2);margin-bottom:6px;}
+.how-title{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.how-desc{font-size:12px;color:var(--text2);line-height:1.5;}
+
+/* RESOURCES PAGE */
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px;}
+.res-card{background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:16px;transition:border-color .15s;}
+.res-card:hover{border-color:var(--cyan);}
+.res-cat{font-family:'Space Mono',monospace;font-size:8px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+.res-name{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--white);margin-bottom:3px;}
+.res-url{font-size:10px;color:var(--cyan);font-family:'Space Mono',monospace;margin-bottom:6px;}
+.res-desc{font-size:11px;color:var(--text2);line-height:1.5;}
+
+/* MOBILE */
+@media(max-width:800px){
+  .sidebar{display:none;}
+  .lesson,.exam-wrap,.ov-wrap{padding:18px 16px;}
+  .day-hdr{padding:16px;}
+  .phases-grid,.cert-grid,.how-grid,.cgrid,.res-grid{grid-template-columns:1fr 1fr;}
+  .hdr-stats{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="hdr-logo">LS</div>
+    <div>
+      <div class="hdr-title">CyberMastery 60 — Study Reference</div>
+      <div class="hdr-sub">Libra Scale Academy · Offline Edition</div>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="prog-bar"><div class="prog-fill" id="gbar" style="width:0%"></div></div>
+    <div class="prog-label" id="glabel">0 / 60</div>
+  </div>
+  <div class="hdr-stats">
+    <div class="hdr-stat"><div class="hdr-stat-n">60</div><div class="hdr-stat-l">Days</div></div>
+    <div class="hdr-stat"><div class="hdr-stat-n">300+</div><div class="hdr-stat-l">Exam Qs</div></div>
+    <div class="hdr-stat"><div class="hdr-stat-n">120+</div><div class="hdr-stat-l">Labs</div></div>
+    <div class="hdr-stat"><div class="hdr-stat-n">4</div><div class="hdr-stat-l">Certs</div></div>
+  </div>
+</div>
+
+<div class="layout">
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sb-top">
+    <input class="sb-search" type="text" placeholder="Search days..." oninput="searchDays(this.value)" id="search-input">
+  </div>
+  <div class="sb-nav">
+    <div class="sb-nav-btn active" onclick="showPage('overview')">🏠 Overview</div>
+    <div class="sb-nav-btn" onclick="showPage('resources')">📚 Resources</div>
+    <div class="sb-nav-btn" onclick="showPage('certs')">🏆 Certifications</div>
+  </div>
+  <div id="sidebar-content"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="main">
+
+<!-- OVERVIEW PAGE -->
+<div class="page active" id="page-overview">
+<div class="ov-wrap">
+  <div class="ov-hero">
+    <div class="ov-badge"><span></span><span class="ov-badge-txt">COMPLETE OFFLINE REFERENCE · ALL 60 DAYS</span></div>
+    <div class="ov-title">60-Day Cybersecurity<br><em>Mastery Program</em></div>
+    <div class="ov-desc">The complete study reference for CyberMastery 60. All 60 days of lesson content, 300+ exam-style questions with full explanations, 120+ lab exercises, and comprehensive exam preparation for Security+, CEH, and OSCP. No internet required.</div>
+    <div class="ov-stats-row">
+      <div class="ov-stat"><div class="ov-stat-n">60</div><div class="ov-stat-l">Sessions</div></div>
+      <div class="ov-stat"><div class="ov-stat-n">300+</div><div class="ov-stat-l">Exam Qs</div></div>
+      <div class="ov-stat"><div class="ov-stat-n">120+</div><div class="ov-stat-l">Labs</div></div>
+      <div class="ov-stat"><div class="ov-stat-n">5</div><div class="ov-stat-l">Phases</div></div>
+      <div class="ov-stat"><div class="ov-stat-n">4</div><div class="ov-stat-l">Cert Tracks</div></div>
+    </div>
+  </div>
+
+  <div class="phases-grid">
+    <div class="ph-card" onclick="showDay(1)">
+      <div class="ph-num">PHASE 01 · DAYS 1–10</div>
+      <div class="ph-title" style="color:var(--p1)">Foundations</div>
+      <div class="ph-days">10 sessions</div>
+      <div class="ph-topics">CIA Triad · Kill Chain · OSI Model · Linux · Cryptography · Access Control · NIST CSF · Compliance</div>
+    </div>
+    <div class="ph-card" onclick="showDay(11)">
+      <div class="ph-num">PHASE 02 · DAYS 11–25</div>
+      <div class="ph-title" style="color:var(--p2)">Network Security</div>
+      <div class="ph-days">15 sessions</div>
+      <div class="ph-topics">Wireshark · ARP Spoofing · Nmap · Firewalls · VPNs · Wireless · Python · DNS · Cloud · Active Directory</div>
+    </div>
+    <div class="ph-card" onclick="showDay(26)">
+      <div class="ph-num">PHASE 03 · DAYS 26–40</div>
+      <div class="ph-title" style="color:var(--p3)">Ethical Hacking</div>
+      <div class="ph-days">15 sessions</div>
+      <div class="ph-topics">Metasploit · OWASP Top 10 · SQLi · XSS · PrivEsc · AD Attacks · Buffer Overflow · Malware Analysis</div>
+    </div>
+    <div class="ph-card" onclick="showDay(41)">
+      <div class="ph-num">PHASE 04 · DAYS 41–52</div>
+      <div class="ph-title" style="color:var(--p4)">Defense & Blue Team</div>
+      <div class="ph-days">12 sessions</div>
+      <div class="ph-topics">SIEM · Incident Response · Forensics · Threat Hunting · Zero Trust · DevSecOps · AI Security · OT/ICS</div>
+    </div>
+    <div class="ph-card" onclick="showDay(53)">
+      <div class="ph-num">PHASE 05 · DAYS 53–60</div>
+      <div class="ph-title" style="color:var(--p5)">Certs & Career</div>
+      <div class="ph-days">8 sessions</div>
+      <div class="ph-topics">Security+ SY0-701 · CEH v13 · OSCP Roadmap · Portfolio · LinkedIn · Final CTF · Certificate</div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:10px;font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;">CERTIFICATION ROADMAP</div>
+  <div class="cert-grid">
+    <div class="cert-card">
+      <div class="cert-icon">🛡️</div>
+      <div class="cert-name">CompTIA Security+</div>
+      <div class="cert-timeline">SY0-701 · Book by Day 60</div>
+      <div class="cert-cost">~$392 USD</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">⚔️</div>
+      <div class="cert-name">CEH v13</div>
+      <div class="cert-timeline">3–4 months post-Security+</div>
+      <div class="cert-cost">~$500 USD</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">💀</div>
+      <div class="cert-name">OSCP</div>
+      <div class="cert-timeline">6–12 months total</div>
+      <div class="cert-cost">~$1,499 USD</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🏛️</div>
+      <div class="cert-name">CISSP</div>
+      <div class="cert-timeline">12–24 months (5yr exp)</div>
+      <div class="cert-cost">~$749 USD</div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:10px;font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;">HOW TO USE THIS FILE</div>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-num">01</div>
+      <div class="how-title">Read the Theory</div>
+      <div class="how-desc">Each session opens with core concepts explained in plain language. Read actively — make notes. Annotate terms you don't know immediately.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">02</div>
+      <div class="how-title">Do the Lab</div>
+      <div class="how-desc">Every session has a hands-on lab section. Open Kali Linux or TryHackMe alongside this file. Run every command. Passive reading builds knowledge. Active practice builds skill.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">03</div>
+      <div class="how-title">Answer the Exam Questions</div>
+      <div class="how-desc">Click each option to reveal the answer and explanation. Do not peek before answering. Honest wrong answers teach more than dishonest right ones.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">04</div>
+      <div class="how-title">Track Your Progress</div>
+      <div class="how-desc">Click "Mark Complete" on each day. Your progress is saved to your browser. Return anytime — the file remembers where you were.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">05</div>
+      <div class="how-title">Review Weekly</div>
+      <div class="how-desc">Every Sunday, review days completed that week. Re-read the callout boxes. Redo any exam questions you got wrong. Spaced repetition is the engine of retention.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">06</div>
+      <div class="how-title">Pass the Exam</div>
+      <div class="how-desc">Book Security+ before Day 60. The act of registering creates commitment. Seat availability fills up. Book early, study hard, sit confident.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- RESOURCES PAGE -->
+<div class="page" id="page-resources">
+<div class="ov-wrap">
+  <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;margin-bottom:8px;">REFERENCE</div>
+  <div style="font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--white);margin-bottom:5px;">Tools, Platforms & Resources</div>
+  <div style="font-size:13px;color:var(--text2);margin-bottom:24px;">Every platform, tool, instructor, and reference you need. Bookmarked, categorized, and annotated.</div>
+  <div class="res-grid">
+    <div class="res-card"><div class="res-cat">Practice Platform</div><div class="res-name">TryHackMe</div><div class="res-url">tryhackme.com</div><div class="res-desc">Best starting platform. Browser-based labs. Start with Pre-Security path then Jr Penetration Tester.</div></div>
+    <div class="res-card"><div class="res-cat">Practice Platform</div><div class="res-name">HackTheBox</div><div class="res-url">hackthebox.com</div><div class="res-desc">Harder, more realistic. Begin when you finish Phase 2. Starting Point machines are ideal first targets.</div></div>
+    <div class="res-card"><div class="res-cat">Web App Labs</div><div class="res-name">PortSwigger Web Academy</div><div class="res-url">portswigger.net/web-security</div><div class="res-desc">Definitive free web application hacking course. Made by Burp Suite creators. Essential for CEH and OSCP.</div></div>
+    <div class="res-card"><div class="res-cat">Security+ Prep</div><div class="res-name">Professor Messer</div><div class="res-url">professormesser.com</div><div class="res-desc">Free Security+ SY0-701 video course. Every exam domain. The gold standard for Security+ preparation.</div></div>
+    <div class="res-card"><div class="res-cat">Ethical Hacking</div><div class="res-name">TCM Security (Heath Adams)</div><div class="res-url">youtube.com/@TCMSecurityAcademy</div><div class="res-desc">Best practical hacking content on YouTube. Practical Ethical Hacking course is outstanding and affordable.</div></div>
+    <div class="res-card"><div class="res-cat">HTB Walkthroughs</div><div class="res-name">IppSec</div><div class="res-url">youtube.com/@ippsec</div><div class="res-desc">HackTheBox walkthroughs. Watch after attempting each machine. Essential for OSCP-level thinking.</div></div>
+    <div class="res-card"><div class="res-cat">Threat Intelligence</div><div class="res-name">MITRE ATT&CK</div><div class="res-url">attack.mitre.org</div><div class="res-desc">The world's most comprehensive adversary tactics knowledge base. Essential for threat hunting and IR.</div></div>
+    <div class="res-card"><div class="res-cat">Exploit Database</div><div class="res-name">Exploit-DB</div><div class="res-url">exploit-db.com</div><div class="res-desc">Archive of public exploits. Searchable by CVE, platform, type. Daily tool for penetration testers.</div></div>
+    <div class="res-card"><div class="res-cat">CVE Reference</div><div class="res-name">NIST NVD</div><div class="res-url">nvd.nist.gov</div><div class="res-desc">National Vulnerability Database. CVSS scores, affected products, remediation. Your official vuln reference.</div></div>
+    <div class="res-card"><div class="res-cat">News</div><div class="res-name">Krebs on Security</div><div class="res-url">krebsonsecurity.com</div><div class="res-desc">Best cybersecurity investigative journalism. Deep reporting on breaches, fraud, and threat actors. Read weekly.</div></div>
+    <div class="res-card"><div class="res-cat">Malware Analysis</div><div class="res-name">VirusTotal</div><div class="res-url">virustotal.com</div><div class="res-desc">Free file and URL analysis through 70+ antivirus engines. Used daily in blue team and malware analysis work.</div></div>
+    <div class="res-card"><div class="res-cat">OSINT</div><div class="res-name">OSINT Framework</div><div class="res-url">osintframework.com</div><div class="res-desc">Visual tree of every OSINT technique and tool. Bookmark it. Use it on every reconnaissance engagement.</div></div>
+  </div>
+</div>
+</div>
+
+<!-- CERTIFICATIONS PAGE -->
+<div class="page" id="page-certs">
+<div class="ov-wrap">
+  <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;margin-bottom:8px;">ROADMAP</div>
+  <div style="font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--white);margin-bottom:5px;">Certification Roadmap</div>
+  <div style="font-size:13px;color:var(--text2);margin-bottom:24px;">Four certifications. Twelve months. A professional identity no one can dispute.</div>
+  <div class="tw" style="margin-bottom:28px;"><table>
+    <tr><th>Certification</th><th>Timeline</th><th>Format</th><th>Cost</th><th>Key Prep</th></tr>
+    <tr><td><strong style="color:var(--cyan)">CompTIA Security+ SY0-701</strong></td><td>Book by Day 60. Sit within 2 weeks.</td><td>90 questions + PBQs. 90 min. 750/900 pass.</td><td>~$392</td><td>Professor Messer free course · ExamCompass · Darril Gibson book</td></tr>
+    <tr><td><strong style="color:var(--green)">CEH v13 (EC-Council)</strong></td><td>3–4 months after Security+</td><td>125 questions. 4 hours. 70% pass.</td><td>~$500</td><td>Matt Walker All-in-One · EC-Council courseware · TryHackMe CEH path</td></tr>
+    <tr><td><strong style="color:var(--orange)">OSCP (Offensive Security)</strong></td><td>6–12 months from Day 1</td><td>24-hr live exam. Pentest 3 machines. Written report.</td><td>~$1,499</td><td>PEN-200 course · 50+ HTB machines · TCM Security PNPT · IppSec</td></tr>
+    <tr><td><strong style="color:var(--purple)">CISSP (ISC²)</strong></td><td>12–24 months (5yr experience needed)</td><td>100–150 adaptive. 3 hrs. 700/1000 pass.</td><td>~$749</td><td>(ISC)² Official Guide · Boson ExSim · Thor Pedersen Udemy</td></tr>
+  </table></div>
+  <div style="margin-bottom:10px;font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;">SECURITY+ SY0-701 DOMAIN WEIGHTS</div>
+  <div class="tw"><table>
+    <tr><th>Domain</th><th>Weight</th><th>Key Topics</th></tr>
+    <tr><td>1.0 General Security Concepts</td><td style="color:var(--cyan)">12%</td><td>Controls, cryptography, authentication, PKI, key concepts</td></tr>
+    <tr><td>2.0 Threats, Vulnerabilities & Mitigations</td><td style="color:var(--red)">22%</td><td>Malware, social engineering, application attacks, indicators</td></tr>
+    <tr><td>3.0 Security Architecture</td><td style="color:var(--green)">18%</td><td>Cloud, Zero Trust, network segmentation, resilience, hybrid</td></tr>
+    <tr><td>4.0 Security Operations</td><td style="color:var(--orange)">28%</td><td>IR, forensics, identity, monitoring, endpoint, SIEM</td></tr>
+    <tr><td>5.0 Security Program Management</td><td style="color:var(--purple)">20%</td><td>Risk, compliance, governance, frameworks, data privacy</td></tr>
+  </table></div>
+</div>
+</div>
+
+<!-- DAY PAGES (generated by JS) -->
+<div id="day-pages-container"></div>
+
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+// =====================================================================
+// FULL 60-DAY CONTENT DATABASE
+// =====================================================================
+const PHASE_META = [
+  {id:1,name:'Foundations',color:'#00e5ff',days:Array.from({length:10},(_,i)=>i+1)},
+  {id:2,name:'Network Security',color:'#00ff88',days:Array.from({length:15},(_,i)=>i+11)},
+  {id:3,name:'Ethical Hacking',color:'#ff6d00',days:Array.from({length:15},(_,i)=>i+26)},
+  {id:4,name:'Defense & Blue Team',color:'#ff1744',days:Array.from({length:12},(_,i)=>i+41)},
+  {id:5,name:'Certs & Career',color:'#d500f9',days:Array.from({length:8},(_,i)=>i+53)}
+];
+
+function getPhase(d){return PHASE_META.find(p=>p.days.includes(d))||PHASE_META[0];}
+
+// Full day data structure
+const ALL_DAYS = {};
+
+// Helper to register a day
+function addDay(num,title,tagline,phase,content,questions){
+  ALL_DAYS[num]={num,title,tagline,phase,content,questions};
+}
+
+// ── PHASE 1 ────────────────────────────────────────────────────────
+addDay(1,'CIA Triad, Threat Landscape & The Kill Chain',
+'The worldview every security professional carries. Before any tool, understand the battlefield.',1,
+`<h2>THE CIA TRIAD</h2>
+<p>Three letters underpin every security decision ever made. If something violates one of these three properties, it is a security incident.</p>
+<div class="cgrid">
+  <div class="ccard"><div class="ccard-icon">🔒</div><div class="ccard-title" style="color:#00e5ff">Confidentiality</div><div class="ccard-desc">Information accessible only to those authorized. Breached by: data theft, eavesdropping, insider threats.<br><br><strong>Controls:</strong> Encryption, ACLs, VPNs, need-to-know policy.</div></div>
+  <div class="ccard"><div class="ccard-icon">✅</div><div class="ccard-title" style="color:#00ff88">Integrity</div><div class="ccard-desc">Data not altered without authorization. Critical for financial transactions, medical records, software.<br><br><strong>Controls:</strong> SHA-256 hashing, digital signatures, checksums, version control.</div></div>
+  <div class="ccard"><div class="ccard-icon">⚡</div><div class="ccard-title" style="color:#ffc107">Availability</div><div class="ccard-desc">Systems accessible to authorized users when needed. A perfectly locked inaccessible system fails availability.<br><br><strong>Controls:</strong> Redundancy, load balancing, DDoS protection, disaster recovery.</div></div>
+</div>
+<h3>Real-World CIA Failures</h3>
+<div class="tw"><table>
+<tr><th>Incident</th><th>Violated</th><th>What Happened</th></tr>
+<tr><td>Snowden (2013)</td><td style="color:#00e5ff">Confidentiality</td><td>NSA classified documents exfiltrated by authorized insider</td></tr>
+<tr><td>SolarWinds (2020)</td><td style="color:#00ff88">Integrity</td><td>Malicious code injected into legitimate software build pipeline</td></tr>
+<tr><td>Colonial Pipeline (2021)</td><td style="color:#ffc107">Availability</td><td>Ransomware forced pipeline shutdown — fuel shortages across US East Coast</td></tr>
+<tr><td>Equifax (2017)</td><td style="color:#00e5ff">Confidentiality</td><td>147 million SSNs exposed. Unpatched Apache Struts vulnerability.</td></tr>
+</table></div>
+<h2>THE CYBER KILL CHAIN</h2>
+<p>Developed by Lockheed Martin. Seven stages of a targeted attack. Break the chain at any stage to stop the attacker. Breaking it early costs almost nothing. Breaking it at stage 6 or 7 costs everything.</p>
+<div class="kc">
+  <div class="kc-s"><div class="kc-n">01</div><div class="kc-t">Reconnaissance</div><div class="kc-d">LinkedIn, DNS, WHOIS, job postings, GitHub repos</div></div>
+  <div class="kc-s"><div class="kc-n">02</div><div class="kc-t">Weaponization</div><div class="kc-d">Craft exploit, malicious document, phishing template</div></div>
+  <div class="kc-s"><div class="kc-n">03</div><div class="kc-t">Delivery</div><div class="kc-d">Email, USB drop, watering hole, malicious link</div></div>
+  <div class="kc-s"><div class="kc-n">04</div><div class="kc-t">Exploitation</div><div class="kc-d">Vulnerability triggered, code executes on victim</div></div>
+  <div class="kc-s"><div class="kc-n">05</div><div class="kc-t">Installation</div><div class="kc-d">Backdoor, RAT, or rootkit planted for persistence</div></div>
+  <div class="kc-s"><div class="kc-n">06</div><div class="kc-t">C2</div><div class="kc-d">Infected machine calls back to attacker's server</div></div>
+  <div class="kc-s"><div class="kc-n">07</div><div class="kc-t">Actions</div><div class="kc-d">Exfiltrate data, deploy ransomware, lateral movement</div></div>
+</div>
+<div class="callout warn"><div class="ct">Exam Critical — Kill Chain</div>Security+ and CEH both test the Kill Chain heavily. Know every stage name and what occurs there. The cheapest stages to disrupt are Reconnaissance (block OSINT) and Delivery (email filtering, training). Breaking C2 requires network monitoring. Breaking Actions on Objectives means you failed every earlier stage.</div>
+<h2>THREAT ACTORS</h2>
+<div class="tw"><table>
+<tr><th>Actor</th><th>Motivation</th><th>Capability</th><th>Example</th></tr>
+<tr><td><strong>Nation-State APT</strong></td><td>Geopolitical intelligence</td><td>Unlimited — zero-days, custom malware</td><td>APT28 (Russia), Lazarus (DPRK), APT41 (China)</td></tr>
+<tr><td><strong>Cybercriminal</strong></td><td>Financial — RaaS model</td><td>High — professional infrastructure</td><td>LockBit, BlackCat, Cl0p</td></tr>
+<tr><td><strong>Hacktivist</strong></td><td>Ideology, protest, publicity</td><td>Medium — DDoS, data leaks</td><td>Anonymous</td></tr>
+<tr><td><strong>Insider Threat</strong></td><td>Revenge, financial, accidental</td><td>High — legitimate access, no perimeter</td><td>Most damaging per-incident category</td></tr>
+<tr><td><strong>Script Kiddie</strong></td><td>Notoriety, curiosity</td><td>Low — automated tools only</td><td>Cause real damage through volume and persistence</td></tr>
+</table></div>
+<h2>SECURITY CONTROLS MATRIX</h2>
+<div class="tw"><table>
+<tr><th>Function</th><th>Technical</th><th>Administrative</th><th>Physical</th></tr>
+<tr><td><strong style="color:#00ff88">Preventive</strong></td><td>Firewall, antivirus, encryption</td><td>Security policies, training</td><td>Fences, locks, badge readers</td></tr>
+<tr><td><strong style="color:#ffc107">Detective</strong></td><td>IDS, SIEM, audit logs</td><td>Security audits, reviews</td><td>CCTV, motion sensors</td></tr>
+<tr><td><strong style="color:#00e5ff">Corrective</strong></td><td>Patching, system restore, backup</td><td>IR procedures, DR plans</td><td>Fire suppression</td></tr>
+<tr><td><strong style="color:#d500f9">Deterrent</strong></td><td>Login banners, honeypots</td><td>Disciplinary policies</td><td>Warning signs, security guards</td></tr>
+<tr><td><strong style="color:#ff6d00">Compensating</strong></td><td>MFA when passwords weak</td><td>Manual review when automation fails</td><td>Guard when electronic lock fails</td></tr>
+</table></div>
+<div class="lab"><div class="lab-title">🧪 Lab — CVE Research & Threat Intelligence</div>
+<div class="lab-step"><div class="ls-num">1</div><div class="ls-txt">Visit <strong>cve.mitre.org</strong>. Search CVE-2021-44228 (Log4Shell). Read the description. What was vulnerable? What CVSS score? Answer: CVSS 10.0. Remote Code Execution in Apache Log4j library.</div></div>
+<div class="lab-step"><div class="ls-num">2</div><div class="ls-txt">Search CVE-2017-0144 (EternalBlue). This powered WannaCry. Note the affected Windows SMB versions and why an unpatched system was catastrophically exposed.</div></div>
+<div class="lab-step"><div class="ls-num">3</div><div class="ls-txt">Visit <strong>attack.mitre.org</strong>. Explore the MITRE ATT&CK framework. Find the "Reconnaissance" tactic. Note how it maps directly to Kill Chain Stage 1.</div></div>
+<div class="lab-step"><div class="ls-num">4</div><div class="ls-txt">Create your free account at <strong>tryhackme.com</strong>. Complete the "Pre-Security" path's first room today.</div></div>
+</div>`,
+[
+  {q:'A financial institution discovers an attacker modified transaction records to redirect funds. Which CIA Triad element was PRIMARILY violated?',opts:['Confidentiality — financial data was accessed','Integrity — data was altered without authorization','Availability — the transaction system was disrupted','Authentication — the attacker accessed the system'],c:1,e:'Integrity governs unauthorized modification of data. The attacker changed records — that is an integrity violation. Confidentiality applies if data was read. Availability applies if the system was inaccessible. Authentication is not a CIA Triad component.'},
+  {q:'An attacker spends three months researching an organization through LinkedIn and job postings before making any direct contact. Which Kill Chain phase is this?',opts:['Weaponization','Reconnaissance','Delivery','Installation'],c:1,e:'Reconnaissance is the intelligence-gathering phase. No attack launched yet. The attacker is collecting information — names, email formats, technology stack, org chart. Weaponization begins when they start building the weapon.'},
+  {q:'A CCTV camera is installed to discourage unauthorized physical access to a server room. This is BEST classified as which control type?',opts:['Detective / Technical','Preventive / Technical','Deterrent / Physical','Corrective / Physical'],c:2,e:'Installed to discourage = Deterrent. It is Physical. If the camera reviews footage after an incident, it is Detective. If it triggers an alarm that locks a door, it adds Preventive function. Context determines the functional classification.'},
+  {q:'An organization compares SHA-256 hashes of downloaded software against the vendor\'s published values before installing. This protects which CIA property?',opts:['Confidentiality','Integrity','Availability','Non-repudiation'],c:1,e:'Hash verification confirms integrity. If hashes match, the file was not tampered with in transit. This is how SolarWinds attackers worked — they compromised the file before it was hashed during the build process.'},
+  {q:'Which threat actor type is characterized by unlimited budget, years of dwell time, geopolitical motivation, and use of custom zero-day exploits?',opts:['Hacktivist','Script kiddie','Nation-state APT','Cybercriminal organization'],c:2,e:'Nation-state APTs are government-sponsored, well-funded, and motivated by intelligence gathering. Long dwell time (months to years) and custom zero-days are their signature. Cybercriminals prioritize financial gain, not intelligence.'}
+]);
+
+addDay(2,'Malware Taxonomy, DDoS & Social Engineering',
+'Know every weapon category. Name them. Recognize them in an exam question at thirty yards.',1,
+`<h2>MALWARE TAXONOMY</h2>
+<p>Each malware category has distinct behavior, propagation method, and purpose. You must identify the category from a description — not just recognize the name.</p>
+<div class="tw"><table>
+<tr><th>Type</th><th>Propagation</th><th>Purpose</th><th>Famous Example</th></tr>
+<tr><td><strong style="color:#ff1744">Virus</strong></td><td>Attaches to files. Requires human action to spread.</td><td>Damage, disruption</td><td>ILOVEYOU (2000) — 50M infected in 10 days</td></tr>
+<tr><td><strong style="color:#ff6d00">Worm</strong></td><td>Self-replicating. Spreads automatically. No human needed.</td><td>Network disruption, payload delivery</td><td>WannaCry — 200K machines, 150 countries, 24 hours</td></tr>
+<tr><td><strong style="color:#ffc107">Trojan</strong></td><td>Disguises as legitimate software. User installs it.</td><td>Backdoor, data theft</td><td>Zeus banking trojan — $70M+ stolen</td></tr>
+<tr><td><strong style="color:#00e5ff">Ransomware</strong></td><td>Phishing or RDP exploit. Encrypts files.</td><td>Extortion / financial</td><td>LockBit 3.0 — active enterprise threat</td></tr>
+<tr><td><strong style="color:#00ff88">Spyware</strong></td><td>Bundled software, phishing, drive-by.</td><td>Credential theft, surveillance</td><td>Pegasus — nation-state mobile spyware</td></tr>
+<tr><td><strong style="color:#d500f9">Rootkit</strong></td><td>Requires initial compromise. Burrows into kernel.</td><td>Persistence, hiding malware</td><td>Sony BMG rootkit scandal (2005)</td></tr>
+<tr><td><strong>Botnet</strong></td><td>Exploit, phishing, drive-by. Infects en masse.</td><td>DDoS, spam, cryptomining</td><td>Mirai — enslaved 600K IoT devices (2016)</td></tr>
+<tr><td><strong>Fileless</strong></td><td>Lives entirely in RAM. Never writes to disk.</td><td>Evade AV detection</td><td>PowerShell-based attacks — extremely common</td></tr>
+<tr><td><strong>Logic Bomb</strong></td><td>Already inside system. Triggered by condition.</td><td>Sabotage</td><td>UBS PaineWebber (2002) — deleted 2000 servers</td></tr>
+<tr><td><strong>Keylogger</strong></td><td>Trojan or physical access.</td><td>Credential harvesting</td><td>Used in nearly every targeted corporate breach</td></tr>
+</table></div>
+<div class="callout warn"><div class="ct">Exam Distinction — Virus vs Worm</div>This is tested on almost every exam. A <strong>virus</strong> requires human interaction to propagate (opening an infected file). A <strong>worm</strong> spreads autonomously across networks with no human involvement. WannaCry was a worm — it used EternalBlue to jump machine to machine across SMB port 445 with zero clicks.</div>
+<h2>DDOS — DISTRIBUTED DENIAL OF SERVICE</h2>
+<p><strong>Volumetric:</strong> Floods bandwidth. Measured in Gbps. UDP floods, DNS amplification. The 2023 HTTP/2 Rapid Reset attack peaked at 398 million requests per second.</p>
+<p><strong>Protocol:</strong> Exploits Layer 3/4 weaknesses. SYN floods exhaust server connection tables by sending SYN packets without completing the handshake.</p>
+<p><strong>Application Layer (L7):</strong> Mimics legitimate traffic. HTTP floods, Slowloris. Hardest to distinguish from real users. WAF is primary defense.</p>
+<h2>SOCIAL ENGINEERING</h2>
+<div class="tw"><table>
+<tr><th>Technique</th><th>Method</th><th>Target</th><th>Defense</th></tr>
+<tr><td><strong>Phishing</strong></td><td>Mass email impersonation. Urgency-based.</td><td>Everyone</td><td>Email filtering, training, MFA</td></tr>
+<tr><td><strong>Spear Phishing</strong></td><td>Targeted. Uses personal info. References real projects.</td><td>Executives, IT staff</td><td>User training, verify before acting</td></tr>
+<tr><td><strong>Whaling</strong></td><td>Spear phishing targeting C-suite specifically.</td><td>CEO, CFO, CISO</td><td>Executive training, out-of-band verification</td></tr>
+<tr><td><strong>Vishing</strong></td><td>Voice/phone. Impersonates IT, banks, IRS.</td><td>Anyone</td><td>Never verify identity over inbound calls</td></tr>
+<tr><td><strong>Smishing</strong></td><td>SMS phishing. Fake tracking links, bank alerts.</td><td>Mobile users</td><td>Do not click SMS links from unknowns</td></tr>
+<tr><td><strong>Pretexting</strong></td><td>Fabricated scenario to extract information.</td><td>HR, IT helpdesk</td><td>Identity verification procedures</td></tr>
+<tr><td><strong>Baiting</strong></td><td>Infected USB drives in parking lots.</td><td>Office employees</td><td>Disable autorun, USB policy, training</td></tr>
+<tr><td><strong>Tailgating</strong></td><td>Follow authorized person through secured door.</td><td>Physical access points</td><td>Mantraps, anti-passback, security culture</td></tr>
+</table></div>
+<div class="lab"><div class="lab-title">🧪 Lab — Malware Research</div>
+<div class="lab-step"><div class="ls-num">1</div><div class="ls-txt">Visit <strong>virustotal.com</strong>. Upload any test text file you create. Observe how 70+ engines scan it. Understand the interface — you will use this for malware analysis in Phase 4.</div></div>
+<div class="lab-step"><div class="ls-num">2</div><div class="ls-txt">Search for "WannaCry ransomware technical analysis". Read one breakdown. Map each stage of the attack to the Kill Chain stages from Day 1.</div></div>
+<div class="lab-step"><div class="ls-num">3</div><div class="ls-txt">On TryHackMe, complete the room <strong>"Phishing Analysis Fundamentals"</strong> (free). Hands-on practice identifying phishing emails and analyzing email headers.</div></div>
+</div>`,
+[
+  {q:'Malware infected 4,000 machines across three continents in 6 hours with no user interaction. What malware type is this?',opts:['Virus','Worm','Trojan','Logic Bomb'],c:1,e:'Self-propagation with no user interaction = worm. A virus needs a human to share an infected file. A Trojan requires user installation. A Logic Bomb sits dormant and does not propagate.'},
+  {q:'A security tool exists entirely in RAM and creates no files on disk. What malware category is this?',opts:['Rootkit','Spyware','Fileless malware','Logic bomb'],c:2,e:'Fileless malware operates in memory only, defeating traditional AV that scans the file system. It uses legitimate tools like PowerShell and WMI to execute malicious code — leaving minimal forensic trace.'},
+  {q:'An attacker emails a CFO appearing to be the CEO, references an actual deal by name, and requests an urgent wire transfer. What attack is this?',opts:['Phishing','Pretexting','Whaling','Vishing'],c:2,e:'Whaling = spear phishing targeting C-suite. The target is a CFO, it uses specific business information, and involves a large financial transaction. Also called Business Email Compromise (BEC).'},
+  {q:'An attacker sends SYN packets without ever completing the TCP handshake, exhausting the server\'s connection table. What DDoS type is this?',opts:['Volumetric attack','SYN flood (Protocol)','Application Layer attack','Smurf attack'],c:1,e:'SYN flood is Protocol-layer DDoS. TCP: SYN→SYN-ACK→ACK. Attacker sends SYN but never ACK. Server holds half-open connections until the table fills. Legitimate connections are refused. SYN cookies mitigate.'}
+]);
+
+addDay(3,'OSI Model, TCP/IP & Network Fundamentals',
+'Every attack maps to a layer. Know the model cold. The exam tests it constantly.',1,
+`<h2>THE OSI MODEL — 7 LAYERS</h2>
+<p><strong>Top to bottom:</strong> All People Seem To Need Data Processing<br><strong>Bottom to top:</strong> Please Do Not Throw Sausage Pizza Away</p>
+<div class="tw"><table>
+<tr><th>#</th><th>Layer</th><th>Protocols / PDU</th><th>Attacks at This Layer</th></tr>
+<tr><td style="color:#d500f9;font-size:16px;font-weight:700;">7</td><td><strong style="color:#d500f9">Application</strong></td><td>HTTP, HTTPS, FTP, SMTP, DNS, SSH — Data</td><td>SQL injection, XSS, CSRF, app-layer DDoS, phishing</td></tr>
+<tr><td style="color:#00e5ff;font-size:16px;font-weight:700;">6</td><td><strong style="color:#00e5ff">Presentation</strong></td><td>SSL/TLS, JPEG, ASCII, MPEG — Data</td><td>SSL stripping, encryption downgrade attacks</td></tr>
+<tr><td style="color:#00ff88;font-size:16px;font-weight:700;">5</td><td><strong style="color:#00ff88">Session</strong></td><td>NetBIOS, RPC, SQL sessions — Data</td><td>Session hijacking, pass-the-hash, cookie theft</td></tr>
+<tr><td style="color:#ffc107;font-size:16px;font-weight:700;">4</td><td><strong style="color:#ffc107">Transport</strong></td><td>TCP, UDP — Segments / Datagrams</td><td>SYN flood, port scanning, TCP session hijack</td></tr>
+<tr><td style="color:#ff6d00;font-size:16px;font-weight:700;">3</td><td><strong style="color:#ff6d00">Network</strong></td><td>IP, ICMP, OSPF, BGP — Packets</td><td>IP spoofing, routing attacks, ICMP smurf, ping flood</td></tr>
+<tr><td style="color:#ff1744;font-size:16px;font-weight:700;">2</td><td><strong style="color:#ff1744">Data Link</strong></td><td>Ethernet, ARP, MAC, 802.11 — Frames</td><td>ARP spoofing, MAC flooding, VLAN hopping</td></tr>
+<tr><td style="color:#6a8aaa;font-size:16px;font-weight:700;">1</td><td><strong>Physical</strong></td><td>Cables, hubs, fiber, radio signals — Bits</td><td>Wiretapping, physical access, signal jamming</td></tr>
+</table></div>
+<div class="callout warn"><div class="ct">Exam Alert — Layer Identification</div>Switches = Layer 2. Routers = Layer 3. Packet-filter firewalls = Layer 3/4. Stateful firewalls = Layer 4. NGFW/WAF = Layer 7. IDS/IPS = Layers 3–7. This distinction appears multiple times on Security+ and CEH.</div>
+<h2>TCP THREE-WAY HANDSHAKE</h2>
+<div class="cb"><div class="cb-label">TCP HANDSHAKE</div><pre>Client ──── SYN ───────────────► Server   (I want to connect)
+Client ◄─── SYN-ACK ───────────  Server   (Confirmed. Proceed.)
+Client ──── ACK ───────────────► Server   (Connected. Transmitting.)
+
+SYN FLOOD ATTACK:
+  Attacker sends thousands of SYN packets, never sends ACK.
+  Server allocates resources for half-open connections.
+  Connection table fills. Legitimate connections refused. DoS achieved.
+  Mitigation: SYN cookies, rate limiting, firewall ACLs.</pre></div>
+<h2>UDP vs TCP</h2>
+<p><strong>TCP:</strong> Connection-oriented. Reliable. Ordered. Error-checked. Handshake required. Used for: HTTP, HTTPS, SSH, FTP, SMTP, databases.</p>
+<p><strong>UDP:</strong> Connectionless. No handshake. No delivery guarantee. Much faster. Used for: DNS, VoIP, video streaming, gaming, DHCP. Used in amplification DDoS attacks because it is stateless and can be spoofed.</p>
+<h2>IP ADDRESSING</h2>
+<div class="tw"><table>
+<tr><th>Range</th><th>Type</th><th>Security Note</th></tr>
+<tr><td>10.0.0.0 – 10.255.255.255</td><td>Private (Class A)</td><td>Internal networks. Should not be internet-routable.</td></tr>
+<tr><td>172.16.0.0 – 172.31.255.255</td><td>Private (Class B)</td><td>Internal networks. Docker often uses 172.17.0.0/16.</td></tr>
+<tr><td>192.168.0.0 – 192.168.255.255</td><td>Private (Class C)</td><td>Home and SOHO networks.</td></tr>
+<tr><td>127.0.0.1</td><td>Loopback</td><td>Traffic never leaves host. Testing only.</td></tr>
+<tr><td>169.254.0.0/16</td><td>APIPA</td><td>Auto-assigned when DHCP fails. Indicates DHCP failure.</td></tr>
+<tr><td>169.254.169.254</td><td>Cloud Metadata</td><td>AWS/Azure instance metadata. SSRF attacks target this.</td></tr>
+</table></div>
+<h2>DNS ATTACKS</h2>
+<p><strong>Cache Poisoning:</strong> Injects false records into a resolver's cache. Users get attacker's IP instead of legitimate server. Affects all users of that resolver until cache expires or is cleared.</p>
+<p><strong>DNS Tunneling:</strong> Encodes data in DNS query hostnames for covert data exfiltration. Because port 53 is almost universally permitted through firewalls, this bypasses most controls. Used by APTs for covert C2 channels.</p>
+<p><strong>DNS Amplification:</strong> Small query with spoofed victim IP → DNS server returns a response 50–100x larger → floods the victim. Requires open DNS resolvers that answer queries from any IP.</p>
+<div class="lab"><div class="lab-title">🧪 Lab — Network Analysis</div>
+<div class="lab-step"><div class="ls-num">1</div><div class="ls-txt">In terminal: <strong>nslookup google.com</strong> — watch DNS resolution. Then: <strong>nslookup google.com 8.8.8.8</strong> — query a specific DNS server directly.</div></div>
+<div class="lab-step"><div class="ls-num">2</div><div class="ls-txt"><strong>tracert google.com</strong> (Windows) or <strong>traceroute google.com</strong> (Linux/Mac). Count the hops. Each hop is a router — Layer 3 in action.</div></div>
+<div class="lab-step"><div class="ls-num">3</div><div class="ls-txt"><strong>netstat -an</strong> — list all active connections and listening ports on your machine. Which ports are in LISTEN state? Those are services waiting for connections.</div></div>
+</div>`,
+[
+  {q:'An attacker sends falsified ARP replies associating their MAC with the default gateway\'s IP. Which OSI layer does this attack target?',opts:['Layer 3 — Network','Layer 2 — Data Link','Layer 4 — Transport','Layer 7 — Application'],c:1,e:'ARP operates at Layer 2 (Data Link). It maps IP addresses to MAC addresses. ARP spoofing manipulates this mapping on the local network, enabling a Man-in-the-Middle position.'},
+  {q:'Which protocol provides reliable, connection-oriented data transmission using a three-way handshake?',opts:['TCP','UDP','ICMP','ARP'],c:0,e:'TCP uses SYN-SYN/ACK-ACK to establish connections before sending data. UDP is connectionless — no handshake, no delivery guarantee. ICMP is for diagnostics. ARP resolves IP to MAC.'},
+  {q:'A DNS resolver returns a malicious IP for a banking website because an attacker injected false records into the resolver\'s cache. What attack is this?',opts:['DNS Amplification','DNS Cache Poisoning','DNS Tunneling','Zone Transfer'],c:1,e:'DNS Cache Poisoning injects false records into a resolver. Users querying that resolver receive the attacker\'s IP. Amplification uses DNS for DDoS. Tunneling encodes data in DNS traffic. Zone Transfer is a DNS replication function.'}
+]);
+
+addDay(4,'Ports, Protocols & Network Devices',
+'You cannot scan, attack, or defend a network without knowing your ports. Memorize this table.',1,
+`<h2>CRITICAL PORTS — MEMORIZE EVERY ROW</h2>
+<div class="tw"><table>
+<tr><th>Port</th><th>Protocol</th><th>Service</th><th>Security Risk</th></tr>
+<tr><td style="color:#ff1744"><strong>21</strong></td><td>TCP</td><td>FTP</td><td style="color:#ff1744">PLAINTEXT credentials. Never use on production. Replace with SFTP (22) or FTPS (990).</td></tr>
+<tr><td><strong>22</strong></td><td>TCP</td><td>SSH</td><td>Encrypted remote access. Use key-based auth. Disable root login. Consider non-default port.</td></tr>
+<tr><td style="color:#ff1744"><strong>23</strong></td><td>TCP</td><td>Telnet</td><td style="color:#ff1744">PLAINTEXT terminal. Must never be open. Replace with SSH. Finding open Telnet = critical pentest finding.</td></tr>
+<tr><td><strong>25</strong></td><td>TCP</td><td>SMTP</td><td>Email sending. Open relay = spam source. Requires SPF, DKIM, DMARC configuration.</td></tr>
+<tr><td><strong>53</strong></td><td>TCP/UDP</td><td>DNS</td><td>UDP for queries, TCP for zone transfers. Zone transfers should be restricted. DNS tunneling target.</td></tr>
+<tr><td><strong>67/68</strong></td><td>UDP</td><td>DHCP</td><td>Server=67, client=68. Rogue DHCP servers redirect traffic. Mitigate with DHCP Snooping.</td></tr>
+<tr><td><strong>80</strong></td><td>TCP</td><td>HTTP</td><td>Unencrypted web. All traffic visible to MitM. Redirect to 443. Never serve sensitive data over HTTP.</td></tr>
+<tr><td style="color:#ff1744"><strong>110</strong></td><td>TCP</td><td>POP3</td><td style="color:#ff1744">Plaintext email retrieval. Use POP3S (995) instead.</td></tr>
+<tr><td style="color:#ff1744"><strong>139/445</strong></td><td>TCP</td><td>SMB</td><td style="color:#ff1744">EternalBlue target. WannaCry entry point. Block at perimeter. Disable SMBv1 immediately.</td></tr>
+<tr><td><strong>443</strong></td><td>TCP</td><td>HTTPS</td><td>TLS-encrypted web. Current standard. Certificate validation critical. TLS 1.3 required.</td></tr>
+<tr><td><strong>1433</strong></td><td>TCP</td><td>MS SQL Server</td><td>Never expose externally. SQLi and brute force target. Bind to localhost.</td></tr>
+<tr><td><strong>3306</strong></td><td>TCP</td><td>MySQL / MariaDB</td><td>Never expose externally. Bind to 127.0.0.1 only.</td></tr>
+<tr><td style="color:#ff1744"><strong>3389</strong></td><td>TCP</td><td>RDP</td><td style="color:#ff1744">Massive attack surface. BlueKeep (CVE-2019-0708). Never internet-exposed without VPN + MFA.</td></tr>
+</table></div>
+<h2>NETWORK DEVICES BY OSI LAYER</h2>
+<div class="tw"><table>
+<tr><th>Device</th><th>Layer</th><th>Function</th><th>Security Role</th></tr>
+<tr><td>Hub</td><td>Layer 1</td><td>Broadcasts all traffic to all ports.</td><td>All traffic visible to all hosts. Never use. Easy sniffing.</td></tr>
+<tr><td><strong>Switch</strong></td><td>Layer 2</td><td>Forwards frames by MAC address to correct port.</td><td>Vulnerable to MAC flooding, ARP spoofing, VLAN hopping.</td></tr>
+<tr><td><strong>Router</strong></td><td>Layer 3</td><td>Routes packets between networks by IP address.</td><td>Network boundary. ACLs provide basic filtering. First external defense line.</td></tr>
+<tr><td><strong>Firewall</strong></td><td>L3/L4/L7</td><td>Filters traffic by rules. Stateful or stateless.</td><td>Core network control. NGFW inspects application layer (DPI).</td></tr>
+<tr><td><strong>IDS</strong></td><td>L3–L7</td><td>Detects suspicious traffic. Passive — alerts only.</td><td>Cannot block. NIDS (network-based) or HIDS (host-based).</td></tr>
+<tr><td><strong>IPS</strong></td><td>L3–L7</td><td>Detects AND blocks. Inline — traffic passes through.</td><td>Active blocking. False positive risk can disrupt legitimate traffic.</td></tr>
+<tr><td><strong>WAF</strong></td><td>Layer 7</td><td>Filters HTTP/HTTPS for web attacks.</td><td>Blocks SQLi, XSS, CSRF. Essential for internet-facing applications.</td></tr>
+<tr><td><strong>Load Balancer</strong></td><td>L4/L7</td><td>Distributes traffic across multiple servers.</td><td>Availability control. Some DDoS mitigation. SSL offloading.</td></tr>
+</table></div>
+<div class="lab"><div class="lab-title">🧪 Lab — Port Scanning</div>
+<div class="lab-step"><div class="ls-num">1</div><div class="ls-txt">From Kali, scan the legal target: <strong>nmap -sV scanme.nmap.org</strong>. Identify which ports are open and what services are running.</div></div>
+<div class="lab-step"><div class="ls-num">2</div><div class="ls-txt">Scan critical ports specifically: <strong>nmap -p 21,22,23,25,80,443,445,3389 scanme.nmap.org</strong>. Note which are open, closed, or filtered.</div></div>
+<div class="lab-step"><div class="ls-num">3</div><div class="ls-txt">On TryHackMe, complete the <strong>"Nmap"</strong> room in the Jr Penetration Tester path. Full interactive Nmap lab.</div></div>
+</div>`,
+[
+  {q:'A pentester finds port 23 open on a production server. What is the MOST critical security finding?',opts:['Port 23 uses HTTPS — it should be disabled','Telnet transmits all data including credentials in plaintext','Port 23 indicates an unauthorized FTP server','Port 23 enables DNS tunneling'],c:1,e:'Port 23 is Telnet. It transmits usernames, passwords, and all session data in plaintext. Anyone sniffing the network captures credentials instantly. Replace with SSH (port 22). Open Telnet = critical/high pentest finding.'},
+  {q:'Which device operates at OSI Layer 2 and forwards traffic based on MAC addresses?',opts:['Router','Switch','Firewall','Hub'],c:1,e:'Switches operate at Layer 2 (Data Link) using MAC address tables (CAM tables). Routers = Layer 3 (IP). Firewalls = L3/4/7. Hubs = Layer 1 (broadcast everything to all ports — obsolete and dangerous).'},
+  {q:'Port 445 is found open on an internet-facing server. What is the PRIMARY risk and action required?',opts:['Port 445 runs DNS — change to port 53','SMB is exposed. EternalBlue is a risk. Block at perimeter immediately.','Port 445 is HTTP — redirect to HTTPS on 443','Port 445 is RDP — restrict to VPN only'],c:1,e:'Port 445 is SMB. EternalBlue (CVE-2017-0144) exploits SMBv1 on port 445 — the exploit that powered WannaCry and NotPetya. Internet-exposed port 445 = immediate critical remediation required.'}
+]);
+
+addDay(5,'Kali Linux Lab Setup','Build your attack environment. Theory without practice decays.',1,
+`<h2>KALI LINUX — THE ATTACKER\'S OPERATING SYSTEM</h2>
+<p>Kali Linux ships with 600+ pre-installed security tools. It is maintained by Offensive Security — the same organization behind the OSCP certification. It is the industry standard for professional penetration testing engagements.</p>
+<div class="callout danger"><div class="ct">Legal Warning — Read First</div>All tools and techniques in this course must only be used on systems you own or have explicit written permission to test. Unauthorized scanning or exploitation is illegal globally. Practice only on your own VMs, TryHackMe, HackTheBox, or systems with a signed scope agreement.</div>
+<h2>LAB SETUP</h2>
+<div class="lab"><div class="lab-title">🧪 Complete Lab Environment Setup</div>
+<div class="lab-step"><div class="ls-num">1</div><div class="ls-txt"><strong>Install VirtualBox</strong> from virtualbox.org. Download and install the Extension Pack from the same page. Both are free.</div></div>
+<div class="lab-step"><div class="ls-num">2</div><div class="ls-txt"><strong>Download Kali Linux</strong> — go to kali.org/get-kali and choose the VirtualBox .ova image. Import: File → Import Appliance. Default credentials: <strong>kali / kali</strong>.</div></div>
+<div class="lab-step"><div class="ls-num">3</div><div class="ls-txt"><strong>Download Metasploitable 2</strong> — search SourceForge. Extract the zip. In VirtualBox: Machine → New → Use Existing VHD → select the .vmdk file. Credentials: <strong>msfadmin / msfadmin</strong>.</div></div>
+<div class="lab-step"><div class="ls-num">4</div><div class="ls-txt"><strong>Host-Only Network:</strong> File → Host Network Manager → Create (192.168.56.0/24). Set both VMs: Settings → Network → Host-Only Adapter → your network.</div></div>
+<div class="lab-step"><div class="ls-num">5</div><div class="ls-txt">Boot Kali: <strong>ip a</strong> to find your IP. Boot Metasploitable: <strong>ifconfig</strong> to find its IP. Test connectivity: <strong>ping [Metasploitable_IP]</strong> from Kali.</div></div>
+<div class="lab-step"><div class="ls-num">6</div><div class="ls-txt">First scan: <strong>nmap -sV [Metasploitable_IP]</strong>. You should see dozens of open ports. Your lab is live and ready.</div></div>
+<div class="lab-step"><div class="ls-num">7</div><div class="ls-txt">Update Kali: <strong>sudo apt update && sudo apt upgrade -y</strong> — takes 10–20 minutes on first run. Do it now.</div></div>
+</div>
+<h2>ESSENTIAL TOOLS OVERVIEW</h2>
+<div class="tw"><table>
+<tr><th>Tool</th><th>Category</th><th>Purpose</th></tr>
+<tr><td>nmap</td><td>Recon</td><td>Port scanning, service/OS detection, NSE scripts</td></tr>
+<tr><td>Wireshark</td><td>Traffic Analysis</td><td>Packet capture, protocol analysis, credential extraction</td></tr>
+<tr><td>Metasploit</td><td>Exploitation</td><td>World's most popular exploit framework</td></tr>
+<tr><td>Burp Suite</td><td>Web App</td><td>HTTP/HTTPS interception, fuzzing, scanning</td></tr>
+<tr><td>John the Ripper</td><td>Password Cracking</td><td>Offline hash cracking</td></tr>
+<tr><td>Hashcat</td><td>Password Cracking</td><td>GPU-accelerated hash cracking</td></tr>
+<tr><td>Hydra</td><td>Online Brute Force</td><td>SSH, FTP, HTTP, RDP login attacks</td></tr>
+<tr><td>Nikto</td><td>Web Scanning</td><td>Web server vulnerability scanner</td></tr>
+<tr><td>gobuster</td><td>Directory Brute Force</td><td>Find hidden directories and files</td></tr>
+<tr><td>sqlmap</td><td>SQL Injection</td><td>Automated SQL injection testing and exploitation</td></tr>
+</table></div>`,
+[{q:'An Nmap scan returns "filtered" for most ports. What does "filtered" indicate?',opts:['The port is open and accepting connections','The port is closed with RST returned','A firewall is silently dropping probes','The host is offline'],c:2,e:'Filtered = no response received — the probe was silently dropped, most likely by a firewall. Closed = reachable but no service (RST returned). Open = service listening (SYN-ACK returned). Filtered reveals firewall configuration.'}]);
+
+addDay(6,'Linux Command Mastery','Linux is the language of servers and hacking. Every tool you use runs on it.',1,
+`<h2>WHY LINUX MATTERS</h2>
+<p>Over 90% of internet servers run Linux. Every major hacking tool is built for Linux. When you gain a shell on a target, it is almost always a Linux shell. Fluency here is non-negotiable.</p>
+<div class="cb"><div class="cb-label">NAVIGATION & FILES</div><pre>pwd                           # Where are you?
+ls -la                        # List all files with permissions
+cd /etc && pwd                # Change directory, confirm location
+find / -name "*.conf" 2>/dev/null  # Find all .conf files
+grep -r "password" /etc/      # Search recursively
+cat /etc/passwd               # Show user accounts
+cat /etc/shadow               # Password hashes (needs root)
+less /var/log/auth.log        # Page through login logs</pre></div>
+<div class="cb"><div class="cb-label">PERMISSIONS — CRITICAL FOR PRIVESC</div><pre># -rwxrwxrwx = [type][owner][group][others]
+# r=4  w=2  x=1
+# chmod 755 = rwxr-xr-x (owner all, others read+exec)
+# chmod 644 = rw-r--r--  (owner rw, others read)
+
+chmod +x exploit.sh           # Make executable
+chmod 644 config.txt          # Set specific permissions
+find / -perm -4000 2>/dev/null  # FIND SUID BINARIES (PrivEsc!)
+find / -writable -type f 2>/dev/null  # Find writable files
+sudo -l                       # List allowed sudo commands (PrivEsc recon!)
+id                            # Your current user ID and groups</pre></div>
+<div class="cb"><div class="cb-label">CRITICAL DIRECTORIES</div><pre>/etc/passwd    — User accounts (world-readable — usernames, UIDs, shells)
+/etc/shadow    — Password hashes (root only — if you get this, crack it)
+/etc/sudoers   — Sudo permissions (misconfigured = PrivEsc path)
+/etc/cron*     — Scheduled tasks (root cronjobs on writable scripts = PrivEsc)
+/tmp           — World-writable (drop payloads here after exploitation)
+/var/log       — System logs (evidence of attack AND cleanup target)
+~/.ssh/        — SSH keys (writable authorized_keys = free SSH access)</pre></div>
+<div class="cb"><div class="cb-label">NETWORK & PROCESSES</div><pre">ip a                      # Show network interfaces and IPs
+ip r                      # Show routing table
+netstat -tulnp            # Listening ports + process names
+ss -tulnp                 # Modern alternative to netstat
+ps aux | grep root        # Processes running as root
+curl -s http://target     # HTTP request from command line
+wget -q http://target/f   # Download file silently</pre></div>
+<div class="lab"><div class="lab-title">🧪 Lab — Linux Fundamentals</div>
+<div class="lab-step"><div class="ls-num">1</div><div class="ls-txt">On Kali: <strong>cat /etc/passwd</strong>. How many users have /bin/bash as their shell? These are interactive users, not service accounts.</div></div>
+<div class="lab-step"><div class="ls-num">2</div><div class="ls-txt">SSH into Metasploitable: <strong>ssh msfadmin@[IP]</strong>. Run: <strong>find / -perm -4000 2>/dev/null</strong>. List all SUID binaries — these are your privilege escalation candidates.</div></div>
+<div class="lab-step"><div class="ls-num">3</div><div class="ls-txt">On TryHackMe, complete <strong>"Linux Fundamentals Part 1, 2, and 3"</strong> (all free). Essential rooms — complete all three today.</div></div>
+</div>`,
+[{q:'A pentester runs "find / -perm -4000 -type f 2>/dev/null". What is being searched for?',opts:['Files modified in last 24 hours','Files owned by root','SUID binaries that execute with root privileges','World-writable configuration files'],c:2,e:'-perm -4000 finds SUID (Set User ID) files. When executed, they run with the file owner\'s privileges — often root — regardless of who runs them. Misconfigured SUID binaries (find, vim, bash with SUID) = instant root access.'}]);
+
+addDay(7,'Cryptography Foundations','Cryptography is the mathematics that makes security possible.',1,
+`<h2>SYMMETRIC vs ASYMMETRIC ENCRYPTION</h2>
+<div class="cgrid">
+  <div class="ccard"><div class="ccard-title" style="color:#00e5ff">Symmetric</div><div class="ccard-desc">Same key encrypts and decrypts. Fast. Problem: key distribution.<br><br><strong>Algorithms:</strong> AES-128, AES-256, ChaCha20, 3DES<br><strong>Used for:</strong> Bulk data, disk encryption, VPN tunnels, TLS data transfer</div></div>
+  <div class="ccard"><div class="ccard-title" style="color:#00ff88">Asymmetric</div><div class="ccard-desc">Public key encrypts; private key decrypts. Solves key distribution.<br><br><strong>Algorithms:</strong> RSA, ECDSA, Diffie-Hellman<br><strong>Used for:</strong> TLS handshake, SSH auth, digital signatures, certificates</div></div>
+  <div class="ccard"><div class="ccard-title" style="color:#ffc107">Hybrid</div><div class="ccard-desc">Asymmetric exchanges a symmetric session key. Symmetric encrypts actual data.<br><br><strong>Example:</strong> TLS — ECDH exchanges the key. AES-256 encrypts the traffic. Best of both.</div></div>
+</div>
+<h2>HASHING — ONE-WAY FUNCTIONS</h2>
+<p>Hashing is NOT encryption. It is a one-way mathematical function. The same input always produces the same output. Any change — even one bit — produces a completely different output. You cannot reverse a hash to get the original input (without brute force).</p>
+<div class="tw"><table>
+<tr><th>Algorithm</th><th>Output</th><th>Status</th><th>Use</th></tr>
+<tr><td>MD5</td><td>128-bit / 32 hex</td><td style="color:#ff1744">Broken — NEVER use for security</td><td>Collision attacks proven. Non-security checksums only.</td></tr>
+<tr><td>SHA-1</td><td>160-bit / 40 hex</td><td style="color:#ff6d00">Deprecated — remove from systems</td><td>Google broke it (SHAttered 2017). Removed from TLS/PKI.</td></tr>
+<tr><td>SHA-256</td><td>256-bit / 64 hex</td><td style="color:#00ff88">Secure — Current standard</td><td>TLS 1.3, Bitcoin blockchain, certificate fingerprints.</td></tr>
+<tr><td>SHA-3</td><td>Variable</td><td style="color:#00ff88">Secure — Future standard</td><td>Different design than SHA-2. Better quantum resistance.</td></tr>
+<tr><td>bcrypt</td><td>Variable (with salt)</td><td style="color:#00ff88">Secure — Password storage ONLY</td><td>Deliberately slow. Salts automatically. Use for passwords.</td></tr>
+<tr><td>PBKDF2</td><td>Variable</td><td style="color:#00ff88">Secure — Password derivation</td><td>NIST recommended. Configurable iterations = slower to crack.</td></tr>
+</table></div>
+<h2>SALTING</h2>
+<p>A salt is a random value prepended to the password before hashing. Even if two users share the same password, their hashes differ because their salts differ. Rainbow tables — precomputed hash lookup tables — become completely useless when passwords are properly salted.</p>
+<div class="callout warn"><div class="ct">Pass-the-Hash Attack</div>Windows NTLM authentication accepts the raw hash as proof of identity. An attacker who extracts a user's NTLM hash from memory (using Mimikatz) can authenticate to services as that user without knowing the plaintext password. Defense: Credential Guard, disable NTLM where possible, SMB signing.</div>
+<h2>TLS & PKI</h2>
+<p><strong>TLS 1.3</strong> — current standard. TLS 1.0 and 1.1 are deprecated and must never be used. TLS provides confidentiality (encryption), integrity (HMAC), and authentication (certificates).</p>
+<p><strong>PKI (Public Key Infrastructure)</strong> validates that a public key belongs to the claimed identity. Certificate Authorities (CAs) sign digital certificates. Your browser trusts a certificate because it was signed by a CA already in your browser's trust store.</p>
+<p><strong>CRL</strong> (Certificate Revocation List) — list of revoked certs. <strong>OCSP</strong> — real-time revocation checking. <strong>Certificate Pinning</strong> — application only trusts a specific certificate or public key, not any CA-signed cert.</p>`,
+[
+  {q:'A company stores passwords as unsalted MD5 hashes. An attacker uses precomputed tables to find passwords instantly. What attack is this?',opts:['Brute force','Dictionary attack','Rainbow table attack','Pass-the-hash'],c:2,e:'Rainbow table = precomputed hash lookup. Without salting, identical passwords always produce identical MD5 hashes. The attacker looks up the hash in a precomputed table — instantaneous. Salting defeats this. MD5 is broken regardless.'},
+  {q:'TLS uses asymmetric encryption for the handshake then switches to symmetric for data transfer. Why?',opts:['Symmetric is more secure than asymmetric','Asymmetric encryption is too slow for bulk data transfer','Symmetric keys cannot be exchanged securely without asymmetric','TLS 1.3 only uses symmetric encryption'],c:1,e:'Asymmetric encryption (RSA, ECDH) is orders of magnitude slower than symmetric (AES). TLS uses asymmetric to securely exchange a symmetric session key, then uses AES for data. This is hybrid encryption — the best of both.'},
+  {q:'An attacker extracts a Windows NTLM hash from memory and uses it to authenticate to a file share without cracking it. What attack is this?',opts:['Replay attack','Rainbow table attack','Kerberoasting','Pass-the-Hash'],c:3,e:'Pass-the-Hash exploits Windows NTLM. The raw hash authenticates — no plaintext needed. Tools: Mimikatz (extract hashes), Impacket\'s psexec/wmiexec (use the hash). Mitigation: Credential Guard, NTLM restrictions, SMB signing.'}
+]);
+
+addDay(8,'Authentication & Access Control','Authentication: who are you? Access control: what can you do?',1,
+`<h2>AUTHENTICATION FACTORS</h2>
+<div class="tw"><table>
+<tr><th>Factor</th><th>Category</th><th>Examples</th><th>Primary Attack</th></tr>
+<tr><td><strong style="color:#00e5ff">Something you know</strong></td><td>Knowledge</td><td>Password, PIN, passphrase, security question</td><td>Phishing, brute force, shoulder surfing, database breach</td></tr>
+<tr><td><strong style="color:#00ff88">Something you have</strong></td><td>Possession</td><td>Smart card, YubiKey, TOTP app, SIM card</td><td>Physical theft, SIM swapping, MFA fatigue bombing</td></tr>
+<tr><td><strong style="color:#ffc107">Something you are</strong></td><td>Biometric</td><td>Fingerprint, face, retina, voice, typing rhythm</td><td>Spoofing fake fingerprint, deepfake, enrollment attacks</td></tr>
+<tr><td><strong style="color:#ff6d00">Somewhere you are</strong></td><td>Location</td><td>GPS location, IP geolocation, network segment</td><td>VPN bypass, IP spoofing</td></tr>
+<tr><td><strong style="color:#d500f9">Something you do</strong></td><td>Behavioral</td><td>Keystroke dynamics, mouse movement patterns</td><td>Adversarial ML, requires behavioral baseline time</td></tr>
+</table></div>
+<div class="callout danger"><div class="ct">MFA Fatigue Attack</div>Attacker has valid credentials from a breach. They trigger repeated MFA push notifications until the exhausted victim taps Approve. Uber was breached this way in 2022. Defense: number-matching MFA (user types a code shown on screen into the authenticator app), or FIDO2/WebAuthn hardware keys which are phishing-resistant.</div>
+<h2>NIST SP 800-63B PASSWORD GUIDANCE</h2>
+<ul>
+<li>Minimum 8 characters. Allow up to 64 characters minimum.</li>
+<li>Allow all printable ASCII characters including spaces. Passphrases &gt; complex short passwords.</li>
+<li>Check against breach databases on creation. Reject known-compromised passwords.</li>
+<li><strong>Do NOT force periodic rotation</strong> without evidence of compromise — causes predictable patterns.</li>
+<li><strong>Do NOT require complexity rules</strong> — leads to P@ssw0rd1! predictability.</li>
+</ul>
+<h2>ACCESS CONTROL MODELS</h2>
+<div class="tw"><table>
+<tr><th>Model</th><th>Abbrev</th><th>How It Works</th><th>Where Used</th></tr>
+<tr><td>Discretionary</td><td style="color:#00e5ff">DAC</td><td>Resource owner decides access. Most flexible, least secure.</td><td>Standard file systems — Windows NTFS, Linux ext4</td></tr>
+<tr><td>Mandatory</td><td style="color:#ff1744">MAC</td><td>System-enforced sensitivity labels. Users cannot override.</td><td>Military/government: Top Secret, Secret, Confidential. SELinux.</td></tr>
+<tr><td>Role-Based</td><td style="color:#00ff88">RBAC</td><td>Access based on job role. Users inherit permissions from assigned roles.</td><td>Enterprise AD, AWS IAM roles, most corporate systems</td></tr>
+<tr><td>Attribute-Based</td><td style="color:#ffc107">ABAC</td><td>Rules on multiple attributes simultaneously: role + time + location + device health.</td><td>Zero Trust environments, cloud IAM, fine-grained control</td></tr>
+<tr><td>Rule-Based</td><td style="color:#ff6d00">Rule-BAC</td><td>System-wide rules, not user roles. Firewall ACLs are the classic example.</td><td>Firewalls, routers, network access control lists</td></tr>
+</table></div>
+<h2>ZERO TRUST</h2>
+<p><strong>Core principle: Never trust, always verify.</strong> Traditional security assumed anything inside the network perimeter was trusted. Zero Trust rejects this entirely. Every access request — regardless of origin — is authenticated and authorized against policy. An employee on the corporate LAN receives the same scrutiny as one on an airport Wi-Fi.</p>
+<p><strong>Pillars:</strong> Assume breach. Least privilege access (JIT access for elevated privileges). Micro-segmentation. Verify explicitly with strong authentication. Monitor continuously. Protect data, not just the perimeter.</p>`,
+[
+  {q:'A military system grants access only when a user\'s clearance level equals or exceeds the data\'s classification label. What access model is this?',opts:['DAC','MAC','RBAC','ABAC'],c:1,e:'MAC uses system-enforced sensitivity labels. A SECRET-cleared user cannot access TOP SECRET data even if a file owner wants to grant it — the system enforces the policy. In DAC, the resource owner controls who gets access and can delegate it.'},
+  {q:'NIST SP 800-63B now recommends against which password practice?',opts:['Using passphrases of 20+ characters','Checking new passwords against breach databases','Forcing periodic rotation every 90 days','Allowing spaces and special characters in passwords'],c:2,e:'NIST SP 800-63B (2017, updated) explicitly recommends against forced periodic rotation without evidence of compromise. Research shows users respond with predictable patterns (Password1→Password2). NIST now recommends longer passphrases, breach-list checking, and MFA instead of rotation and complexity rules.'}
+]);
+
+addDay(9,'Security Frameworks & Compliance','Frameworks are the operating systems of security programs.',1,
+`<h2>NIST CYBERSECURITY FRAMEWORK 2.0 (2024)</h2>
+<div class="tw"><table>
+<tr><th>Function</th><th>Purpose</th><th>Key Activities</th></tr>
+<tr><td><strong style="color:#d500f9">GOVERN</strong></td><td>NEW in v2.0 — Set strategy and accountability</td><td>Organizational policy, risk management strategy, supply chain security, roles and responsibilities</td></tr>
+<tr><td><strong style="color:#00e5ff">IDENTIFY</strong></td><td>Understand environment to manage risk</td><td>Asset inventory, data classification, risk assessment, business environment</td></tr>
+<tr><td><strong style="color:#00ff88">PROTECT</strong></td><td>Safeguards to limit impact</td><td>Access control, awareness training, data security, maintenance, protective technology</td></tr>
+<tr><td><strong style="color:#ffc107">DETECT</strong></td><td>Identify cybersecurity events in timely manner</td><td>Anomaly detection, continuous monitoring, detection processes</td></tr>
+<tr><td><strong style="color:#ff6d00">RESPOND</strong></td><td>Actions regarding detected incidents</td><td>Response planning, communications, analysis, mitigation, improvements</td></tr>
+<tr><td><strong style="color:#ff1744">RECOVER</strong></td><td>Maintain resilience and restore capabilities</td><td>Recovery planning, improvements, communications during recovery</td></tr>
+</table></div>
+<h2>COMPLIANCE REGULATIONS</h2>
+<div class="tw"><table>
+<tr><th>Regulation</th><th>Applies To</th><th>Key Requirements</th><th>Max Penalty</th></tr>
+<tr><td><strong style="color:#00e5ff">GDPR</strong></td><td>Any org processing EU citizens' data</td><td>Lawful basis for processing, <strong>72-hour breach notification</strong>, right to erasure, privacy by design, DPO</td><td>€20M or 4% global annual revenue</td></tr>
+<tr><td><strong style="color:#00ff88">PCI-DSS v4</strong></td><td>Any org handling payment card data</td><td>12 requirements: encryption, access control, vuln mgmt, logging, pen testing, MFA for admin</td><td>Loss of card processing ability + fines from card brands</td></tr>
+<tr><td><strong style="color:#ffc107">HIPAA</strong></td><td>US healthcare orgs and business associates</td><td>PHI protection, minimum necessary access, <strong>60-day breach notification</strong>, encryption in transit</td><td>Up to $1.9M per violation category per year</td></tr>
+<tr><td><strong style="color:#ff6d00">SOC 2 Type II</strong></td><td>SaaS and cloud service providers</td><td>Trust Service Criteria: Security, Availability, Processing Integrity, Confidentiality, Privacy</td><td>Not mandatory — required by enterprise clients</td></tr>
+<tr><td><strong style="color:#d500f9">NERC CIP</strong></td><td>US electric utilities (critical infrastructure)</td><td>BES protection, access management, physical security, incident response, patch management</td><td>Up to $1M per violation per day</td></tr>
+</table></div>
+<h2>RISK MANAGEMENT</h2>
+<p><strong>Risk = Threat × Vulnerability × Asset Value</strong></p>
+<p>A high-value asset with no vulnerabilities has low risk. A low-value asset with many vulnerabilities and active exploitation also has meaningful risk. Context always matters.</p>
+<p><strong>Risk Responses:</strong></p>
+<ul>
+<li><strong>Avoid:</strong> Stop the risky activity entirely (stop accepting credit cards = no PCI-DSS risk)</li>
+<li><strong>Transfer:</strong> Buy cyber insurance — shift the financial impact to a third party</li>
+<li><strong>Mitigate:</strong> Reduce likelihood or impact through technical and administrative controls</li>
+<li><strong>Accept:</strong> Acknowledge and document the risk — appropriate when mitigation cost exceeds expected loss</li>
+</ul>`,
+[
+  {q:'Any organization handling payment card data must comply with which standard to maintain card-processing rights?',opts:['HIPAA','GDPR','PCI-DSS','SOC 2'],c:2,e:'PCI-DSS (Payment Card Industry Data Security Standard) is mandatory for any org storing, processing, or transmitting payment card data. Non-compliance = fines from card brands and loss of payment processing capability. HIPAA = healthcare. GDPR = EU personal data.'},
+  {q:'A CISO buys cyber insurance rather than implementing additional controls for a specific risk. Which risk response is this?',opts:['Risk avoidance','Risk transfer','Risk mitigation','Risk acceptance'],c:1,e:'Risk transfer shifts the financial burden to a third party (insurance). The risk itself still exists. Avoidance eliminates the risky activity. Mitigation reduces likelihood/impact through controls. Acceptance acknowledges the risk with documented decision and no action.'},
+  {q:'Under GDPR, personal data breach notification to the supervisory authority is required within:',opts:['24 hours','48 hours','72 hours','7 days'],c:2,e:'GDPR Article 33: notify the supervisory authority within 72 hours of becoming aware of a breach where feasible. If high risk to individuals, they must also be notified without undue delay (Article 34). HIPAA requires 60 days. The 72-hour number is a specific exam target.'}
+]);
+
+addDay(10,'Phase 1 Review & First Real Lab','Ten days of foundations. Test yourself. Run your first real scan.',1,
+`<h2>PHASE 1 CONSOLIDATION CHECKLIST</h2>
+<p>Before moving to Phase 2, verify you can answer every item below without looking it up. If you cannot, return to that day and re-read. Moving forward with gaps costs you far more time later.</p>
+<div class="tw"><table>
+<tr><th>Concept</th><th>Day</th><th>Test Yourself</th></tr>
+<tr><td>CIA Triad — real-world failure of each</td><td>1</td><td>What real incident violated each property?</td></tr>
+<tr><td>Kill Chain — all 7 stages in order</td><td>1</td><td>Name them from memory. No peeking.</td></tr>
+<tr><td>Virus vs Worm — the specific difference</td><td>2</td><td>Which requires user action? Which is self-replicating?</td></tr>
+<tr><td>Fileless malware — what makes it different</td><td>2</td><td>Where does it live? Why is it harder to detect?</td></tr>
+<tr><td>OSI layers 1–7 — name and attacks at each</td><td>3</td><td>Write all 7 from memory with a sample attack at each.</td></tr>
+<tr><td>TCP three-way handshake</td><td>3</td><td>SYN → ? → ?</td></tr>
+<tr><td>Port table — 21,22,23,25,53,80,443,445,3389</td><td>4</td><td>Service and primary security risk for each.</td></tr>
+<tr><td>Symmetric vs asymmetric — use cases</td><td>7</td><td>What is AES used for? What is RSA used for?</td></tr>
+<tr><td>Why MD5 is broken for passwords</td><td>7</td><td>What attack does lack of salting enable?</td></tr>
+<tr><td>Five access control models and where used</td><td>8</td><td>DAC, MAC, RBAC, ABAC, Rule-BAC — one real example each.</td></tr>
+<tr><td>NIST CSF 2.0 — all six functions</td><td>9</td><td>Name them in order. Which one was new in 2024?</td></tr>
+<tr><td>GDPR 72-hour rule</td><td>9</td><td>What triggers it? Who must be notified?</td></tr>
+</table></div>
+<div class="lab"><div class="lab-title">🧪 Lab — Full Recon on Metasploitable 2</div>
+<div class="lab-step"><div class="ls-num">1</div><div class="ls-txt">Boot both VMs. Verify connectivity from Kali: <strong>ping -c 3 [Metasploitable_IP]</strong></div></div>
+<div class="lab-step"><div class="ls-num">2</div><div class="ls-txt">Full aggressive scan with output saved: <strong>nmap -sV -O -A [Metasploitable_IP] -oN phase1_scan.txt</strong></div></div>
+<div class="lab-step"><div class="ls-num">3</div><div class="ls-txt">For each open port in your results: (a) what service is running, (b) what version, (c) what is the security risk based on Phase 1 knowledge?</div></div>
+<div class="lab-step"><div class="ls-num">4</div><div class="ls-txt">Check for EternalBlue vulnerability: <strong>nmap --script smb-vuln-ms17-010 [Metasploitable_IP]</strong> — note whether it is vulnerable. You will exploit this in Phase 3.</div></div>
+<div class="lab-step"><div class="ls-num">5</div><div class="ls-txt">On TryHackMe, complete <strong>"Pre-Security: How The Web Works"</strong> — closes Phase 1 and opens Phase 2 web content.</div></div>
+</div>`,
+[
+  {q:'Which represents an Availability violation of the CIA Triad?',opts:['Attacker reads encrypted emails with stolen private key','Developer modifies a database record without authorization','Ransomware encrypts all files making them inaccessible','User accesses files they are not authorized to view'],c:2,e:'Ransomware encrypting files = Availability. Data exists but authorized users cannot access it. Reading with stolen key = Confidentiality. Modifying without auth = Integrity. Accessing unauthorized files = Confidentiality.'},
+  {q:'NIST SP 800-63B recommends against which practice?',opts:['Passphrases of 20+ characters','Checking passwords against breach databases','Forcing rotation every 90 days','Allowing spaces and special characters'],c:2,e:'NIST explicitly recommends against forced periodic rotation without evidence of compromise. It leads to predictable patterns (Password1→Password2→Password3). NIST recommends breach-list checking and MFA over arbitrary rotation and complexity rules.'},
+  {q:'Which NIST CSF 2.0 function was added NEW in the February 2024 update?',opts:['Identify','Protect','Govern','Detect'],c:2,e:'GOVERN is the new sixth function added in NIST CSF 2.0. It covers organizational policy, risk management strategy, supply chain security governance, and defining cybersecurity roles and responsibilities. The original five (Identify, Protect, Detect, Respond, Recover) remain unchanged.'},
+  {q:'Security observes DNS traffic with base64-looking strings in subdomain names. What attack technique is likely?',opts:['DNS Cache Poisoning','DNS Amplification DDoS','DNS Tunneling','DNS Hijacking'],c:2,e:'DNS Tunneling encodes data in DNS query hostnames. The subdomain carries exfiltrated data. Firewalls typically allow all DNS traffic (port 53), making this an effective covert channel for data exfiltration and C2 communication.'},
+  {q:'An organization buys cyber insurance instead of implementing additional controls for a specific risk. Which risk response strategy is this?',opts:['Risk avoidance','Risk transfer','Risk mitigation','Risk acceptance'],c:1,e:'Cyber insurance transfers the financial burden to the insurance company. The risk itself still exists — only the financial consequence is transferred. Avoidance eliminates the risky activity entirely. Mitigation reduces likelihood/impact. Acceptance acknowledges the risk with documented decision.'}
+]);
+
+// ── PHASE 2 DAYS 11–25 ─────────────────────────────────────────────
+const P2_DAYS = {
+  11:['Wireshark & Network Traffic Analysis','Wireshark is a window into the soul of a network. Every credential, every session, every packet.'],
+  12:['ARP Spoofing & Man-in-the-Middle Attacks','Position yourself between two communicating parties. Read everything. Modify anything.'],
+  13:['Nmap — Complete Reference','The first tool on every pentest. Port scanning, service detection, vulnerability scripts.'],
+  14:['Firewalls & IDS/IPS','First and second lines of network defense. Know every type, every detection method.'],
+  15:['VPNs & Tunneling Protocols','VPNs protect data in transit. They also create attack surfaces. Know both sides.'],
+  16:['Wireless Security — WPA2 & WPA3','Wi-Fi is the most attacked network medium. Weak configs compromise everything.'],
+  17:['Python for Security','Python is the scripting language of cybersecurity. Read it. Write it. Use it.'],
+  18:['DNS & DHCP Attacks','Control DNS and you control where traffic goes. Control DHCP and you control everything.'],
+  19:['Email Security — SPF, DKIM & DMARC','Email is the number one attack vector. Three DNS records protect it.'],
+  20:['Network Hardening','Most breaches exploit misconfigurations, not zero-days. Remove the low-hanging fruit.'],
+  21:['Cloud Security Fundamentals','Misconfigurations cause the majority of cloud breaches. The shared responsibility model is testable.'],
+  22:['Active Directory Basics','AD runs 90% of enterprise Windows networks. Phase 3 attacks build on this foundation.'],
+  23:['OSINT & Reconnaissance','Before touching a target, attackers know more about it than most employees.'],
+  24:['Vulnerability Scanning','Automate discovery of known weaknesses. Understand every finding before reporting it.'],
+  25:['Phase 2 Review & Network CTF','25 days in. Your network security knowledge is now real. Test it end-to-end.']
+};
+
+// ── PHASE 3 DAYS 26–40 ─────────────────────────────────────────────
+const P3_DAYS = {
+  26:['Penetration Testing Methodology','Methodology separates professionals from script kiddies. Follow the phases.'],
+  27:['Metasploit Framework','The world\'s most popular penetration testing framework. Learn it completely.'],
+  28:['Exploitation Deep Dive','Read CVEs, find POCs, adapt them. This is where real skill develops.'],
+  29:['Web App Hacking — OWASP Top 10','Web applications are the most attacked surface. OWASP is your map.'],
+  30:['SQL Injection & Cross-Site Scripting','SQLi is 30 years old and still the most damaging web vulnerability in history.'],
+  31:['Password Attacks','Crack hashes. Brute force logins. Spray credentials. Understand every vector.'],
+  32:['Linux Privilege Escalation','Getting a shell is step one. Getting root is step two. SUID, sudo, cron, PATH.'],
+  33:['Windows Privilege Escalation','Most corporate targets run Windows. AlwaysInstallElevated, unquoted paths, token abuse.'],
+  34:['Active Directory Attacks','Kerberoasting, AS-REP Roasting, DCSync, Golden Ticket. Domain domination.'],
+  35:['Wireless Hacking','WPA2 handshake capture, evil twin attack, PMKID. Controlled lab only.'],
+  36:['Social Engineering & Phishing Campaigns','The most successful attack vector in computing history. Humans before firewalls.'],
+  37:['Buffer Overflow Basics','The exploit behind thousands of CVEs. Understand why and how it works.'],
+  38:['Malware Analysis','Static and dynamic analysis. Understand what a binary does before trusting it.'],
+  39:['Post-Exploitation & Pivoting','You have a shell. Now move deeper. Lateral movement is the real threat.'],
+  40:['Penetration Test Report Writing','The report is the product. Exploitation is the process. Every finding documented.']
+};
+
+// ── PHASE 4 DAYS 41–52 ─────────────────────────────────────────────
+const P4_DAYS = {
+  41:['SIEM & Log Analysis','If you didn\'t log it, it didn\'t happen. If you logged it, find the signal.'],
+  42:['Incident Response Lifecycle','How you respond in the first hour determines the outcome of everything after.'],
+  43:['Digital Forensics','Evidence collection, chain of custody, forensic analysis. The investigation phase.'],
+  44:['Threat Hunting','Assume breach. Go looking for what your SIEM missed. Proactive defense.'],
+  45:['APT & Advanced Threat Intelligence','How nation-states operate so you can detect their TTPs before they complete.'],
+  46:['Zero Trust Architecture','Never trust, always verify. Every request. Every user. Every device. Every time.'],
+  47:['DevSecOps & Secure SDLC','Security in the pipeline, not bolted on after deployment. Shift left.'],
+  48:['AI in Cybersecurity & OT/ICS Security','AI as attacker and defender. OT/ICS is where digital meets physical infrastructure.'],
+  49:['Ransomware Defense','Prevent it with controls. Detect it early. Recover without paying. Backups are king.'],
+  50:['API & Cloud Attack Defense','APIs are the new perimeter. OWASP API Top 10. Cloud attack patterns.'],
+  51:['Mobile & IoT Security','The attack surface expanded to every pocket and every building. 41B IoT devices.'],
+  52:['Phase 4 Review & Blue Team CTF','Defense mastery test. Detect the attack. Contain it. Report it. Improve.']
+};
+
+// ── PHASE 5 DAYS 53–60 ─────────────────────────────────────────────
+const P5_DAYS = {
+  53:['Security+ SY0-701 Deep Prep','Every domain. Every objective weight. Every exam technique. Pass this exam.'],
+  54:['Security+ Practice Exam — 90 Questions','Simulated exam conditions. 90 minutes. Pass at 750/900. Do this without stopping.'],
+  55:['CEH v13 Domains & Strategy','125 questions. 4 hours. 70% pass mark. EC-Council exam strategy and domain breakdown.'],
+  56:['OSCP Prep & HackTheBox Strategy','24-hour live exam. Three machines. One report. Begin preparing seriously now.'],
+  57:['GitHub Portfolio Build','Your work is only as real as the proof you can show. Document, publish, share.'],
+  58:['LinkedIn & Brand Positioning','Security skills without visibility are invisible. Build the profile. Tell the story.'],
+  59:['Mock Pentest & Final CTF','Full simulated engagement from scope to report. Your graduation test.'],
+  60:['Graduation & Career Launch','Sixty days. One complete career foundation. Your certification roadmap is clear.']
+};
+
+// Register Phase 2–5 days
+[[P2_DAYS,2],[P3_DAYS,3],[P4_DAYS,4],[P5_DAYS,5]].forEach(([days,phase])=>{
+  Object.entries(days).forEach(([num,[title,tagline]])=>{
+    const n = parseInt(num);
+    const phaseColors = ['','#00e5ff','#00ff88','#ff6d00','#ff1744','#d500f9'];
+    const c = phaseColors[phase];
+    const phaseNames = ['','Foundations','Network Security','Ethical Hacking','Defense & Blue Team','Certs & Career'];
+    addDay(n,title,tagline,phase,
+    `<h2>${title.toUpperCase()}</h2>
+    <p>This session builds critical knowledge and practical skills in <strong>${title}</strong> — a core component of Phase ${phase}: ${phaseNames[phase]}.</p>
+    <div class="callout"><div class="ct">Session Learning Objectives</div>By the end of this session you will understand the core concepts, be able to name and explain the primary tools and techniques, recognize exam-style questions on this topic, and have completed the hands-on lab exercise. Every concept here maps directly to Security+ SY0-701, CEH v13, or OSCP practical methodology.</div>
+    <h2>CORE CONCEPTS</h2>
+    <p>Work through the theory first. Read actively. Write down any term you cannot immediately define. Look it up. Come back. The exam tests recognition of terms in unfamiliar scenarios — not just memorization.</p>
+    <h3>Key Terms to Know</h3>
+    <p>Every session's exam questions are drawn from the specific vocabulary and concepts introduced in the lesson content. For this session, ensure you can define and apply all terms related to <strong>${title}</strong> before moving to the exam questions below.</p>
+    <h2>TOOLS & TECHNIQUES</h2>
+    <p>This session's lab introduces practical tools that you will use on real professional engagements. Every command should be run — not just read. Passive reading of security content decays quickly. Muscle memory built from typing commands persists.</p>
+    <div class="lab"><div class="lab-title">🧪 Lab — ${title}</div>
+    <div class="lab-step"><div class="ls-num">1</div><div class="ls-txt">Open your Kali Linux environment (VM or TryHackMe AttackBox). Ensure your lab is running and you can reach your Metasploitable target.</div></div>
+    <div class="lab-step"><div class="ls-num">2</div><div class="ls-txt">Search TryHackMe for "<strong>${title.split(' ').slice(0,3).join(' ')}</strong>" — find and complete at least one guided room before your next session. Hands-on labs on TryHackMe directly reinforce the content.</div></div>
+    <div class="lab-step"><div class="ls-num">3</div><div class="ls-txt">Document your lab findings in a personal notes file structured like a pentest finding: what you did, what you found, what the business impact is, and how to remediate it. This builds the report-writing muscle.</div></div>
+    <div class="lab-step"><div class="ls-num">4</div><div class="ls-txt">After completing the lab, return here and answer the exam questions below. Answer honestly — do not look up the answer before clicking. Honest wrong answers teach more than dishonest right ones.</div></div>
+    </div>
+    <h2>EXAM PREPARATION — WHAT TO EXPECT</h2>
+    <p>Security+ SY0-701 uses scenario-based questions extensively. You will not be asked to define terms — you will be asked to identify which control, which attack, or which response is most appropriate given a described scenario. Practice reading scenarios carefully and eliminating wrong answers before selecting the right one.</p>`,
+    [
+      {q:`A security professional analyzing ${title.split(' ')[0].toLowerCase()} incidents must first verify which of the following?`,opts:['The organization\'s cyber insurance policy is current','All security tools are updated to the latest version','Scope, authorization, and documentation are in place','The incident response plan has executive approval'],c:2,e:`Authorization and scope are the foundation of all security activities — whether conducting vulnerability assessments, penetration tests, or incident investigations. Proceeding without explicit written authorization creates legal liability regardless of intent. This principle applies across all cybersecurity domains and is tested extensively on Security+ and CEH.`},
+      {q:`Which security principle BEST addresses the risks associated with ${title.split(' ')[0].toLowerCase()} in enterprise environments?`,opts:['Defense in depth — layer multiple independent controls','Security through obscurity — hide system details','Least functionality — disable unneeded services and features','Non-repudiation — ensure all actions are attributable'],c:0,e:`Defense in depth applies across all security domains. No single control is perfect. Layering multiple independent controls means that if one fails or is bypassed, others still protect the asset. This is the fundamental architecture principle behind modern enterprise security programs and is tested in Security+ Domain 3 (Security Architecture).`}
+    ]);
+  });
+});
+
+// =====================================================================
+// PROGRESS TRACKING
+// =====================================================================
+let progress = {};
+try{ progress = JSON.parse(localStorage.getItem('cm60_progress')||'{}'); }catch(e){}
+
+function saveProgress(){
+  localStorage.setItem('cm60_progress', JSON.stringify(progress));
+  updateProgressUI();
+}
+
+function updateProgressUI(){
+  const done = Object.values(progress).filter(Boolean).length;
+  const pct = Math.round((done/60)*100);
+  document.getElementById('gbar').style.width = pct+'%';
+  document.getElementById('glabel').textContent = done+' / 60';
+}
+
+// =====================================================================
+// SIDEBAR RENDERING
+// =====================================================================
+function buildSidebar(){
+  const container = document.getElementById('sidebar-content');
+  container.innerHTML = PHASE_META.map(ph=>{
+    const isOpen = ph.days.includes(currentDay);
+    const dayItems = ph.days.map(d=>{
+      const info = ALL_DAYS[d];
+      const done = progress[d];
+      const short = info ? info.title.split(' ').slice(0,4).join(' ')+(info.title.split(' ').length>4?'…':'') : 'Day '+d;
+      return `<div class="day-item ${currentDay===d?'active':''} ${done?'done':''}" onclick="showDay(${d})" id="si-${d}">
+        <span class="d-num">D${String(d).padStart(2,'0')}</span>
+        <span class="d-name">${short}</span>
+        ${done?'<span class="d-tick">✓</span>':''}
+      </div>`;
+    }).join('');
+    return `<div class="phase-grp ${isOpen?'open':''}" id="phg-${ph.id}">
+      <div class="phase-hdr" onclick="togglePh(${ph.id})">
+        <span class="phase-lbl" style="color:${ph.color}">Phase ${ph.id} — ${ph.name}</span>
+        <span class="phase-arr">▼</span>
+      </div>
+      <div class="phase-days-list">${dayItems}</div>
+    </div>`;
+  }).join('');
+}
+
+function togglePh(id){
+  document.getElementById('phg-'+id)?.classList.toggle('open');
+}
+
+// =====================================================================
+// PAGE NAVIGATION
+// =====================================================================
+let currentDay = 1;
+let currentPage = 'overview';
+
+function showPage(pg){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+pg)?.classList.add('active');
+  currentPage = pg;
+  window.scrollTo(0,0);
+}
+
+function showDay(dayNum){
+  currentDay = dayNum;
+
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+
+  // Get or create day page
+  const pageId = 'page-day-'+dayNum;
+  let page = document.getElementById(pageId);
+  if(!page){
+    page = document.createElement('div');
+    page.className = 'page';
+    page.id = pageId;
+    page.innerHTML = buildDayHTML(dayNum);
+    document.getElementById('day-pages-container').appendChild(page);
+  }
+  page.classList.add('active');
+  buildSidebar();
+  updateProgressUI();
+  window.scrollTo(0,0);
+}
+
+function buildDayHTML(dayNum){
+  const day = ALL_DAYS[dayNum];
+  if(!day) return `<div class="lesson"><h2>Day ${dayNum}</h2><p>Loading content...</p></div>`;
+
+  const ph = PHASE_META.find(p=>p.days.includes(dayNum))||PHASE_META[0];
+  const phNames = ['','Foundations','Network Security','Ethical Hacking','Defense & Blue Team','Certs & Career'];
+  const isDone = progress[dayNum];
+
+  const qHTML = (day.questions||[]).map((q,i)=>{
+    const opts = q.opts.map((o,j)=>`<div class="qo" onclick="ansQ(this,${dayNum},${i},${j},${q.c})"><span class="ql">${'ABCD'[j]}</span>${o}</div>`).join('');
+    return `<div class="qcard">
+      <div class="qn">QUESTION ${String(i+1).padStart(2,'0')} · DAY ${dayNum}</div>
+      <div class="qt">${q.q}</div>
+      <div class="qopts">${opts}</div>
+      <div class="qexp" id="qex-${dayNum}-${i}">${q.e}</div>
+    </div>`;
+  }).join('');
+
+  return `
+  <div class="day-hdr">
+    <div class="dh-meta">
+      <div class="dh-badge">DAY ${String(dayNum).padStart(2,'0')} / 60</div>
+      <div class="dh-phase" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:${ph.color}">PHASE ${ph.id} — ${phNames[ph.id].toUpperCase()}</div>
+    </div>
+    <div class="dh-title">${day.title}</div>
+    <div class="dh-tagline">${day.tagline||''}</div>
+    <div class="dh-actions">
+      ${dayNum>1?`<button class="dh-btn" onclick="showDay(${dayNum-1})">← Day ${dayNum-1}</button>`:''}
+      ${dayNum<60?`<button class="dh-btn" onclick="showDay(${dayNum+1})">Day ${dayNum+1} →</button>`:''}
+      <button class="dh-btn primary ${isDone?'done':''}" id="btn-done-${dayNum}" onclick="markDone(${dayNum})">${isDone?'✓ Completed':'✓ Mark Complete'}</button>
+    </div>
+  </div>
+  <div class="lesson">${day.content}</div>
+  ${qHTML.length?`<div class="exam-wrap">
+    <div class="exam-head">🎯 Day ${dayNum} Exam Prep</div>
+    <div class="exam-sub">Security+ SY0-701 · CEH v13 style questions — click an answer to reveal the explanation</div>
+    ${qHTML}
+  </div>`:''}`;
+}
+
+function ansQ(el, dayNum, qi, chosen, correct){
+  const opts = el.parentElement.querySelectorAll('.qo');
+  opts.forEach((o,i)=>{
+    o.classList.add('revealed');
+    if(i===correct) o.classList.add('correct');
+    else if(i===chosen&&chosen!==correct) o.classList.add('wrong');
+  });
+  const exp = document.getElementById(`qex-${dayNum}-${qi}`);
+  if(exp) exp.classList.add('show');
+}
+
+function markDone(dayNum){
+  progress[dayNum] = true;
+  saveProgress();
+  const btn = document.getElementById('btn-done-'+dayNum);
+  if(btn){btn.textContent='✓ Completed';btn.classList.add('done');}
+  buildSidebar();
+  if(dayNum<60 && confirm(`Day ${dayNum} complete! Move to Day ${dayNum+1}?`)){showDay(dayNum+1);}
+}
+
+// =====================================================================
+// SEARCH
+// =====================================================================
+function searchDays(query){
+  const q = query.toLowerCase().trim();
+  if(!q){buildSidebar();return;}
+  const container = document.getElementById('sidebar-content');
+  const matches = Object.values(ALL_DAYS).filter(d=>
+    d.title.toLowerCase().includes(q)||
+    d.tagline.toLowerCase().includes(q)
+  );
+  container.innerHTML = matches.length?
+    matches.map(d=>`<div class="day-item" onclick="showDay(${d.num})"><span class="d-num">D${String(d.num).padStart(2,'0')}</span><span class="d-name">${d.title}</span>${progress[d.num]?'<span class="d-tick">✓</span>':''}</div>`).join(''):
+    `<div style="padding:16px;font-size:11px;color:var(--text3);">No results for "${query}"</div>`;
+}
+
+// =====================================================================
+// INIT
+// =====================================================================
+document.addEventListener('DOMContentLoaded',()=>{
+  buildSidebar();
+  updateProgressUI();
+});
+</script>
+</body>
+</html>

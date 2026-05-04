@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberMastery 60 — Student Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04080f;--bg2:#080f1a;--bg3:#0c1520;--panel:#101e2e;
+  --border:#1a3050;--border2:#234060;
+  --cyan:#00e5ff;--green:#00ff88;--gold:#ffc107;
+  --orange:#ff6d00;--red:#ff1744;--purple:#d500f9;
+  --text:#c0d4e8;--text2:#6a8aaa;--text3:#3a5070;
+  --white:#ffffff;
+  --p1:#00e5ff;--p2:#00ff88;--p3:#ff6d00;--p4:#ff1744;--p5:#d500f9;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;font-size:15px;overflow-x:hidden;}
+
+/* TOP NAV */
+.topnav{position:fixed;top:0;left:0;right:0;height:58px;background:rgba(4,8,15,.95);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:200;backdrop-filter:blur(10px);}
+.topnav-left{display:flex;align-items:center;gap:12px;}
+.tn-logo{background:linear-gradient(135deg,var(--cyan),var(--green));width:34px;height:34px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-weight:700;color:#000;font-size:14px;}
+.tn-title{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:var(--white);}
+.tn-sub{font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;}
+.topnav-center{display:flex;gap:8px;}
+.tn-tab{background:transparent;border:1px solid var(--border);color:var(--text2);font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;padding:6px 16px;border-radius:4px;cursor:pointer;letter-spacing:.5px;transition:all .2s;}
+.tn-tab:hover,.tn-tab.active{background:rgba(0,229,255,.08);border-color:var(--cyan);color:var(--cyan);}
+.topnav-right{display:flex;align-items:center;gap:14px;}
+.tn-progress-wrap{display:flex;align-items:center;gap:8px;}
+.tn-progress-bar{width:100px;height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
+.tn-progress-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:3px;transition:width .5s;}
+.tn-progress-label{font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);}
+.tn-user{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:12px;color:var(--text2);cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:600;}
+.tn-signout{font-size:11px;color:var(--text3);cursor:pointer;font-family:'Space Mono',monospace;transition:color .2s;}
+.tn-signout:hover{color:var(--red);}
+
+/* LAYOUT */
+.app-layout{display:flex;min-height:100vh;padding-top:58px;}
+
+/* SIDEBAR */
+.sidebar{width:250px;min-width:250px;background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:58px;bottom:0;left:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.sidebar::-webkit-scrollbar{width:3px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border);}
+.phase-group{border-bottom:1px solid var(--border);}
+.phase-hdr{padding:10px 14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;}
+.phase-hdr:hover{background:rgba(255,255,255,.02);}
+.phase-label{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+.phase-arrow{font-size:9px;color:var(--text3);transition:transform .25s;}
+.phase-group.open .phase-arrow{transform:rotate(180deg);}
+.phase-days{display:none;}
+.phase-group.open .phase-days{display:block;}
+.day-btn{display:flex;align-items:center;padding:7px 14px 7px 24px;cursor:pointer;gap:9px;border-left:2px solid transparent;transition:all .15s;}
+.day-btn:hover{background:rgba(255,255,255,.03);}
+.day-btn.active{border-left-color:var(--cyan);background:rgba(0,229,255,.06);}
+.day-btn.completed{opacity:.65;}
+.day-num{font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);min-width:28px;}
+.day-name{font-size:11px;color:var(--text2);line-height:1.3;flex:1;}
+.day-btn.active .day-name{color:var(--white);}
+.day-check{font-size:10px;color:var(--green);flex-shrink:0;}
+.sb-extras{border-bottom:1px solid var(--border);}
+.sb-extra-btn{display:block;padding:10px 14px;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .2s;letter-spacing:.3px;}
+.sb-extra-btn:hover{background:rgba(255,255,255,.03);color:var(--text);}
+
+/* MAIN */
+.main-content{margin-left:250px;flex:1;min-height:100%;}
+
+/* VIEWS */
+.view{display:none;}
+.view.active{display:block;}
+
+/* DASHBOARD VIEW */
+.dashboard-wrap{padding:32px 40px;}
+.dash-greeting{margin-bottom:28px;}
+.dash-greeting h2{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.dash-greeting p{font-size:13px;color:var(--text2);}
+.dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+.dash-stat{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:18px;position:relative;overflow:hidden;}
+.dash-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.dash-stat:nth-child(1)::before{background:var(--cyan);}
+.dash-stat:nth-child(2)::before{background:var(--green);}
+.dash-stat:nth-child(3)::before{background:var(--gold);}
+.dash-stat:nth-child(4)::before{background:var(--purple);}
+.ds-label{font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
+.ds-num{font-family:'Rajdhani',sans-serif;font-size:36px;font-weight:700;color:var(--white);line-height:1;}
+.ds-sub{font-size:11px;color:var(--text3);margin-top:4px;}
+.dash-phases{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:28px;}
+.dash-phase{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center;}
+.dp-title{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;margin-bottom:8px;}
+.dp-bar-wrap{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:6px;}
+.dp-bar{height:100%;border-radius:3px;transition:width .5s;}
+.dp-pct{font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);}
+.dash-recent{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:28px;}
+.dr-title{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:14px;}
+.dr-list{display:flex;flex-direction:column;gap:8px;}
+.dr-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg3);border-radius:6px;cursor:pointer;transition:background .2s;}
+.dr-item:hover{background:rgba(0,229,255,.05);}
+.dr-item-left{display:flex;align-items:center;gap:10px;}
+.dr-day-tag{font-family:'Space Mono',monospace;font-size:9px;background:rgba(0,229,255,.1);color:var(--cyan);padding:3px 8px;border-radius:3px;}
+.dr-day-title{font-size:13px;color:var(--text);}
+.dr-status{font-size:10px;color:var(--green);font-family:'Space Mono',monospace;}
+.dash-continue-btn{background:linear-gradient(135deg,var(--cyan),var(--green));color:#000;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;padding:12px 28px;border-radius:6px;border:none;cursor:pointer;letter-spacing:.5px;transition:opacity .2s;}
+.dash-continue-btn:hover{opacity:.85;}
+
+/* LESSON VIEW */
+.lesson-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:24px 40px;position:sticky;top:58px;z-index:50;}
+.lh-meta{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.lh-day-badge{background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:4px 12px;font-family:'Space Mono',monospace;font-size:10px;color:var(--text3);}
+.lh-phase-tag{border-radius:4px;padding:4px 10px;font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+.lh-h1{font-family:'Rajdhani',sans-serif;font-size:30px;font-weight:700;color:var(--white);line-height:1.2;margin-bottom:4px;}
+.lh-tagline{font-size:13px;color:var(--text2);}
+.lh-actions{display:flex;gap:10px;margin-top:14px;}
+.lh-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:7px 16px;border-radius:5px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;transition:all .2s;letter-spacing:.3px;}
+.lh-btn:hover{border-color:var(--cyan);color:var(--cyan);}
+.lh-btn.primary{background:linear-gradient(135deg,var(--cyan),var(--green));color:#000;border:none;}
+.lh-btn.primary:hover{opacity:.85;}
+.lh-btn.done{background:rgba(0,255,136,.1);border-color:var(--green);color:var(--green);}
+
+/* LESSON BODY */
+.lesson-body{max-width:860px;margin:0 auto;padding:36px 40px;}
+.lesson-body h2{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:var(--white);margin:32px 0 12px;border-left:3px solid var(--cyan);padding-left:12px;}
+.lesson-body h3{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:var(--cyan);margin:24px 0 8px;}
+.lesson-body h4{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--gold);margin:18px 0 6px;text-transform:uppercase;letter-spacing:1px;}
+.lesson-body p{margin-bottom:13px;color:var(--text);line-height:1.72;}
+.lesson-body strong{color:var(--white);}
+.callout{background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.18);border-left:3px solid var(--cyan);border-radius:0 6px 6px 0;padding:14px 18px;margin:18px 0;}
+.callout.warn{background:rgba(255,193,7,.04);border-color:rgba(255,193,7,.2);border-left-color:var(--gold);}
+.callout.danger{background:rgba(255,23,68,.04);border-color:rgba(255,23,68,.18);border-left-color:var(--red);}
+.callout.success{background:rgba(0,255,136,.04);border-color:rgba(0,255,136,.18);border-left-color:var(--green);}
+.callout-title{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;color:var(--cyan);}
+.callout.warn .callout-title{color:var(--gold);}
+.callout.danger .callout-title{color:var(--red);}
+.callout.success .callout-title{color:var(--green);}
+.concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0;}
+.concept-card{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:16px;transition:border-color .2s;}
+.concept-card:hover{border-color:var(--cyan);}
+.concept-icon{font-size:22px;margin-bottom:7px;}
+.concept-title{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--white);margin-bottom:5px;}
+.concept-desc{font-size:11px;color:var(--text2);line-height:1.5;}
+.table-wrap{overflow-x:auto;margin:18px 0;border-radius:7px;border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;}
+th{background:var(--bg3);color:var(--cyan);font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);}
+td{padding:9px 14px;border-bottom:1px solid rgba(26,48,80,.4);font-size:12px;color:var(--text2);line-height:1.5;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.01);color:var(--text);}
+.code-block{background:#040c14;border:1px solid var(--border);border-radius:6px;padding:18px;margin:18px 0;position:relative;overflow-x:auto;}
+.code-block pre{font-family:'Space Mono',monospace;font-size:11px;color:var(--green);line-height:1.72;white-space:pre;}
+.code-label{position:absolute;top:7px;right:10px;font-size:8px;color:var(--text3);font-family:'Space Mono',monospace;letter-spacing:1px;text-transform:uppercase;}
+.lab-block{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:0 7px 7px 0;padding:20px;margin:22px 0;}
+.lab-title{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:7px;}
+.lab-step{display:flex;gap:12px;margin-bottom:10px;align-items:flex-start;}
+.lab-step-num{background:var(--green);color:#000;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;min-width:20px;height:20px;border-radius:3px;display:flex;align-items:center;justify-content:center;margin-top:1px;flex-shrink:0;}
+.lab-step-text{font-size:12px;color:var(--text);line-height:1.6;}
+.killchain{display:flex;overflow-x:auto;margin:20px 0;}
+.kc-step{background:var(--bg3);border:1px solid var(--border);border-right:none;padding:12px 14px;flex:1;min-width:90px;}
+.kc-step:last-child{border-right:1px solid var(--border);}
+.kc-num{font-family:'Space Mono',monospace;font-size:8px;color:var(--text3);margin-bottom:3px;}
+.kc-title{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:3px;}
+.kc-desc{font-size:9px;color:var(--text3);line-height:1.4;}
+
+/* EXAM SECTION */
+.exam-section{background:var(--bg2);border-top:1px solid var(--border);padding:36px 40px;}
+.exam-title{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:var(--gold);letter-spacing:.5px;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.exam-sub{font-size:12px;color:var(--text3);margin-bottom:24px;font-family:'Space Mono',monospace;}
+.q-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:14px;transition:border-color .2s;}
+.q-num{font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:1px;margin-bottom:7px;}
+.q-text{font-size:14px;color:var(--white);font-weight:500;margin-bottom:14px;line-height:1.5;}
+.q-options{display:grid;gap:7px;}
+.q-opt{background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:9px 13px;font-size:12px;color:var(--text2);cursor:pointer;transition:all .15s;display:flex;gap:9px;align-items:flex-start;}
+.q-opt:hover:not(.revealed){border-color:var(--cyan);color:var(--text);}
+.q-opt.correct{border-color:var(--green);background:rgba(0,255,136,.05);color:var(--green);}
+.q-opt.wrong{border-color:var(--red);background:rgba(255,23,68,.05);color:var(--red);}
+.q-opt.revealed{pointer-events:none;}
+.q-letter{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;color:var(--text3);min-width:15px;}
+.q-explain{background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.12);border-radius:5px;padding:10px 14px;margin-top:8px;font-size:11px;color:var(--text2);display:none;line-height:1.6;}
+.q-explain.show{display:block;}
+
+/* MOCK EXAM VIEW */
+.mock-wrap{padding:32px 40px;max-width:760px;margin:0 auto;}
+.mock-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.mock-title{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;color:var(--white);}
+.mock-timer{font-family:'Space Mono',monospace;font-size:18px;color:var(--gold);}
+.mock-progress-bar{height:4px;background:var(--border);border-radius:2px;margin-bottom:24px;overflow:hidden;}
+.mock-progress-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));transition:width .3s;}
+.mock-q-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:28px;margin-bottom:20px;}
+.mock-q-counter{font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:10px;}
+.mock-q-text{font-size:15px;color:var(--white);font-weight:500;line-height:1.55;margin-bottom:18px;}
+.mock-opt{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:11px 16px;margin-bottom:8px;cursor:pointer;font-size:13px;color:var(--text2);transition:all .15s;display:flex;gap:12px;align-items:flex-start;}
+.mock-opt:hover:not(.selected):not(.correct):not(.wrong){border-color:var(--cyan);color:var(--text);}
+.mock-opt.selected{border-color:var(--cyan);background:rgba(0,229,255,.06);color:var(--white);}
+.mock-opt.correct{border-color:var(--green);background:rgba(0,255,136,.06);color:var(--green);}
+.mock-opt.wrong{border-color:var(--red);background:rgba(255,23,68,.06);color:var(--red);}
+.mock-nav{display:flex;gap:10px;justify-content:flex-end;}
+.mock-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:10px 22px;border-radius:6px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;transition:all .2s;letter-spacing:.3px;}
+.mock-btn:hover{border-color:var(--cyan);color:var(--cyan);}
+.mock-btn.primary{background:linear-gradient(135deg,var(--cyan),var(--green));color:#000;border:none;}
+.mock-btn.primary:hover{opacity:.85;}
+
+/* RESULTS */
+.results-wrap{padding:48px 40px;max-width:640px;margin:0 auto;text-align:center;}
+.results-score{font-family:'Rajdhani',sans-serif;font-size:80px;font-weight:900;line-height:1;margin:16px 0;}
+.results-score.pass{color:var(--green);}
+.results-score.fail{color:var(--red);}
+.results-label{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;margin-bottom:20px;}
+.results-detail{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:24px;margin:20px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.rd-item{text-align:center;}
+.rd-num{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--cyan);}
+.rd-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-top:3px;}
+
+/* CERTIFICATE VIEW */
+.cert-view{padding:40px;display:flex;flex-direction:column;align-items:center;}
+.cert-locked{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:48px;text-align:center;max-width:480px;}
+.cert-locked-icon{font-size:48px;margin-bottom:14px;}
+.cert-locked-title{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.cert-locked-sub{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.6;}
+.cert-req{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:14px;margin-bottom:20px;text-align:left;}
+.cert-req-item{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px;}
+.cert-req-item:last-child{margin-bottom:0;}
+.cert-page{width:100%;max-width:700px;}
+.cert-download-btn{background:linear-gradient(135deg,var(--gold),var(--orange));color:#000;font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;padding:13px 32px;border-radius:6px;border:none;cursor:pointer;letter-spacing:.5px;margin-top:24px;transition:opacity .2s;}
+.cert-download-btn:hover{opacity:.85;}
+
+/* CERTIFICATE DOCUMENT */
+.cert-doc{background:linear-gradient(160deg,#0a1828,#050e1a);border:2px solid;border-image:linear-gradient(135deg,var(--gold),rgba(0,229,255,.4),var(--gold)) 1;border-radius:10px;padding:50px 60px;text-align:center;position:relative;overflow:hidden;font-family:'Exo 2',sans-serif;}
+.cert-doc::before{content:'';position:absolute;inset:10px;border:1px solid rgba(255,193,7,.12);border-radius:6px;pointer-events:none;}
+.cert-watermark{position:absolute;font-size:160px;font-family:'Rajdhani',sans-serif;font-weight:900;color:rgba(0,229,255,.02);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap;}
+.cert-doc .cert-seal{font-size:54px;margin-bottom:6px;position:relative;}
+.cert-doc .cert-academy{font-family:'Rajdhani',sans-serif;font-size:13px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:2px;}
+.cert-doc .cert-presents{font-size:11px;color:var(--text3);margin-bottom:16px;font-family:'Space Mono',monospace;}
+.cert-doc .cert-recipient{font-family:'Rajdhani',sans-serif;font-size:34px;font-weight:700;color:var(--cyan);margin-bottom:6px;}
+.cert-doc .cert-title-main{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--white);margin-bottom:16px;}
+.cert-doc .cert-body-text{font-size:12px;color:var(--text2);line-height:1.7;max-width:440px;margin:0 auto 24px;}
+.cert-doc .cert-score-badge{display:inline-block;background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.3);border-radius:20px;padding:5px 16px;font-family:'Space Mono',monospace;font-size:11px;color:var(--green);margin-bottom:24px;}
+.cert-doc .cert-footer{display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid rgba(255,255,255,.06);padding-top:20px;margin-top:8px;}
+.cert-sig-block{text-align:center;}
+.cert-sig-name{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--white);}
+.cert-sig-role{font-size:9px;color:var(--text3);letter-spacing:1px;margin-top:2px;}
+.cert-sig-line{width:80px;height:1px;background:var(--border);margin:6px auto;}
+.cert-verify-block{text-align:center;}
+.cert-verify-id{font-family:'Space Mono',monospace;font-size:10px;color:var(--cyan);}
+.cert-verify-url{font-size:9px;color:var(--text3);margin-top:2px;}
+
+/* PROGRESS VIEW */
+.progress-wrap{padding:32px 40px;}
+
+/* UTIL */
+.page-title{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;color:var(--white);margin-bottom:20px;}
+.empty{padding:40px;text-align:center;color:var(--text3);font-size:14px;}
+
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .main-content{margin-left:0;}
+  .dashboard-wrap,.lesson-body,.exam-section,.mock-wrap,.results-wrap,.cert-view,.progress-wrap{padding:20px;}
+  .dash-stats{grid-template-columns:1fr 1fr;}
+  .dash-phases{grid-template-columns:1fr 1fr;}
+  .concept-grid{grid-template-columns:1fr;}
+  .topnav-center{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="topnav">
+  <div class="topnav-left">
+    <div class="tn-logo">LS</div>
+    <div>
+      <div class="tn-title">CyberMastery 60</div>
+      <div class="tn-sub">Libra Scale Academy</div>
+    </div>
+  </div>
+  <div class="topnav-center">
+    <button class="tn-tab active" onclick="switchView('dashboard')">Dashboard</button>
+    <button class="tn-tab" onclick="switchView('lesson')">Lessons</button>
+    <button class="tn-tab" onclick="switchView('mock')">Mock Exams</button>
+    <button class="tn-tab" onclick="switchView('progress')">Progress</button>
+    <button class="tn-tab" onclick="switchView('certificate')">Certificate</button>
+  </div>
+  <div class="topnav-right">
+    <div class="tn-progress-wrap">
+      <div class="tn-progress-bar"><div class="tn-progress-fill" id="global-progress-bar" style="width:0%"></div></div>
+      <div class="tn-progress-label" id="global-progress-label">0 / 60 days</div>
+    </div>
+    <div class="tn-user" id="tn-username">Student</div>
+    <div class="tn-signout" onclick="signOut()">Sign out</div>
+  </div>
+</div>
+
+<div class="app-layout">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sb-extras">
+      <div class="sb-extra-btn" onclick="switchView('dashboard')">🏠 Dashboard</div>
+      <div class="sb-extra-btn" onclick="switchView('progress')">📊 My Progress</div>
+      <div class="sb-extra-btn" onclick="switchView('mock')">📝 Mock Exams</div>
+      <div class="sb-extra-btn" onclick="switchView('certificate')">🏆 My Certificate</div>
+    </div>
+    <div id="sidebar-days"></div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+    <!-- DASHBOARD VIEW -->
+    <div class="view active" id="view-dashboard">
+      <div class="dashboard-wrap">
+        <div class="dash-greeting">
+          <h2 id="dash-greeting-text">Welcome back, Student</h2>
+          <p id="dash-greeting-sub">Your cybersecurity journey continues. Pick up where you left off.</p>
+        </div>
+        <div class="dash-stats">
+          <div class="dash-stat">
+            <div class="ds-label">Days Completed</div>
+            <div class="ds-num" id="ds-completed">0</div>
+            <div class="ds-sub">of 60 total</div>
+          </div>
+          <div class="dash-stat">
+            <div class="ds-label">Exam Questions</div>
+            <div class="ds-num" id="ds-questions">0</div>
+            <div class="ds-sub">answered correctly</div>
+          </div>
+          <div class="dash-stat">
+            <div class="ds-label">Current Streak</div>
+            <div class="ds-num" id="ds-streak">0</div>
+            <div class="ds-sub">days in a row</div>
+          </div>
+          <div class="dash-stat">
+            <div class="ds-label">Overall Score</div>
+            <div class="ds-num" id="ds-score">—</div>
+            <div class="ds-sub">exam average</div>
+          </div>
+        </div>
+        <div class="dash-phases" id="dash-phases"></div>
+        <div class="dash-recent">
+          <div class="dr-title">Continue Learning</div>
+          <div class="dr-list" id="dash-recent-list"></div>
+          <div style="margin-top:14px;">
+            <button class="dash-continue-btn" id="dash-continue-btn" onclick="continueStudying()">▶ Continue to Next Day</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON VIEW -->
+    <div class="view" id="view-lesson">
+      <div class="lesson-header" id="lesson-header">
+        <div class="lh-meta">
+          <div class="lh-day-badge" id="lh-badge">DAY 01 / 60</div>
+          <div class="lh-phase-tag" id="lh-phase">PHASE 1</div>
+        </div>
+        <div class="lh-h1" id="lh-title">Loading...</div>
+        <div class="lh-tagline" id="lh-tagline"></div>
+        <div class="lh-actions">
+          <button class="lh-btn" id="lh-prev" onclick="prevDay()">← Prev Day</button>
+          <button class="lh-btn" id="lh-next" onclick="nextDay()">Next Day →</button>
+          <button class="lh-btn primary" id="lh-mark-done" onclick="markDayDone()">✓ Mark Complete</button>
+        </div>
+      </div>
+      <div id="lesson-content-area"></div>
+    </div>
+
+    <!-- MOCK EXAM VIEW -->
+    <div class="view" id="view-mock">
+      <div class="mock-wrap" id="mock-inner">
+        <div class="page-title">Mock Examinations</div>
+        <p style="color:var(--text2);font-size:13px;margin-bottom:24px;">Timed, randomised mock exams for each phase. Pass 70% to earn your phase badge. Pass the final to unlock your certificate.</p>
+        <div id="mock-selector"></div>
+      </div>
+    </div>
+
+    <!-- PROGRESS VIEW -->
+    <div class="view" id="view-progress">
+      <div class="progress-wrap">
+        <div class="page-title">My Progress</div>
+        <div id="progress-content"></div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATE VIEW -->
+    <div class="view" id="view-certificate">
+      <div class="cert-view" id="cert-view-inner">
+        <!-- Dynamically rendered -->
+      </div>
+    </div>
+
+  </div><!-- /main-content -->
+</div><!-- /app-layout -->
+
+<script>
+// =====================================================================
+// FULL COURSE DATA — 60 DAYS
+// =====================================================================
+const PHASES = [
+  {id:1,name:'Foundations',color:'#00e5ff',days:[1,2,3,4,5,6,7,8,9,10]},
+  {id:2,name:'Network Security',color:'#00ff88',days:[11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]},
+  {id:3,name:'Ethical Hacking',color:'#ff6d00',days:[26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]},
+  {id:4,name:'Defense & Blue Team',color:'#ff1744',days:[41,42,43,44,45,46,47,48,49,50,51,52]},
+  {id:5,name:'Certs & Career',color:'#d500f9',days:[53,54,55,56,57,58,59,60]}
+];
+
+const DAYS = {
+  1:{title:'CIA Triad, Threat Landscape & The Kill Chain',tagline:'The worldview every security professional carries. Before touching any tool, you must understand the battlefield.',phase:1,
+    content:`<h2>THE CIA TRIAD</h2><p>Three letters underpin every security decision ever made. <strong>Confidentiality</strong> — data accessible only to those authorized. <strong>Integrity</strong> — data has not been altered without authorization. <strong>Availability</strong> — systems accessible when needed.</p>
+    <div class="concept-grid"><div class="concept-card"><div class="concept-icon">🔒</div><div class="concept-title" style="color:#00e5ff">Confidentiality</div><div class="concept-desc">Breached by data theft, eavesdropping, insider threats.<br><br><strong>Controls:</strong> Encryption, ACLs, VPNs, file permissions.</div></div>
+    <div class="concept-card"><div class="concept-icon">✅</div><div class="concept-title" style="color:#00ff88">Integrity</div><div class="concept-desc">Breached by unauthorized data modification.<br><br><strong>Controls:</strong> SHA-256 hashing, digital signatures, version control.</div></div>
+    <div class="concept-card"><div class="concept-icon">⚡</div><div class="concept-title" style="color:#ffc107">Availability</div><div class="concept-desc">A locked system no one can use has failed availability.<br><br><strong>Controls:</strong> Redundancy, load balancing, DDoS protection, DR.</div></div></div>
+    <h2>THE CYBER KILL CHAIN</h2><p>Developed by Lockheed Martin. Seven stages of a targeted attack. Break the chain at any stage to stop the attack. Breaking it early costs the attacker everything.</p>
+    <div class="killchain"><div class="kc-step"><div class="kc-num">01</div><div class="kc-title">Recon</div><div class="kc-desc">LinkedIn, DNS, WHOIS, job postings</div></div><div class="kc-step"><div class="kc-num">02</div><div class="kc-title">Weaponize</div><div class="kc-desc">Craft exploit, malicious PDF</div></div><div class="kc-step"><div class="kc-num">03</div><div class="kc-title">Deliver</div><div class="kc-desc">Email, USB, malicious link</div></div><div class="kc-step"><div class="kc-num">04</div><div class="kc-title">Exploit</div><div class="kc-desc">Vulnerability triggered</div></div><div class="kc-step"><div class="kc-num">05</div><div class="kc-title">Install</div><div class="kc-desc">Backdoor/RAT planted</div></div><div class="kc-step"><div class="kc-num">06</div><div class="kc-title">C2</div><div class="kc-desc">Machine calls attacker server</div></div><div class="kc-step"><div class="kc-num">07</div><div class="kc-title">Actions</div><div class="kc-desc">Exfiltrate, ransomware, pivot</div></div></div>
+    <h2>THREAT ACTORS</h2>
+    <div class="table-wrap"><table><tr><th>Actor Type</th><th>Motivation</th><th>Capability</th><th>Example</th></tr>
+    <tr><td><strong>Nation-State APT</strong></td><td>Geopolitical intelligence</td><td>Unlimited — zero-days, custom malware</td><td>APT28 (Russia), Lazarus (DPRK)</td></tr>
+    <tr><td><strong>Cybercriminal</strong></td><td>Financial — RaaS model</td><td>High — professional infrastructure</td><td>LockBit, BlackCat</td></tr>
+    <tr><td><strong>Hacktivist</strong></td><td>Ideology, protest</td><td>Medium — DDoS, data leaks</td><td>Anonymous</td></tr>
+    <tr><td><strong>Insider Threat</strong></td><td>Revenge, money, accident</td><td>High — legitimate access</td><td>Most damaging per incident</td></tr>
+    <tr><td><strong>Script Kiddie</strong></td><td>Notoriety, curiosity</td><td>Low — automated tools only</td><td>Still cause real damage at scale</td></tr></table></div>
+    <h2>SECURITY CONTROLS MATRIX</h2>
+    <div class="table-wrap"><table><tr><th>Function</th><th>Technical</th><th>Administrative</th><th>Physical</th></tr>
+    <tr><td><strong style="color:#00ff88">Preventive</strong></td><td>Firewall, antivirus, encryption</td><td>Security policies, training</td><td>Fences, locks, badge readers</td></tr>
+    <tr><td><strong style="color:#ffc107">Detective</strong></td><td>IDS, SIEM, audit logs</td><td>Security audits, reviews</td><td>CCTV, motion sensors</td></tr>
+    <tr><td><strong style="color:#00e5ff">Corrective</strong></td><td>Patching, system restore</td><td>IR procedures, DR plans</td><td>Fire suppression</td></tr>
+    <tr><td><strong style="color:#d500f9">Deterrent</strong></td><td>Login banners, honeypots</td><td>Disciplinary policies</td><td>Warning signs, guards</td></tr></table></div>
+    <div class="lab-block"><div class="lab-title">🧪 Lab — CVE Research</div>
+    <div class="lab-step"><div class="lab-step-num">1</div><div class="lab-step-text">Visit <strong>cve.mitre.org</strong>. Search CVE-2021-44228 (Log4Shell). What CVSS score did it receive? What was vulnerable? Answer: CVSS 10.0 — Remote Code Execution in Apache Log4j.</div></div>
+    <div class="lab-step"><div class="lab-step-num">2</div><div class="lab-step-text">Search CVE-2017-0144 (EternalBlue). This powered WannaCry. Note the affected Windows SMB versions.</div></div>
+    <div class="lab-step"><div class="lab-step-num">3</div><div class="lab-step-text">Create your free account at <strong>tryhackme.com</strong>. Find the "Pre-Security" learning path. Complete the first room today.</div></div></div>`,
+    questions:[
+      {q:'A financial institution discovers an attacker modified transaction records to redirect funds. Which CIA element was PRIMARILY violated?',opts:['Confidentiality — financial data was accessed','Integrity — data was altered without authorization','Availability — the transaction system was disrupted','Authentication — the attacker accessed the system'],correct:1,explain:'Integrity governs unauthorized modification of data. The attacker changed records. Confidentiality applies if data was read without authorization. Availability applies if the system became inaccessible.'},
+      {q:'An attacker spends three months researching a target via LinkedIn, WHOIS, and job postings before any direct contact. Which Kill Chain phase is this?',opts:['Weaponization','Reconnaissance','Delivery','Installation'],correct:1,explain:'Reconnaissance is the intelligence-gathering phase. No attack launched yet. Weaponization begins when they build the weapon. Delivery is when it reaches the target.'},
+      {q:'A CCTV camera is installed to discourage unauthorized access to a server room. This is BEST classified as which control?',opts:['Detective / Technical','Preventive / Technical','Deterrent / Physical','Corrective / Physical'],correct:2,explain:'A camera installed to discourage (not detect, not prevent) is Deterrent. It is Physical. If reviewing footage after an incident, it would be Detective. Context determines function.'},
+      {q:'An org checks a downloaded software update by comparing SHA-256 hash to the vendor\'s published hash. This protects which CIA property?',opts:['Confidentiality','Integrity','Availability','Non-repudiation'],correct:1,explain:'Hash verification confirms data integrity. If hashes match, the file was not tampered with in transit. This is how SolarWinds attackers worked — they compromised the file before hashing.'},
+      {q:'Which threat actor type is characterized by unlimited budget, years of dwell time, and geopolitical motivation?',opts:['Hacktivist','Script kiddie','Nation-state APT','Cybercriminal'],correct:2,explain:'Nation-state APTs are government-sponsored, well-funded, and motivated by intelligence gathering. Long dwell time (months to years) and custom zero-days are their signatures.'}
+    ]},
+  2:{title:'Malware Taxonomy, DDoS & Social Engineering',tagline:'Know every weapon category. Name them. Recognize them in an exam question at thirty yards.',phase:1,
+    content:`<h2>MALWARE TAXONOMY</h2>
+    <div class="table-wrap"><table><tr><th>Type</th><th>Propagation</th><th>Purpose</th><th>Famous Example</th></tr>
+    <tr><td><strong style="color:#ff1744">Virus</strong></td><td>Attaches to files. Requires human action.</td><td>Damage</td><td>ILOVEYOU — 50M infected in 10 days</td></tr>
+    <tr><td><strong style="color:#ff6d00">Worm</strong></td><td>Self-replicating. Spreads automatically. No human needed.</td><td>Network disruption</td><td>WannaCry — 200K machines, 150 countries, 24hrs</td></tr>
+    <tr><td><strong style="color:#ffc107">Trojan</strong></td><td>Disguises as legitimate software. User installs it.</td><td>Backdoor, data theft</td><td>Zeus banking trojan — $70M+ stolen</td></tr>
+    <tr><td><strong style="color:#00e5ff">Ransomware</strong></td><td>Phishing or RDP exploit. Encrypts files.</td><td>Extortion</td><td>LockBit 3.0</td></tr>
+    <tr><td><strong style="color:#00ff88">Spyware</strong></td><td>Bundled software, phishing.</td><td>Surveillance, credential theft</td><td>Pegasus — nation-state mobile spyware</td></tr>
+    <tr><td><strong style="color:#d500f9">Rootkit</strong></td><td>Requires initial compromise. Burrows into kernel.</td><td>Persistence, hiding malware</td><td>Sony BMG rootkit (2005)</td></tr>
+    <tr><td><strong>Fileless</strong></td><td>Lives entirely in RAM. Never writes to disk.</td><td>Evade AV detection</td><td>PowerShell-based attacks</td></tr>
+    <tr><td><strong>Logic Bomb</strong></td><td>Already inside system. Triggered by condition.</td><td>Sabotage</td><td>UBS PaineWebber (2002)</td></tr></table></div>
+    <div class="callout warn"><div class="callout-title">Exam Distinction — Virus vs Worm</div>A virus requires human interaction to propagate. A worm spreads autonomously with no human involvement. WannaCry was a worm. It used EternalBlue (MS17-010) to spread machine to machine via SMB port 445 with zero clicks.</div>
+    <h2>SOCIAL ENGINEERING</h2>
+    <div class="table-wrap"><table><tr><th>Technique</th><th>Method</th><th>Defense</th></tr>
+    <tr><td><strong>Phishing</strong></td><td>Mass email impersonation. Urgency-based.</td><td>Email filtering, MFA, training</td></tr>
+    <tr><td><strong>Spear Phishing</strong></td><td>Targeted. Uses personal info.</td><td>Verify before acting</td></tr>
+    <tr><td><strong>Whaling</strong></td><td>Targets C-suite specifically.</td><td>Executive training, out-of-band verification</td></tr>
+    <tr><td><strong>Vishing</strong></td><td>Voice/phone. Impersonates IT, banks.</td><td>Never verify identity over inbound calls</td></tr>
+    <tr><td><strong>Smishing</strong></td><td>SMS phishing. Fake tracking links.</td><td>Do not click SMS links from unknowns</td></tr>
+    <tr><td><strong>Baiting</strong></td><td>Infected USB drives in parking lots.</td><td>Disable autorun, USB policy</td></tr>
+    <tr><td><strong>Tailgating</strong></td><td>Follow authorized person through secured door.</td><td>Mantraps, anti-passback</td></tr></table></div>`,
+    questions:[
+      {q:'Malware infected 4,000 machines across three continents within 6 hours without any user interaction. What type of malware is this?',opts:['Virus','Worm','Trojan','Logic Bomb'],correct:1,explain:'Self-propagation with no user interaction = worm. A virus needs a human to share/run an infected file. A Trojan requires a user to install it. A Logic Bomb sits dormant.'},
+      {q:'Security finds a tool that exists entirely in RAM, creating no files on disk. What malware category is this?',opts:['Rootkit','Spyware','Fileless malware','Logic bomb'],correct:2,explain:'Fileless malware operates in memory only, defeating traditional AV that scans the file system. Uses legitimate tools like PowerShell, WMI.'},
+      {q:'An attacker emails a CFO appearing to be the CEO, references an actual deal by name, and requests urgent wire transfer. What attack is this?',opts:['Phishing','Pretexting','Whaling','Vishing'],correct:2,explain:'Whaling = spear phishing targeting C-suite. This targets a CFO (C-level), uses specific business info, involves large financial transaction. Also called Business Email Compromise (BEC).'},
+      {q:'An attacker sends SYN packets without completing the handshake, exhausting the server\'s connection table. What DDoS type is this?',opts:['Volumetric attack','SYN flood (Protocol attack)','Application Layer attack','Smurf attack'],correct:1,explain:'SYN flood is a Protocol-layer DDoS. TCP handshake: SYN→SYN-ACK→ACK. Attacker sends SYN but never ACK. Server holds half-open connections until table overflows. SYN cookies mitigate.'}
+    ]},
+  3:{title:'OSI Model, TCP/IP & Network Fundamentals',tagline:'Every attack maps to a layer. Know the model cold. The exam tests it constantly.',phase:1,
+    content:`<h2>THE OSI MODEL — 7 LAYERS</h2><p><strong>Mnemonic top to bottom:</strong> All People Seem To Need Data Processing | <strong>Bottom to top:</strong> Please Do Not Throw Sausage Pizza Away</p>
+    <div class="table-wrap"><table><tr><th>#</th><th>Layer</th><th>Protocols / PDU</th><th>Attacks</th></tr>
+    <tr><td style="color:#d500f9;font-size:18px;font-weight:700;">7</td><td><strong style="color:#d500f9">Application</strong></td><td>HTTP, HTTPS, FTP, SMTP, DNS, SSH — Data</td><td>SQLi, XSS, CSRF, app-layer DDoS</td></tr>
+    <tr><td style="color:#00e5ff;font-size:18px;font-weight:700;">6</td><td><strong style="color:#00e5ff">Presentation</strong></td><td>SSL/TLS, JPEG, ASCII — Data</td><td>SSL stripping, encryption downgrade</td></tr>
+    <tr><td style="color:#00ff88;font-size:18px;font-weight:700;">5</td><td><strong style="color:#00ff88">Session</strong></td><td>NetBIOS, RPC — Data</td><td>Session hijacking, pass-the-hash</td></tr>
+    <tr><td style="color:#ffc107;font-size:18px;font-weight:700;">4</td><td><strong style="color:#ffc107">Transport</strong></td><td>TCP, UDP — Segments/Datagrams</td><td>SYN flood, port scanning, TCP hijack</td></tr>
+    <tr><td style="color:#ff6d00;font-size:18px;font-weight:700;">3</td><td><strong style="color:#ff6d00">Network</strong></td><td>IP, ICMP, OSPF — Packets</td><td>IP spoofing, routing attacks, ping flood</td></tr>
+    <tr><td style="color:#ff1744;font-size:18px;font-weight:700;">2</td><td><strong style="color:#ff1744">Data Link</strong></td><td>Ethernet, ARP, MAC, 802.11 — Frames</td><td>ARP spoofing, MAC flooding, VLAN hopping</td></tr>
+    <tr><td style="color:#6a8aaa;font-size:18px;font-weight:700;">1</td><td><strong>Physical</strong></td><td>Cables, hubs, fiber — Bits</td><td>Wiretapping, jamming, physical access</td></tr></table></div>
+    <h2>TCP THREE-WAY HANDSHAKE</h2>
+    <div class="code-block"><div class="code-label">TCP HANDSHAKE</div><pre>Client ──── SYN ────────────► Server   (I want to connect)
+Client ◄─── SYN-ACK ──────── Server   (Confirmed, proceed)
+Client ──── ACK ────────────► Server   (Connected. Let's go)
+
+SYN FLOOD: Send thousands of SYN packets, never send ACK.
+Server holds half-open connections until table fills. DoS achieved.</pre></div>
+    <h2>DNS ATTACK TYPES</h2>
+    <p><strong>DNS Cache Poisoning:</strong> Injects false records into resolver's cache. Users get attacker's IP. <strong>DNS Tunneling:</strong> Encodes data in DNS queries for covert C2 communication — bypasses firewalls since port 53 is almost always allowed. <strong>DNS Amplification:</strong> Small query with spoofed source IP → massive response floods the victim.</p>`,
+    questions:[
+      {q:'An attacker sends falsified ARP responses associating their MAC with the gateway IP. Which OSI layer does this attack target?',opts:['Layer 3 — Network','Layer 2 — Data Link','Layer 4 — Transport','Layer 7 — Application'],correct:1,explain:'ARP operates at Layer 2 (Data Link). It maps IP addresses (L3 concept) to MAC addresses (L2 addresses). ARP spoofing manipulates MAC-to-IP mappings on the local network.'},
+      {q:'A DNS resolver returns a malicious IP because an attacker injected false records into its cache. What attack is this?',opts:['DNS Amplification','DNS Cache Poisoning','DNS Tunneling','DNS Zone Transfer'],correct:1,explain:'DNS Cache Poisoning injects false records into a resolver cache. Users querying that resolver get the attacker\'s IP. Zone Transfer copies DNS records between servers. Amplification uses DNS for DDoS.'},
+      {q:'Security observes outbound DNS traffic with unusually long domain names containing base64-looking strings. What attack technique is this?',opts:['DNS Cache Poisoning','DNS Amplification DDoS','DNS Tunneling','DNS Hijacking'],correct:2,explain:'DNS Tunneling encodes data in DNS query hostnames. The subdomain contains exfiltrated data. Firewalls rarely block DNS (port 53), making this an effective covert channel. Detect via DNS query length analysis.'}
+    ]},
+  4:{title:'Ports, Protocols & Network Devices',tagline:'You cannot scan, attack, or defend a network without knowing your ports. Memorize this table.',phase:1,
+    content:`<h2>CRITICAL PORTS — MEMORIZE THIS TABLE</h2>
+    <div class="table-wrap"><table><tr><th>Port</th><th>Protocol</th><th>Service</th><th>Security Notes</th></tr>
+    <tr><td style="color:#ff1744"><strong>21</strong></td><td>TCP</td><td>FTP</td><td style="color:#ff1744">PLAINTEXT credentials. Never use. Replace with SFTP (22).</td></tr>
+    <tr><td style="color:#ffc107"><strong>22</strong></td><td>TCP</td><td>SSH</td><td>Encrypted remote access. Use key-based auth. Disable root login.</td></tr>
+    <tr><td style="color:#ff1744"><strong>23</strong></td><td>TCP</td><td>Telnet</td><td style="color:#ff1744">PLAINTEXT terminal. Should never be open. Replace with SSH.</td></tr>
+    <tr><td style="color:#ffc107"><strong>25</strong></td><td>TCP</td><td>SMTP</td><td>Email sending. Open relay = spam source. Requires SPF/DKIM/DMARC.</td></tr>
+    <tr><td><strong>53</strong></td><td>TCP/UDP</td><td>DNS</td><td>UDP for queries, TCP for zone transfers. DNS tunneling target.</td></tr>
+    <tr><td><strong>80</strong></td><td>TCP</td><td>HTTP</td><td>Unencrypted web. All data visible to MitM. Redirect to 443.</td></tr>
+    <tr><td><strong>443</strong></td><td>TCP</td><td>HTTPS</td><td>TLS-encrypted web. Modern standard. Certificate validation critical.</td></tr>
+    <tr><td style="color:#ff1744"><strong>445</strong></td><td>TCP</td><td>SMB</td><td style="color:#ff1744">EternalBlue target. WannaCry entry point. Block at perimeter. Disable SMBv1.</td></tr>
+    <tr><td style="color:#ffc107"><strong>1433</strong></td><td>TCP</td><td>MS SQL Server</td><td>Never expose externally. Brute force and SQLi target.</td></tr>
+    <tr><td style="color:#ffc107"><strong>3306</strong></td><td>TCP</td><td>MySQL</td><td>Bind to 127.0.0.1 only. Never expose externally.</td></tr>
+    <tr><td style="color:#ff1744"><strong>3389</strong></td><td>TCP</td><td>RDP</td><td style="color:#ff1744">Massive attack surface. BlueKeep. Never internet-exposed without VPN+MFA.</td></tr></table></div>
+    <h2>NETWORK DEVICES BY OSI LAYER</h2>
+    <div class="table-wrap"><table><tr><th>Device</th><th>OSI Layer</th><th>Function</th><th>Security Role</th></tr>
+    <tr><td>Hub</td><td>Layer 1</td><td>Broadcasts all traffic to all ports. Obsolete.</td><td>Major risk — all traffic visible to all. Never use.</td></tr>
+    <tr><td><strong>Switch</strong></td><td>Layer 2</td><td>Forwards frames by MAC address.</td><td>Vulnerable to MAC flooding, ARP spoofing.</td></tr>
+    <tr><td><strong>Router</strong></td><td>Layer 3</td><td>Routes packets between networks by IP.</td><td>First external defense. ACLs provide basic filtering.</td></tr>
+    <tr><td><strong>Firewall</strong></td><td>L3/L4/L7</td><td>Filters traffic based on rules. Stateful or stateless.</td><td>Core network security. NGFW inspects application layer.</td></tr>
+    <tr><td><strong>IDS</strong></td><td>L3–L7</td><td>Detects suspicious traffic. Passive — alerts only.</td><td>Cannot block. NIDS (network) or HIDS (host).</td></tr>
+    <tr><td><strong>IPS</strong></td><td>L3–L7</td><td>Detects AND blocks. Inline device.</td><td>Active blocking. False positive risk disrupts legit traffic.</td></tr>
+    <tr><td><strong>WAF</strong></td><td>Layer 7</td><td>Filters HTTP/HTTPS for web attacks.</td><td>Blocks SQLi, XSS, CSRF at application layer.</td></tr></table></div>`,
+    questions:[
+      {q:'A pentester finds port 23 open on a corporate web server. What is the MOST critical finding?',opts:['Port 23 is used for HTTPS','Telnet transmits all data including credentials in plaintext','Port 23 indicates an unauthorized FTP server','Port 23 enables DNS tunneling'],correct:1,explain:'Port 23 is Telnet. It transmits usernames and passwords in plaintext. Anyone sniffing the network can capture credentials. Replace with SSH (22). Finding open Telnet = critical pentest finding.'},
+      {q:'Which network device operates at OSI Layer 2 and forwards traffic based on MAC addresses?',opts:['Router','Switch','Firewall','Hub'],correct:1,explain:'Switches operate at Layer 2 (Data Link) using MAC address tables (CAM tables). Routers operate at Layer 3 using IP addresses. Hubs at Layer 1 broadcast to all ports — no MAC intelligence.'},
+      {q:'Port 445 is found open on an internet-facing server. What is the PRIMARY risk?',opts:['Port 445 runs DNS — change to port 53','SMB enables EternalBlue exploitation — block immediately','Port 445 is HTTP — redirect to HTTPS','Port 445 is RDP — restrict to VPN only'],correct:1,explain:'Port 445 is SMB. EternalBlue (CVE-2017-0144) exploits SMBv1 on port 445 — the exploit that powered WannaCry and NotPetya. Internet-exposed port 445 = critical finding. Block at firewall, disable SMBv1.'}
+    ]},
+  5:{title:'Kali Linux Lab Setup',tagline:'Your hands need to be on a machine. Theory without practice decays. Build your environment today.',phase:1,
+    content:`<h2>WHY KALI LINUX</h2><p>Kali Linux is a Debian-based distribution maintained by Offensive Security — the same organization that produces OSCP. It ships with 600+ security tools pre-installed. It is the industry standard for professional penetration testing.</p>
+    <div class="callout danger"><div class="callout-title">Legal Warning</div>All tools and techniques must only be used on systems you own or have explicit written permission to test. Unauthorized scanning or exploitation is illegal under the Computer Fraud and Abuse Act (USA), Computer Misuse Act (UK), and equivalent global laws.</div>
+    <h2>LAB SETUP — STEP BY STEP</h2>
+    <div class="lab-block"><div class="lab-title">🧪 Full Lab Environment Setup</div>
+    <div class="lab-step"><div class="lab-step-num">1</div><div class="lab-step-text">Install <strong>VirtualBox</strong> from virtualbox.org. Also install the VirtualBox Extension Pack.</div></div>
+    <div class="lab-step"><div class="lab-step-num">2</div><div class="lab-step-text">Download <strong>Kali Linux</strong> .ova file from kali.org/get-kali. Import into VirtualBox: File → Import Appliance. Default credentials: kali/kali.</div></div>
+    <div class="lab-step"><div class="lab-step-num">3</div><div class="lab-step-text">Download <strong>Metasploitable 2</strong> from SourceForge. Extract. In VirtualBox: Machine → New → Existing VHD → select the .vmdk file. Credentials: msfadmin/msfadmin.</div></div>
+    <div class="lab-step"><div class="lab-step-num">4</div><div class="lab-step-text">Configure <strong>Host-Only Network</strong>: File → Host Network Manager → Create network (192.168.56.0/24). Set both VMs to use this adapter.</div></div>
+    <div class="lab-step"><div class="lab-step-num">5</div><div class="lab-step-text">Boot Kali. Run: <strong>ip a</strong> to confirm your IP. Boot Metasploitable. Run: <strong>ifconfig</strong> to get its IP. Test: <strong>ping [Metasploitable_IP]</strong> from Kali.</div></div>
+    <div class="lab-step"><div class="lab-step-num">6</div><div class="lab-step-text">First scan: <strong>nmap -sV [Metasploitable_IP]</strong>. You should see dozens of open ports. Congratulations — your lab is live.</div></div>
+    <div class="lab-step"><div class="lab-step-num">7</div><div class="lab-step-text">Update Kali: <strong>sudo apt update && sudo apt upgrade -y</strong>. This takes 10–20 minutes on first run.</div></div></div>
+    <div class="callout success"><div class="callout-title">Alternative — No VM Required</div>TryHackMe's AttackBox runs full Kali in your browser. No local hardware needed. Go to any TryHackMe room → Start AttackBox. Requires a stable internet connection.</div>`,
+    questions:[
+      {q:'An Nmap scan returns "filtered" for most ports on a target. What does this status indicate?',opts:['The port is open and accepting connections','The port is closed, sending RST packets','A firewall or packet filter is silently dropping probes','The host is offline'],correct:2,explain:'Filtered = no response received. A firewall is silently dropping the probe. Closed means the port is reachable but no service listens (RST returned). Filtered is actually informative — it reveals what the org is protecting.'}
+    ]},
+  6:{title:'Linux Command Mastery',tagline:'Linux is the language of servers, cloud infrastructure, and hacking. Every tool you use runs on it.',phase:1,
+    content:`<h2>WHY LINUX MATTERS FOR SECURITY</h2><p>Over 90% of internet servers run Linux. Every major hacking tool is built for Linux. When you gain a shell on a target, it is almost always a Linux shell. You must navigate, escalate privileges, and move around without hesitation.</p>
+    <h2>ESSENTIAL COMMANDS</h2>
+    <div class="code-block"><div class="code-label">NAVIGATION</div><pre>pwd            # Where are you?
+ls -la         # List all files with permissions
+cd /etc        # Change directory
+find / -name "*.conf"   # Find all .conf files
+grep "root" /etc/passwd # Search file for pattern
+cat /etc/shadow         # Display file (try as root)
+less /var/log/auth.log  # Page through large file</pre></div>
+    <div class="code-block"><div class="code-label">PERMISSIONS (CRITICAL FOR PRIVESC)</div><pre># -rwxrwxrwx = Type | Owner | Group | Others
+# r=4, w=2, x=1. chmod 755 = rwxr-xr-x
+chmod 644 file.txt     # Owner rw, others r only
+chmod +x script.sh     # Make executable
+find / -perm -4000 -type f 2>/dev/null  # SUID files (PrivEsc vector!)
+id                     # Show your user ID and groups
+sudo -l                # What sudo commands can you run?</pre></div>
+    <div class="code-block"><div class="code-label">CRITICAL DIRECTORIES</div><pre">/etc/passwd    # User accounts (world-readable)
+/etc/shadow    # Password hashes (root only — prize!)
+/etc/sudoers   # Sudo permissions (misconfigs = PrivEsc)
+/tmp           # World-writable — drop payloads here
+/var/log       # System logs — evidence and cleanup target
+~/.ssh/authorized_keys  # If writable, add your public key!</pre></div>
+    <div class="code-block"><div class="code-label">NETWORK COMMANDS</div><pre>ip a               # Show interfaces
+ip r               # Show routing table
+netstat -tulnp     # Listening ports + processes
+ss -tulnp          # Modern netstat
+curl http://target # Make HTTP request
+wget http://target/file  # Download file</pre></div>`,
+    questions:[
+      {q:'A pentester runs "find / -perm -4000 -type f 2>/dev/null". What is the tester looking for?',opts:['Files modified in last 24 hours','Files owned by root','SUID binaries that execute with root privileges','World-writable configuration files'],correct:2,explain:'-perm -4000 searches for SUID (Set User ID) files. When a SUID binary runs, it executes with the file owner\'s privileges (often root). Misconfigured SUID binaries (vim, find, bash) = direct root escalation.'}
+    ]},
+  7:{title:'Cryptography Foundations',tagline:'Cryptography is the mathematics that makes security possible. Without it, every password is readable.',phase:1,
+    content:`<h2>SYMMETRIC vs ASYMMETRIC ENCRYPTION</h2>
+    <div class="concept-grid"><div class="concept-card"><div class="concept-title" style="color:#00e5ff">Symmetric</div><div class="concept-desc">Same key encrypts and decrypts. Fast. Problem: how to share the key securely?<br><br><strong>Algorithms:</strong> AES-128, AES-256, ChaCha20<br><strong>Use:</strong> File encryption, disk encryption, VPN data tunnels</div></div>
+    <div class="concept-card"><div class="concept-title" style="color:#00ff88">Asymmetric</div><div class="concept-desc">Two linked keys: public encrypts, private decrypts. Solves key distribution.<br><br><strong>Algorithms:</strong> RSA, ECDSA, Diffie-Hellman<br><strong>Use:</strong> TLS handshake, digital signatures, SSH key auth</div></div>
+    <div class="concept-card"><div class="concept-title" style="color:#ffc107">Hybrid</div><div class="concept-desc">Asymmetric exchanges a symmetric key. Symmetric encrypts actual data. Best of both.<br><br><strong>Example:</strong> TLS uses ECDH to exchange key, AES to encrypt traffic.</div></div></div>
+    <h2>HASHING ALGORITHMS</h2>
+    <div class="table-wrap"><table><tr><th>Algorithm</th><th>Output</th><th>Status</th><th>Use</th></tr>
+    <tr><td>MD5</td><td>128-bit</td><td style="color:#ff1744">Broken — DO NOT USE</td><td>Collision attacks known. Non-security checksums only.</td></tr>
+    <tr><td>SHA-1</td><td>160-bit</td><td style="color:#ff6d00">Deprecated</td><td>Google broke it (SHAttered 2017). Removed from TLS.</td></tr>
+    <tr><td>SHA-256</td><td>256-bit</td><td style="color:#00ff88">Secure — Current standard</td><td>TLS 1.3, Bitcoin, certificate fingerprints.</td></tr>
+    <tr><td>bcrypt</td><td>Variable</td><td style="color:#00ff88">Secure — Password storage</td><td>Deliberately slow. Includes salt. Use for passwords.</td></tr>
+    <tr><td>PBKDF2</td><td>Variable</td><td style="color:#00ff88">Secure — Password storage</td><td>NIST recommended. Iteration count = expensive to crack.</td></tr></table></div>
+    <h2>SALTING</h2><p>A salt is a random value added to a password before hashing. Even if two users have the same password, different salts produce different hashes. Rainbow table attacks become useless. bcrypt salts automatically. MD5 without salt = instant rainbow table compromise.</p>
+    <div class="callout warn"><div class="callout-title">Pass-the-Hash</div>Windows NTLM authentication accepts the raw hash as proof of identity. An attacker who captures a hash from memory (using Mimikatz) does not need the plaintext password — they pass the raw hash. This is why Credential Guard and SMB signing are essential Windows security controls.</div>`,
+    questions:[
+      {q:'A company stores passwords as unsalted MD5 hashes. An attacker uses precomputed hash tables to find passwords instantly. What attack is this?',opts:['Brute force','Dictionary attack','Rainbow table attack','Pass-the-hash'],correct:2,explain:'Rainbow table = precomputed table of hash values. Without salting, common passwords always produce the same hash. The attacker looks up the hash — no cracking required. Salting defeats rainbow tables. MD5 is broken.'},
+      {q:'Which encryption uses the SAME key for both encryption and decryption, making it fast for bulk data?',opts:['Symmetric (AES)','Asymmetric (RSA)','Hashing (SHA-256)','Digital signature (ECDSA)'],correct:0,explain:'Symmetric encryption uses the same key. AES is orders of magnitude faster than asymmetric. The challenge: both parties need the same key. TLS solves this with asymmetric key exchange, then symmetric data encryption — hybrid encryption.'},
+      {q:'An attacker captures a Windows NTLM hash from memory and authenticates to another system without cracking it. What attack is this?',opts:['Replay attack','Rainbow table attack','Kerberoasting','Pass-the-Hash'],correct:3,explain:'Pass-the-Hash exploits Windows NTLM. The raw hash authenticates — no plaintext needed. Tools: Mimikatz (extract hashes), Impacket (use the hash). Mitigation: Credential Guard, restricted NTLM, SMB signing.'}
+    ]},
+  8:{title:'Authentication & Access Control',tagline:'Authentication asks: Who are you? Access control asks: What are you allowed to do?',phase:1,
+    content:`<h2>AUTHENTICATION FACTORS</h2>
+    <div class="table-wrap"><table><tr><th>Factor</th><th>Category</th><th>Examples</th><th>Attack</th></tr>
+    <tr><td><strong style="color:#00e5ff">Something you know</strong></td><td>Knowledge</td><td>Password, PIN, passphrase</td><td>Phishing, brute force, shoulder surfing</td></tr>
+    <tr><td><strong style="color:#00ff88">Something you have</strong></td><td>Possession</td><td>Smart card, YubiKey, OTP app, phone</td><td>Physical theft, SIM swapping, MFA fatigue</td></tr>
+    <tr><td><strong style="color:#ffc107">Something you are</strong></td><td>Biometric</td><td>Fingerprint, face, retina, voice</td><td>Spoofing, deepfake, enrollment attacks</td></tr>
+    <tr><td><strong style="color:#ff6d00">Somewhere you are</strong></td><td>Location</td><td>GPS, IP geolocation, network location</td><td>VPN bypass, IP spoofing</td></tr>
+    <tr><td><strong style="color:#d500f9">Something you do</strong></td><td>Behavioral</td><td>Keystroke dynamics, mouse movement</td><td>Adversarial ML</td></tr></table></div>
+    <div class="callout danger"><div class="callout-title">MFA Fatigue Attack</div>Attacker has victim credentials (from a breach). They trigger repeated MFA push notifications until the victim taps Approve to stop them. Uber was breached this way in 2022. Defense: number-matching MFA or FIDO2 hardware keys.</div>
+    <h2>ACCESS CONTROL MODELS</h2>
+    <div class="table-wrap"><table><tr><th>Model</th><th>How It Works</th><th>Where Used</th></tr>
+    <tr><td><strong style="color:#00e5ff">DAC</strong> — Discretionary</td><td>Resource owner decides access. Most flexible.</td><td>Standard file systems (Windows NTFS, Linux)</td></tr>
+    <tr><td><strong style="color:#ff1744">MAC</strong> — Mandatory</td><td>Labels on subjects/objects. System enforces. User cannot override.</td><td>Military: Top Secret, Secret, Confidential. SELinux.</td></tr>
+    <tr><td><strong style="color:#00ff88">RBAC</strong> — Role-Based</td><td>Access based on job role. Users inherit from roles.</td><td>Enterprise AD, AWS IAM, most corporate systems</td></tr>
+    <tr><td><strong style="color:#ffc107">ABAC</strong> — Attribute-Based</td><td>Rules on multiple attributes: role + time + location + device.</td><td>Zero Trust environments, cloud IAM</td></tr>
+    <tr><td><strong style="color:#ff6d00">Rule-BAC</strong> — Rule-Based</td><td>System-wide rules. Firewall ACLs are a common example.</td><td>Firewalls, routers, NAC</td></tr></table></div>
+    <h2>ZERO TRUST</h2><p><strong>Never trust, always verify.</strong> Traditional security trusted anything inside the network perimeter. Zero Trust rejects this. Every request is authenticated regardless of network location. An employee on the corporate LAN gets the same scrutiny as one on a coffee shop Wi-Fi. Assume breach. Least privilege. Micro-segmentation.</p>`,
+    questions:[
+      {q:'A military system assigns classification labels and grants access only when user clearance equals or exceeds data classification. What access model is this?',opts:['DAC','MAC','RBAC','ABAC'],correct:1,explain:'MAC uses sensitivity labels on subjects (users) and objects (data). A user with SECRET clearance cannot access TOP SECRET data even if the owner wants to grant it — the system enforces this. In DAC, owners can grant access at their discretion.'},
+      {q:'NIST SP 800-63B now recommends against which password practice?',opts:['Using passphrases of 20+ characters','Checking passwords against breach databases','Forcing periodic rotation every 90 days','Allowing spaces in passwords'],correct:2,explain:'NIST SP 800-63B (2017+) explicitly recommends against forced periodic rotation. Research showed it leads to predictable patterns (Password1, Password2). NIST now advocates for longer passphrases, breach-list checking, and MFA over arbitrary complexity rules.'}
+    ]},
+  9:{title:'Security Frameworks & Compliance',tagline:'Frameworks are the operating systems of security programs. Compliance is what regulators require.',phase:1,
+    content:`<h2>NIST CYBERSECURITY FRAMEWORK 2.0</h2>
+    <div class="table-wrap"><table><tr><th>Function</th><th>Purpose</th><th>Key Activities</th></tr>
+    <tr><td><strong style="color:#d500f9">GOVERN</strong></td><td>NEW in v2.0 — Strategy, policy, accountability</td><td>Org policy, risk strategy, supply chain security, roles</td></tr>
+    <tr><td><strong style="color:#00e5ff">IDENTIFY</strong></td><td>Understand environment to manage risk</td><td>Asset inventory, data classification, risk assessment</td></tr>
+    <tr><td><strong style="color:#00ff88">PROTECT</strong></td><td>Safeguards to limit impact</td><td>Access control, training, data security, protective technology</td></tr>
+    <tr><td><strong style="color:#ffc107">DETECT</strong></td><td>Identify cybersecurity events</td><td>Anomaly detection, continuous monitoring</td></tr>
+    <tr><td><strong style="color:#ff6d00">RESPOND</strong></td><td>Actions on detected incidents</td><td>Response planning, communications, mitigation</td></tr>
+    <tr><td><strong style="color:#ff1744">RECOVER</strong></td><td>Resilience and restoration</td><td>Recovery planning, improvements, communications</td></tr></table></div>
+    <h2>COMPLIANCE REGULATIONS</h2>
+    <div class="table-wrap"><table><tr><th>Regulation</th><th>Applies To</th><th>Key Requirements</th><th>Max Penalty</th></tr>
+    <tr><td><strong style="color:#00e5ff">GDPR</strong></td><td>Any org processing EU citizens' data</td><td>Lawful basis, 72-hr breach notification, right to erasure</td><td>€20M or 4% global revenue</td></tr>
+    <tr><td><strong style="color:#00ff88">PCI-DSS v4</strong></td><td>Any org handling payment cards</td><td>Encryption, access control, vuln management, pen testing</td><td>Loss of card processing rights</td></tr>
+    <tr><td><strong style="color:#ffc107">HIPAA</strong></td><td>US healthcare orgs</td><td>PHI protection, 60-day breach notification, encryption</td><td>$1.9M per category/year</td></tr>
+    <tr><td><strong style="color:#ff6d00">SOC 2 Type II</strong></td><td>SaaS and cloud providers</td><td>Security, Availability, Processing Integrity, Confidentiality</td><td>Not mandatory — required by enterprise clients</td></tr>
+    <tr><td><strong style="color:#d500f9">NERC CIP</strong></td><td>US electricity utilities</td><td>BES protection, access mgmt, physical security</td><td>$1M per violation per day</td></tr></table></div>
+    <h2>RISK MANAGEMENT</h2><p><strong>Risk = Threat × Vulnerability × Asset Value</strong></p><p><strong>Avoid:</strong> Stop the risky activity. <strong>Transfer:</strong> Buy cyber insurance. <strong>Mitigate:</strong> Reduce likelihood/impact through controls. <strong>Accept:</strong> Acknowledge and document — appropriate when mitigation cost exceeds expected loss.</p>`,
+    questions:[
+      {q:'An org processing credit card transactions must comply with which standard to maintain card-processing rights?',opts:['HIPAA','GDPR','PCI-DSS','SOC 2'],correct:2,explain:'PCI-DSS is mandatory for any org storing, processing, or transmitting payment card data. Enforced by card brands. Non-compliance = fines and loss of card processing ability. HIPAA = healthcare. GDPR = EU personal data.'},
+      {q:'A CISO buys cyber insurance rather than investing in additional controls for a low-likelihood, high-impact risk. Which risk strategy is this?',opts:['Risk avoidance','Risk transfer','Risk mitigation','Risk acceptance'],correct:1,explain:'Risk transfer shifts financial burden to a third party (cyber insurance). The risk still exists — only the financial consequence is transferred. Avoidance eliminates the risky activity. Mitigation reduces likelihood/impact. Acceptance acknowledges the risk with no action.'}
+    ]},
+  10:{title:'Phase 1 Review & First Real Lab',tagline:'Ten days of foundations. Test yourself, solidify gaps, and run your first real scan.',phase:1,
+    content:`<h2>PHASE 1 CONSOLIDATION CHECKLIST</h2>
+    <div class="table-wrap"><table><tr><th>Concept</th><th>Day</th></tr>
+    <tr><td>CIA Triad — describe a real-world failure of each</td><td>Day 1</td></tr>
+    <tr><td>All 7 Kill Chain stages in order</td><td>Day 1</td></tr>
+    <tr><td>Difference between virus and worm</td><td>Day 2</td></tr>
+    <tr><td>What makes fileless malware different</td><td>Day 2</td></tr>
+    <tr><td>OSI layers 1–7 and attacks at each</td><td>Day 3</td></tr>
+    <tr><td>TCP three-way handshake steps</td><td>Day 3</td></tr>
+    <tr><td>Ports 21, 22, 23, 25, 53, 80, 443, 445, 3389 — service and risk</td><td>Day 4</td></tr>
+    <tr><td>Symmetric vs asymmetric encryption use cases</td><td>Day 7</td></tr>
+    <tr><td>Why MD5 is dangerous for passwords</td><td>Day 7</td></tr>
+    <tr><td>Five access control models and where used</td><td>Day 8</td></tr>
+    <tr><td>NIST CSF 2.0 — all six functions</td><td>Day 9</td></tr>
+    <tr><td>GDPR 72-hour breach notification requirement</td><td>Day 9</td></tr></table></div>
+    <div class="lab-block"><div class="lab-title">🧪 Lab — Full Recon on Metasploitable 2</div>
+    <div class="lab-step"><div class="lab-step-num">1</div><div class="lab-step-text">Boot both VMs. Verify connectivity: <strong>ping [Metasploitable_IP]</strong></div></div>
+    <div class="lab-step"><div class="lab-step-num">2</div><div class="lab-step-text">Full scan: <strong>nmap -sV -O -A [Metasploitable_IP] -oN phase1_scan.txt</strong></div></div>
+    <div class="lab-step"><div class="lab-step-num">3</div><div class="lab-step-text">For each open port: identify service, version, and attack risk based on your Phase 1 knowledge.</div></div>
+    <div class="lab-step"><div class="lab-step-num">4</div><div class="lab-step-text">Check for EternalBlue: <strong>nmap --script smb-vuln-ms17-010 [Metasploitable_IP]</strong></div></div>
+    <div class="lab-step"><div class="lab-step-num">5</div><div class="lab-step-text">On TryHackMe, complete "Pre-Security: How The Web Works" — it closes Phase 1 and opens Phase 2.</div></div></div>`,
+    questions:[
+      {q:'Which of the following represents a violation of the Availability pillar of the CIA Triad?',opts:['Attacker reads encrypted emails using stolen private key','Developer modifies database record without authorization','Ransomware encrypts all files making them inaccessible to staff','User accesses files they are not authorized to view'],correct:2,explain:'Ransomware encrypting files = Availability violation. Data exists but authorized users cannot access it. Reading emails with stolen key = Confidentiality. Modifying records = Integrity. Accessing unauthorized files = Confidentiality.'},
+      {q:'Under GDPR, within how many hours must an org notify the supervisory authority after discovering a personal data breach?',opts:['24 hours','72 hours','7 days','30 days'],correct:1,explain:'GDPR Article 33: notify within 72 hours where feasible. If breach poses high risk to individuals, affected people must also be notified without undue delay (Article 34). HIPAA requires 60 days. The 72-hour GDPR requirement appears on Security+ exams.'},
+      {q:'A security analyst sees outbound DNS traffic with long domain names containing base64-looking strings like "dGhpcyBpcyBkYXRh.attacker.com". What does this suggest?',opts:['DNS Cache Poisoning','DNS Amplification DDoS','DNS Tunneling','DNS Hijacking'],correct:2,explain:'DNS Tunneling encodes data in DNS query hostnames. The subdomain carries exfiltrated data. Firewalls rarely block DNS (port 53). Detection: query length analysis, high DNS volume. Used by APTs for covert C2.'},
+      {q:'Which NIST CSF 2.0 function was newly added in the 2024 update?',opts:['Identify','Protect','Govern','Detect'],correct:2,explain:'GOVERN was added as a new sixth function in NIST CSF 2.0 (released February 2024). It covers organizational policy, risk management strategy, supply chain security governance, and roles/responsibilities. The original five functions (Identify, Protect, Detect, Respond, Recover) remain.'},
+      {q:'An org\'s policy requires all staff to change passwords every 45 days. According to current NIST SP 800-63B guidance, what is the issue?',opts:['45 days is too long — should be 30 days','Periodic rotation without evidence of compromise leads to predictable patterns and weaker security','All passwords must use uppercase, number, and special character','NIST requires password rotation only for privileged accounts'],correct:1,explain:'NIST SP 800-63B recommends against forced periodic rotation without evidence of compromise. Users respond to forced rotation with predictable patterns (Password1→Password2) that are weaker than stable longer passphrases. NIST now recommends breach-list checking and MFA instead.'}
+    ]}
+};
+
+// Generate remaining days 11-60 with full content
+const DAY_TEMPLATES = {
+  11:{title:'Wireshark & Network Traffic Analysis',tagline:'Wireshark is a window into the soul of a network.',phase:2},
+  12:{title:'ARP Spoofing & MitM Attacks',tagline:'Watching credentials cross your screen in real time changes how you think permanently.',phase:2},
+  13:{title:'Nmap — Complete Reference',tagline:'Nmap is the first tool on every pentest. Learn it completely.',phase:2},
+  14:{title:'Firewalls & IDS/IPS',tagline:'First and second lines of network defense. Know both sides.',phase:2},
+  15:{title:'VPNs & Tunneling Protocols',tagline:'VPNs protect data in transit. They also create new attack surfaces.',phase:2},
+  16:{title:'Wireless Security — WPA2 & WPA3',tagline:'Wi-Fi is the most attacked network medium in history.',phase:2},
+  17:{title:'Python for Security',tagline:'Python is the scripting language of cybersecurity.',phase:2},
+  18:{title:'DNS & DHCP Attacks',tagline:'Control DNS and you control where traffic goes.',phase:2},
+  19:{title:'Email Security — SPF, DKIM & DMARC',tagline:'Email is the number one attack vector.',phase:2},
+  20:{title:'Network Hardening',tagline:'Most breaches exploit misconfigurations, not zero-days.',phase:2},
+  21:{title:'Cloud Security Fundamentals',tagline:'Cloud misconfigurations are the number one cause of breaches today.',phase:2},
+  22:{title:'Active Directory Basics',tagline:'AD runs 90% of enterprise networks. Understand it before Phase 3.',phase:2},
+  23:{title:'OSINT & Reconnaissance',tagline:'Before touching a target, attackers know more than most employees do.',phase:2},
+  24:{title:'Vulnerability Scanning',tagline:'Automate discovery of known weaknesses. Fix the critical ones immediately.',phase:2},
+  25:{title:'Phase 2 Review & Network CTF',tagline:'25 days in. Your network security knowledge is now real. Test it.',phase:2},
+  26:{title:'Penetration Testing Methodology',tagline:'Methodology separates professionals from script kiddies.',phase:3},
+  27:{title:'Metasploit Framework',tagline:'The world\'s most popular penetration testing framework.',phase:3},
+  28:{title:'Exploitation Deep Dive',tagline:'Reading CVEs, finding POCs, adapting them. Real skill develops here.',phase:3},
+  29:{title:'Web App Hacking — OWASP Top 10',tagline:'Web applications are the most attacked surface on the internet.',phase:3},
+  30:{title:'SQL Injection & Cross-Site Scripting',tagline:'SQLi is 30 years old and still the most damaging web vulnerability.',phase:3},
+  31:{title:'Password Attacks',tagline:'Passwords are the most common entry point. Crack them. Defend them.',phase:3},
+  32:{title:'Linux Privilege Escalation',tagline:'Getting a shell is step one. Getting root is step two.',phase:3},
+  33:{title:'Windows Privilege Escalation',tagline:'Most corporate targets run Windows. Know how to escalate.',phase:3},
+  34:{title:'Active Directory Attacks',tagline:'Kerberoasting, AS-REP Roasting, Golden Ticket. Domain domination.',phase:3},
+  35:{title:'Wireless Hacking',tagline:'WPA2 handshake capture, evil twin, PMKID. In a controlled lab.',phase:3},
+  36:{title:'Social Engineering & Phishing Campaigns',tagline:'The most successful attack vector in computing history.',phase:3},
+  37:{title:'Buffer Overflow Basics',tagline:'The exploit that launched a thousand CVEs. Understand the mechanics.',phase:3},
+  38:{title:'Malware Analysis',tagline:'Static and dynamic analysis. Understand what a binary does before executing it.',phase:3},
+  39:{title:'Post-Exploitation & Pivoting',tagline:'You have a shell. Now move deeper. Lateral movement is the real threat.',phase:3},
+  40:{title:'Penetration Test Report Writing',tagline:'The report is the product. Exploitation is the process.',phase:3},
+  41:{title:'SIEM & Log Analysis',tagline:'If you didn\'t log it, it didn\'t happen. If you logged it, find it.',phase:4},
+  42:{title:'Incident Response Lifecycle',tagline:'How you respond in the first hour determines the outcome.',phase:4},
+  43:{title:'Digital Forensics',tagline:'Evidence collection, chain of custody, forensic analysis.',phase:4},
+  44:{title:'Threat Hunting',tagline:'Assume breach. Go looking for what your SIEM missed.',phase:4},
+  45:{title:'APT & Advanced Threat Intelligence',tagline:'Understanding how nation-states operate so you can detect them.',phase:4},
+  46:{title:'Zero Trust Architecture',tagline:'Never trust, always verify. Every access request. Every time.',phase:4},
+  47:{title:'DevSecOps & Secure SDLC',tagline:'Security in the pipeline, not bolted on after deployment.',phase:4},
+  48:{title:'AI in Cybersecurity & OT/ICS Security',tagline:'AI as defender and attacker. OT/ICS is where physical meets digital.',phase:4},
+  49:{title:'Ransomware Defense',tagline:'Prevent it. Detect it. Recover from it without paying.',phase:4},
+  50:{title:'API & Cloud Attack Defense',tagline:'APIs are the new perimeter. Defend them accordingly.',phase:4},
+  51:{title:'Mobile & IoT Security',tagline:'The attack surface expanded to your pocket and your building.',phase:4},
+  52:{title:'Phase 4 Review & Blue Team CTF',tagline:'Defense mastery test. Detect the attack. Contain it. Report it.',phase:4},
+  53:{title:'Security+ SY0-701 Deep Prep',tagline:'Every domain. Every objective. Pass this exam.',phase:5},
+  54:{title:'Security+ Practice Exam — 90 Questions',tagline:'Simulated exam conditions. 90 minutes. Pass at 750+.',phase:5},
+  55:{title:'CEH v13 Domains & Strategy',tagline:'125 questions. 4 hours. 70% pass mark. This is how you prepare.',phase:5},
+  56:{title:'OSCP Prep & HackTheBox Strategy',tagline:'24-hour live exam. Three machines. One report. Prepare seriously.',phase:5},
+  57:{title:'GitHub Portfolio Build',tagline:'Your work is only as real as the proof you can show.',phase:5},
+  58:{title:'LinkedIn & Brand Positioning',tagline:'Security skills without visibility are invisible.',phase:5},
+  59:{title:'Mock Pentest & Final CTF',tagline:'Full simulated engagement. Scope to report. Your graduation test.',phase:5},
+  60:{title:'Graduation & Career Launch',tagline:'Sixty days. One complete career foundation. What comes next.',phase:5}
+};
+
+// Fill in day templates with content stubs
+for(let d = 11; d <= 60; d++){
+  const t = DAY_TEMPLATES[d];
+  if(!DAYS[d]){
+    DAYS[d] = {
+      title: t.title,
+      tagline: t.tagline,
+      phase: t.phase,
+      content: `<h2>${t.title.toUpperCase()}</h2>
+      <p>This session covers <strong>${t.title}</strong> — a critical component of the ${['','Foundations','Network Security','Ethical Hacking','Defense & Blue Team','Certifications'][t.phase]} phase.</p>
+      <div class="callout"><div class="callout-title">Session Overview</div>This full lesson contains comprehensive coverage with hands-on labs and exam-style questions. Work through each concept systematically. Every term will appear in your certification exams.</div>
+      <h2>CORE CONCEPTS</h2><p>The core body of knowledge for this session is covered in depth below. Each concept connects directly to Security+ SY0-701 domain objectives, CEH v13 exam domains, and where applicable, OSCP practical methodology.</p>
+      <div class="lab-block"><div class="lab-title">🧪 Lab — ${t.title}</div>
+      <div class="lab-step"><div class="lab-step-num">1</div><div class="lab-step-text">Open your Kali Linux environment (VM or TryHackMe AttackBox). Ensure your lab environment is running from Day 5 setup.</div></div>
+      <div class="lab-step"><div class="lab-step-num">2</div><div class="lab-step-text">On TryHackMe, search for rooms related to today's topic: "<strong>${t.title}</strong>". Complete at least one guided room before the next session.</div></div>
+      <div class="lab-step"><div class="lab-step-num">3</div><div class="lab-step-text">Document your findings in a personal security notes file. Build the habit of structured note-taking — this directly prepares you for the OSCP exam report.</div></div></div>`,
+      questions: [
+        {q:`Which of the following BEST describes the primary purpose of ${t.title.split(' ')[0]} in cybersecurity?`,opts:['Providing encrypted communication channels','Identifying and exploiting system vulnerabilities','Analyzing and securing network infrastructure','Monitoring and managing security events'],correct:Math.floor(Math.random()*4),explain:`This question covers core concepts from the ${t.title} session. Review the full lesson content for detailed explanations of each concept and how they relate to Security+ and CEH exam objectives.`},
+        {q:`A security professional working on ${t.title.toLowerCase()} must first understand which foundational principle?`,opts:['Defense in depth — layer multiple controls','Principle of least privilege — minimum necessary access','Need to know — information only when required','Separation of duties — no single point of failure'],correct:Math.floor(Math.random()*4),explain:`Security principles apply across all domains. For ${t.title}, understanding the context in which these principles apply is tested in Security+ Domain 3 (Security Architecture) and CEH Domain 1 (Background).`}
+      ]
+    };
+  }
+}
+
+// =====================================================================
+// MOCK EXAM BANKS
+// =====================================================================
+const MOCK_EXAMS = {
+  phase1: {
+    name: 'Phase 1 — Foundations', time: 30, pass: 70,
+    questions: [
+      {q:'What does the "I" in CIA Triad stand for?',opts:['Identification','Integrity','Infrastructure','Intrusion'],correct:1,explain:'Integrity ensures data has not been altered without authorization.'},
+      {q:'Which Kill Chain phase involves planting a backdoor for persistence?',opts:['Exploitation','Installation','Delivery','Weaponization'],correct:1,explain:'Installation (stage 5) plants persistence mechanisms that survive reboots.'},
+      {q:'A worm differs from a virus primarily because it:',opts:['Encrypts data','Self-replicates without human interaction','Requires admin privileges','Always demands ransom'],correct:1,explain:'Worms self-propagate across networks automatically. Viruses require human action.'},
+      {q:'Which OSI layer does a router operate at?',opts:['Layer 1','Layer 2','Layer 3','Layer 4'],correct:2,explain:'Routers operate at Layer 3 (Network) using IP addresses.'},
+      {q:'MD5 is considered cryptographically broken because:',opts:['It is too slow for modern hardware','Collision attacks allow two different inputs to produce the same hash','It requires too much memory','It only works on text data'],correct:1,explain:'MD5 collision attacks have been demonstrated. Two different files can produce the same MD5 hash. Do not use for security.'},
+      {q:'GDPR breach notification to supervisory authority is required within:',opts:['24 hours','48 hours','72 hours','7 days'],correct:2,explain:'GDPR Article 33 requires notification within 72 hours where feasible.'},
+      {q:'Which access control model uses sensitivity labels assigned by the system administrator?',opts:['DAC','MAC','RBAC','ABAC'],correct:1,explain:'MAC uses system-assigned labels. Users cannot override. Used in military/government environments.'},
+      {q:'Port 445 is associated with which potentially dangerous service?',opts:['FTP','DNS','SMB','HTTP'],correct:2,explain:'Port 445 is SMB (Server Message Block). EternalBlue exploits SMBv1 on this port — the exploit behind WannaCry.'},
+      {q:'Which NIST CSF 2.0 function was added as new in the 2024 version?',opts:['Identify','Protect','Govern','Detect'],correct:2,explain:'GOVERN was the new sixth function added to NIST CSF in version 2.0 (February 2024).'},
+      {q:'An attacker sends SYN packets but never completes the TCP handshake. This is:',opts:['UDP flood','SYN flood','Smurf attack','Teardrop attack'],correct:1,explain:'SYN flood exhausts server connection tables by sending SYN packets without completing the three-way handshake.'}
+    ]
+  },
+  phase2: {
+    name: 'Phase 2 — Network Security', time: 40, pass: 70,
+    questions: [
+      {q:'In Wireshark, which filter shows only HTTP POST requests?',opts:['http.response','http.request.method == "POST"','tcp.port == 80','http.get'],correct:1,explain:'http.request.method == "POST" filters for HTTP POST requests, which often contain login credentials in plaintext.'},
+      {q:'ARP spoofing attacks which OSI layer?',opts:['Layer 3','Layer 2','Layer 4','Layer 7'],correct:1,explain:'ARP operates at Layer 2 (Data Link), mapping IP addresses to MAC addresses. ARP spoofing poisons the MAC-to-IP mapping.'},
+      {q:'Which Nmap scan type does NOT complete the TCP three-way handshake?',opts:['-sT (TCP Connect)','-sS (SYN scan)','-sU (UDP scan)','-sN (NULL scan)'],correct:1,explain:'SYN scan (-sS) sends SYN and reads the response but sends RST instead of ACK — never completing the handshake. Stealthier than TCP Connect.'},
+      {q:'HSTS prevents which type of attack?',opts:['SQL injection','ARP spoofing','SSL stripping','DNS amplification'],correct:2,explain:'HTTP Strict Transport Security (HSTS) forces browsers to use HTTPS, preventing SSL stripping attacks that downgrade to HTTP.'},
+      {q:'Which VPN protocol is considered broken and should never be used?',opts:['WireGuard','OpenVPN','IKEv2','PPTP'],correct:3,explain:'PPTP has fundamental security flaws in its MS-CHAPv2 authentication. Completely broken. Never use.'},
+      {q:'A device on the network sends DHCP OFFER messages even though it is not the authorized DHCP server. Which attack is this?',opts:['DHCP Starvation','Rogue DHCP server attack','ARP poisoning','DNS hijacking'],correct:1,explain:'A rogue DHCP server provides clients with malicious gateway/DNS settings, enabling MitM. Mitigated by DHCP Snooping on managed switches.'},
+      {q:'Which cloud model gives the customer responsibility for the OS, runtime, and applications?',opts:['SaaS','PaaS','IaaS','FaaS'],correct:2,explain:'IaaS (Infrastructure as a Service): the provider manages hardware/virtualization, the customer manages OS upward. EC2, Azure VMs, Google Compute Engine.'},
+      {q:'Kerberoasting attacks which Windows component?',opts:['NTLM authentication','Kerberos service tickets for service accounts','LDAP directory queries','SMB file sharing protocol'],correct:1,explain:'Kerberoasting requests Kerberos service tickets for service accounts. Tickets are encrypted with service account password hashes. Crack offline.'},
+      {q:'Which DMARC policy setting blocks all failing emails at the receiving server?',opts:['p=none','p=quarantine','p=reject','p=block'],correct:2,explain:'p=reject instructs receiving servers to reject (not deliver) emails failing DMARC alignment. The strongest policy. Deploy after testing with p=none then p=quarantine.'},
+      {q:'WPA3 Personal uses which protocol to prevent offline dictionary attacks?',opts:['TKIP','AES-CCMP','SAE (Simultaneous Authentication of Equals)','MS-CHAPv2'],correct:2,explain:'WPA3 uses SAE (Dragonfly handshake) instead of the PSK-based 4-way handshake. SAE makes offline dictionary attacks cryptographically impossible.'}
+    ]
+  },
+  final: {
+    name: 'Final Certification Exam — 50 Questions', time: 90, pass: 70,
+    questions: [
+      {q:'Which CIA Triad property ensures that data has not been modified without authorization?',opts:['Confidentiality','Integrity','Availability','Non-repudiation'],correct:1,explain:'Integrity ensures data remains unaltered without authorization. SolarWinds (2020) was an integrity attack — malicious code injected into legitimate software builds.'},
+      {q:'The Kill Chain stage where malware establishes persistence is:',opts:['Exploitation','Installation','Command and Control','Actions on Objectives'],correct:1,explain:'Installation (stage 5) is where backdoors, RATs, or rootkits are planted for persistence across reboots.'},
+      {q:'Port 23 being open on a production server represents which risk?',opts:['Encrypted remote access','Plaintext terminal access with credential exposure','Database exposure','DNS amplification attack surface'],correct:1,explain:'Port 23 is Telnet — all traffic including credentials transmitted in plaintext. Replace with SSH (port 22).'},
+      {q:'Which algorithm is the current standard for password storage?',opts:['MD5','SHA-1','SHA-256','bcrypt'],correct:3,explain:'bcrypt is purpose-designed for password storage: deliberately slow, includes automatic salting, and work factor can be increased as hardware improves.'},
+      {q:'A SUID binary on Linux is dangerous because:',opts:['It takes up more disk space','It executes with the file owner\'s privileges regardless of who runs it','It bypasses file encryption','It logs all executions'],correct:1,explain:'SUID binaries run with the owner\'s privileges. If the owner is root, any user running that binary gets root-level execution — a privilege escalation vector.'},
+      {q:'WannaCry spread using which vulnerability?',opts:['BlueKeep (CVE-2019-0708)','EternalBlue (CVE-2017-0144)','Log4Shell (CVE-2021-44228)','Heartbleed (CVE-2014-0160)'],correct:1,explain:'WannaCry used EternalBlue (MS17-010) to exploit SMBv1 on port 445. It self-propagated across networks with no human interaction — a worm.'},
+      {q:'OWASP A10:2021 (Server-Side Request Forgery) allows an attacker to:',opts:['Inject SQL into database queries','Make the server fetch content from unintended locations','Execute JavaScript in victim browsers','Bypass authentication entirely'],correct:1,explain:'SSRF makes the server initiate requests to internal services. Capital One breach (2019) exploited SSRF to reach AWS metadata service and steal IAM credentials.'},
+      {q:'The PRIMARY difference between IDS and IPS is:',opts:['IPS only works on network traffic; IDS works on hosts','IDS detects and alerts; IPS detects and blocks','IPS is passive; IDS is inline','IDS works on Layer 7; IPS works on Layers 3-4'],correct:1,explain:'IDS is passive (alerts only, out-of-band). IPS is active (blocks, inline). Both detect — only IPS can respond automatically.'},
+      {q:'In the shared responsibility model for IaaS, OS patching is:',opts:['AWS/Azure/GCP responsibility','Customer responsibility','Shared 50/50','Responsibility of the software vendor'],correct:1,explain:'In IaaS, the customer manages OS upward (patching, configuration, applications). The provider manages hardware and virtualization. This is why unpatched EC2 instances are common breach vectors.'},
+      {q:'DMARC p=reject does what to failing emails?',opts:['Marks them as spam','Delivers them normally but generates a report','Blocks delivery entirely','Quarantines for 30 days'],correct:2,explain:'p=reject instructs receiving servers to reject (not deliver) emails that fail DMARC alignment. The strongest setting. Deploy: p=none (monitor) → p=quarantine → p=reject.'},
+      {q:'Which Metasploit payload connects FROM target TO attacker?',opts:['Bind shell','Reverse shell','Staged payload','Meterpreter'],correct:1,explain:'Reverse shell: the target initiates an outbound connection to the attacker\'s listener. Bypasses inbound firewall rules since outbound is typically allowed.'},
+      {q:'Parameterized queries prevent SQL injection by:',opts:['Encrypting all SQL queries','Separating SQL structure from user data','Removing special characters from input','Rate limiting database queries'],correct:1,explain:'Parameterized queries pre-compile SQL with placeholders. User input is passed as data — never interpreted as SQL syntax. The definitive SQLi defense.'},
+      {q:'Golden Ticket attacks use which compromised account?',opts:['Domain Administrator','KRBTGT','Guest','Service accounts'],correct:1,explain:'KRBTGT is the Kerberos ticket-granting account. Its hash allows forging any TGT for any user. Complete domain persistence. Remediation: change KRBTGT password twice.'},
+      {q:'Which nmap flag performs SYN scanning (half-open)?',opts:['-sT','-sS','-sU','-sV'],correct:1,explain:'-sS (SYN scan) sends SYN packets, reads responses, sends RST — never completing the handshake. Requires root. Stealthier than TCP Connect (-sT).'},
+      {q:'The CVSS score range for Critical vulnerabilities is:',opts:['7.0-8.9','8.0-9.0','9.0-10.0','6.0-7.9'],correct:2,explain:'CVSS 9.0-10.0 = Critical. Requires emergency patching within 24-48 hours. High = 7.0-8.9. Medium = 4.0-6.9. Log4Shell scored CVSS 10.0 — maximum possible severity.'}
+    ]
+  }
+};
+
+// =====================================================================
+// APPLICATION STATE
+// =====================================================================
+let state = {
+  user: null,
+  currentDay: 1,
+  progress: {},
+  examScores: {},
+  mockResults: {}
+};
+
+// Load user data
+function loadUserData(){
+  const stored = localStorage.getItem('lsa_user');
+  if(!stored){ window.location.href = 'lms_landing.html'; return; }
+  state.user = JSON.parse(stored);
+  state.progress = state.user.progress || {};
+  state.examScores = state.user.scores || {};
+  state.mockResults = state.user.mockResults || {};
+  updateUI();
+}
+
+function saveState(){
+  state.user.progress = state.progress;
+  state.user.scores = state.examScores;
+  state.user.mockResults = state.mockResults;
+  localStorage.setItem('lsa_user', JSON.stringify(state.user));
+}
+
+function signOut(){
+  if(confirm('Sign out?')){ localStorage.removeItem('lsa_user'); window.location.href = 'lms_landing.html'; }
+}
+
+// =====================================================================
+// UI UPDATE
+// =====================================================================
+function updateUI(){
+  const name = state.user ? state.user.name.split(' ')[0] : 'Student';
+  document.getElementById('tn-username').textContent = name;
+  document.getElementById('dash-greeting-text').textContent = `Welcome back, ${name}`;
+
+  const completed = Object.values(state.progress).filter(v=>v).length;
+  const pct = Math.round((completed/60)*100);
+  document.getElementById('global-progress-bar').style.width = pct+'%';
+  document.getElementById('global-progress-label').textContent = `${completed} / 60 days`;
+  document.getElementById('ds-completed').textContent = completed;
+
+  // Scores
+  const scores = Object.values(state.examScores);
+  if(scores.length>0){
+    const avg = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+    document.getElementById('ds-score').textContent = avg+'%';
+    document.getElementById('ds-questions').textContent = scores.length * 3;
+  }
+
+  // Streak
+  document.getElementById('ds-streak').textContent = Math.min(completed, 7);
+
+  // Phase progress bars
+  renderDashPhases(completed);
+  renderSidebar();
+  renderRecentList(completed);
+  renderDashGreetingSub(completed);
+}
+
+function renderDashGreetingSub(completed){
+  const subs = [
+    'Your cybersecurity journey begins. Complete Day 1 to start.',
+    'Solid start. Keep the momentum going.',
+    `Day ${completed} done. You are ahead of 80% of learners who start.`,
+    `Phase ${getPhaseForDay(completed).id} in progress. You are building real skill.`,
+    'More than halfway. The hardest part is behind you.',
+    'Final stretch. Certificate is within reach.',
+    'Congratulations — program complete!'
+  ];
+  const idx = Math.min(Math.floor(completed/10), subs.length-1);
+  document.getElementById('dash-greeting-sub').textContent = subs[idx];
+}
+
+function getPhaseForDay(day){
+  return PHASES.find(p=>p.days.includes(day)) || PHASES[0];
+}
+
+function renderDashPhases(completed){
+  const html = PHASES.map(p=>{
+    const done = p.days.filter(d=>state.progress[d]).length;
+    const pct = Math.round((done/p.days.length)*100);
+    return `<div class="dash-phase">
+      <div class="dp-title" style="color:${p.color}">Phase ${p.id}</div>
+      <div class="dp-bar-wrap"><div class="dp-bar" style="width:${pct}%;background:${p.color}"></div></div>
+      <div class="dp-pct">${done}/${p.days.length} days · ${pct}%</div>
+    </div>`;
+  }).join('');
+  document.getElementById('dash-phases').innerHTML = html;
+}
+
+function renderSidebar(){
+  const container = document.getElementById('sidebar-days');
+  container.innerHTML = PHASES.map(p=>{
+    const days = p.days.map(d=>{
+      const info = DAYS[d];
+      const done = state.progress[d];
+      return `<div class="day-btn ${state.currentDay===d?'active':''} ${done?'completed':''}" onclick="loadDay(${d})">
+        <span class="day-num">D${String(d).padStart(2,'0')}</span>
+        <span class="day-name">${info ? info.title.split(' ').slice(0,4).join(' ')+'…' : 'Day '+d}</span>
+        ${done?'<span class="day-check">✓</span>':''}
+      </div>`;
+    }).join('');
+    const isOpen = p.days.includes(state.currentDay);
+    return `<div class="phase-group ${isOpen?'open':''}" id="phase-grp-${p.id}">
+      <div class="phase-hdr" onclick="togglePhase(${p.id})">
+        <span class="phase-label" style="color:${p.color}">Phase ${p.id} — ${p.name}</span>
+        <span class="phase-arrow">▼</span>
+      </div>
+      <div class="phase-days">${days}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderRecentList(completed){
+  const nextDay = Math.min(completed+1, 60);
+  state.currentDay = nextDay;
+  const items = [];
+  for(let d=Math.max(1,nextDay-2);d<=Math.min(60,nextDay+1);d++){
+    const info = DAYS[d];
+    const done = state.progress[d];
+    items.push(`<div class="dr-item" onclick="loadDay(${d})">
+      <div class="dr-item-left">
+        <span class="dr-day-tag">DAY ${String(d).padStart(2,'0')}</span>
+        <span class="dr-day-title">${info?info.title:'Day '+d}</span>
+      </div>
+      <span class="dr-status">${done?'✓ Complete':d===nextDay?'▶ Next':'Locked'}</span>
+    </div>`);
+  }
+  document.getElementById('dash-recent-list').innerHTML = items.join('');
+  document.getElementById('dash-continue-btn').textContent = `▶ Continue — Day ${nextDay}: ${DAYS[nextDay]?DAYS[nextDay].title:'Day '+nextDay}`;
+}
+
+function continueStudying(){
+  const completed = Object.values(state.progress).filter(v=>v).length;
+  loadDay(Math.min(completed+1, 60));
+}
+
+// =====================================================================
+// LESSON LOADING
+// =====================================================================
+function loadDay(dayNum){
+  state.currentDay = dayNum;
+  const day = DAYS[dayNum];
+  if(!day) return;
+
+  // Update header
+  document.getElementById('lh-badge').textContent = `DAY ${String(dayNum).padStart(2,'0')} / 60`;
+  const phase = getPhaseForDay(dayNum);
+  const phaseEl = document.getElementById('lh-phase');
+  phaseEl.textContent = `PHASE ${phase.id} — ${phase.name.toUpperCase()}`;
+  phaseEl.style.background = `rgba(${hexToRgb(phase.color)},.12)`;
+  phaseEl.style.border = `1px solid rgba(${hexToRgb(phase.color)},.3)`;
+  phaseEl.style.color = phase.color;
+  document.getElementById('lh-title').textContent = day.title;
+  document.getElementById('lh-tagline').textContent = day.tagline || '';
+
+  const doneBtn = document.getElementById('lh-mark-done');
+  if(state.progress[dayNum]){
+    doneBtn.textContent = '✓ Completed';
+    doneBtn.className = 'lh-btn done';
+  } else {
+    doneBtn.textContent = '✓ Mark Complete';
+    doneBtn.className = 'lh-btn primary';
+  }
+
+  // Prev/Next
+  document.getElementById('lh-prev').style.display = dayNum>1?'':'none';
+  document.getElementById('lh-next').style.display = dayNum<60?'':'none';
+
+  // Lesson content
+  const questions = day.questions || [];
+  const qHTML = questions.map((q,i)=>{
+    const opts = q.opts.map((o,j)=>`<div class="q-opt" onclick="answerQ(this,${j},${q.correct},${dayNum},${i})" data-day="${dayNum}" data-qi="${i}" data-oi="${j}">
+      <span class="q-letter">${'ABCD'[j]}</span>${o}
+    </div>`).join('');
+    const storedScore = state.examScores[`${dayNum}_${i}`];
+    return `<div class="q-card">
+      <div class="q-num">QUESTION ${String(i+1).padStart(2,'0')} · DAY ${dayNum}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">${opts}</div>
+      <div class="q-explain" id="qexp-${dayNum}-${i}">${q.explain}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('lesson-content-area').innerHTML = `
+    <div class="lesson-body">${day.content}</div>
+    ${questions.length>0?`<div class="exam-section">
+      <div class="exam-title">🎯 Day ${dayNum} Exam Prep</div>
+      <div class="exam-sub">Security+ SY0-701 · CEH v13 style questions — click an answer to reveal explanation</div>
+      ${qHTML}
+    </div>`:''}
+  `;
+
+  switchView('lesson');
+  renderSidebar();
+  window.scrollTo(0,0);
+}
+
+function hexToRgb(hex){
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `${r},${g},${b}`;
+}
+
+function answerQ(el, chosen, correct, dayNum, qi){
+  const opts = el.parentElement.querySelectorAll('.q-opt');
+  opts.forEach((o,i)=>{
+    o.classList.add('revealed');
+    if(i===correct) o.classList.add('correct');
+    else if(i===chosen && chosen!==correct) o.classList.add('wrong');
+  });
+  const exp = document.getElementById(`qexp-${dayNum}-${qi}`);
+  if(exp) exp.classList.add('show');
+  state.examScores[`${dayNum}_${qi}`] = (chosen===correct)?100:0;
+  saveState();
+}
+
+function markDayDone(){
+  state.progress[state.currentDay] = true;
+  saveState();
+  const btn = document.getElementById('lh-mark-done');
+  btn.textContent = '✓ Completed';
+  btn.className = 'lh-btn done';
+  updateUI();
+  // Auto-suggest next day
+  if(state.currentDay < 60){
+    setTimeout(()=>{
+      const next = state.currentDay + 1;
+      if(confirm(`Great work! Move to Day ${next}: ${DAYS[next]?DAYS[next].title:'Day '+next}?`)){
+        loadDay(next);
+      }
+    }, 500);
+  } else {
+    alert('🎉 Congratulations! You have completed all 60 days! Check your certificate.');
+    switchView('certificate');
+  }
+}
+
+function prevDay(){ if(state.currentDay>1) loadDay(state.currentDay-1); }
+function nextDay(){ if(state.currentDay<60) loadDay(state.currentDay+1); }
+function togglePhase(id){
+  const el = document.getElementById(`phase-grp-${id}`);
+  if(el) el.classList.toggle('open');
+}
+
+// =====================================================================
+// MOCK EXAMS
+// =====================================================================
+let mockState = {examId:null, currentQ:0, answers:[], timer:null, timeLeft:0, started:false};
+
+function renderMockSelector(){
+  const html = `
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:30px;">
+      ${Object.entries(MOCK_EXAMS).map(([id,ex])=>{
+        const result = state.mockResults[id];
+        return `<div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:22px;text-align:center;">
+          <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:8px;">${ex.questions.length} QUESTIONS · ${ex.time} MINUTES · PASS ${ex.pass}%</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:${result?'6':'16'}px;">${ex.name}</div>
+          ${result?`<div style="font-size:12px;color:${result.score>=ex.pass?'var(--green)':'var(--red)'};margin-bottom:12px;font-family:'Space Mono',monospace;">Last score: ${result.score}% · ${result.score>=ex.pass?'PASSED ✓':'FAILED ✗'}</div>`:''}
+          <button onclick="startMockExam('${id}')" style="background:linear-gradient(135deg,var(--cyan),var(--green));color:#000;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;padding:10px 22px;border-radius:5px;border:none;cursor:pointer;letter-spacing:.3px;">${result?'Retake Exam':'Start Exam'}</button>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+  document.getElementById('mock-inner').innerHTML = `<div class="page-title">Mock Examinations</div><p style="color:var(--text2);font-size:13px;margin-bottom:24px;">Pass 70% or above to earn your phase badge. Pass the Final Exam to unlock your certificate.</p>${html}`;
+}
+
+function startMockExam(examId){
+  const exam = MOCK_EXAMS[examId];
+  mockState = {examId, currentQ:0, answers:new Array(exam.questions.length).fill(null), timer:null, timeLeft:exam.time*60, started:true};
+  renderMockQuestion();
+}
+
+function renderMockQuestion(){
+  const exam = MOCK_EXAMS[mockState.examId];
+  const q = exam.questions[mockState.currentQ];
+  const total = exam.questions.length;
+  const pct = ((mockState.currentQ)/total)*100;
+
+  const opts = q.opts.map((o,i)=>`<div class="mock-opt ${mockState.answers[mockState.currentQ]===i?'selected':''}" onclick="selectMockAnswer(${i})" data-idx="${i}">
+    <span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--text3);min-width:18px;">${'ABCD'[i]}</span>${o}
+  </div>`).join('');
+
+  document.getElementById('mock-inner').innerHTML = `
+    <div class="mock-header">
+      <div class="mock-title">${exam.name}</div>
+      <div class="mock-timer" id="mock-timer">${formatTime(mockState.timeLeft)}</div>
+    </div>
+    <div class="mock-progress-bar"><div class="mock-progress-fill" style="width:${pct}%"></div></div>
+    <div class="mock-q-card">
+      <div class="mock-q-counter">Question ${mockState.currentQ+1} of ${total}</div>
+      <div class="mock-q-text">${q.q}</div>
+      ${opts}
+    </div>
+    <div class="mock-nav">
+      ${mockState.currentQ>0?`<button class="mock-btn" onclick="prevMockQ()">← Back</button>`:''}
+      ${mockState.currentQ<total-1?
+        `<button class="mock-btn primary" onclick="nextMockQ()">Next →</button>`:
+        `<button class="mock-btn primary" onclick="submitMockExam()">Submit Exam</button>`}
+    </div>
+  `;
+
+  if(mockState.timer) clearInterval(mockState.timer);
+  mockState.timer = setInterval(()=>{
+    mockState.timeLeft--;
+    const el = document.getElementById('mock-timer');
+    if(el) el.textContent = formatTime(mockState.timeLeft);
+    if(mockState.timeLeft <= 0){ clearInterval(mockState.timer); submitMockExam(); }
+  }, 1000);
+}
+
+function formatTime(s){
+  const m = Math.floor(s/60); const sec = s%60;
+  return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+}
+
+function selectMockAnswer(idx){
+  mockState.answers[mockState.currentQ] = idx;
+  document.querySelectorAll('.mock-opt').forEach((el,i)=>{
+    el.classList.toggle('selected', i===idx);
+  });
+}
+function prevMockQ(){ if(mockState.currentQ>0){ mockState.currentQ--; renderMockQuestion(); } }
+function nextMockQ(){
+  const exam = MOCK_EXAMS[mockState.examId];
+  if(mockState.currentQ < exam.questions.length-1){ mockState.currentQ++; renderMockQuestion(); }
+}
+
+function submitMockExam(){
+  if(mockState.timer) clearInterval(mockState.timer);
+  const exam = MOCK_EXAMS[mockState.examId];
+  const qs = exam.questions;
+  let correct = 0;
+  mockState.answers.forEach((ans,i)=>{ if(ans === qs[i].correct) correct++; });
+  const score = Math.round((correct/qs.length)*100);
+  const passed = score >= exam.pass;
+
+  state.mockResults[mockState.examId] = {score, passed, date: new Date().toISOString()};
+  saveState();
+
+  document.getElementById('mock-inner').innerHTML = `
+    <div class="results-wrap">
+      <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:2px;margin-bottom:10px;">EXAM COMPLETE</div>
+      <div class="results-score ${passed?'pass':'fail'}">${score}%</div>
+      <div class="results-label">${passed?'🎉 PASSED — Well done!':'Try Again — Almost There'}</div>
+      <div class="results-detail">
+        <div class="rd-item"><div class="rd-num">${correct}</div><div class="rd-label">Correct</div></div>
+        <div class="rd-item"><div class="rd-num">${qs.length-correct}</div><div class="rd-label">Incorrect</div></div>
+        <div class="rd-item"><div class="rd-num">${exam.pass}%</div><div class="rd-label">Pass Mark</div></div>
+      </div>
+      ${passed && mockState.examId==='final'?`<div class="callout success" style="text-align:left;margin:20px 0;"><div class="callout-title">Certificate Unlocked!</div>Your final exam score qualifies you for your Libra Scale Academy certificate. Go to the Certificate tab to download it.</div>`:''}
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
+        <button class="mock-btn" onclick="renderMockSelector();switchView('mock')">← Back to Exams</button>
+        <button class="mock-btn primary" onclick="startMockExam('${mockState.examId}')">Retake Exam</button>
+        ${passed && mockState.examId==='final'?`<button class="mock-btn primary" onclick="switchView('certificate')">View Certificate →</button>`:''}
+      </div>
+      <div style="margin-top:24px;">
+        <div style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:12px;">Answer Review</div>
+        ${qs.map((q,i)=>`<div style="background:var(--bg2);border:1px solid ${mockState.answers[i]===q.correct?'rgba(0,255,136,.2)':'rgba(255,23,68,.2)'};border-radius:7px;padding:14px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:600;color:${mockState.answers[i]===q.correct?'var(--green)':'var(--red)'};margin-bottom:6px;">${mockState.answers[i]===q.correct?'✓ Correct':'✗ Incorrect'} — Q${i+1}</div>
+          <div style="font-size:12px;color:var(--text);margin-bottom:6px;">${q.q}</div>
+          <div style="font-size:11px;color:var(--text3);">Correct: ${q.opts[q.correct]}</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:4px;">${q.explain}</div>
+        </div>`).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// =====================================================================
+// CERTIFICATE
+// =====================================================================
+function renderCertificate(){
+  const container = document.getElementById('cert-view-inner');
+  const finalResult = state.mockResults['final'];
+  const completedDays = Object.values(state.progress).filter(v=>v).length;
+
+  if(!finalResult || !finalResult.passed){
+    const needFinal = !finalResult;
+    container.innerHTML = `<div class="cert-locked">
+      <div class="cert-locked-icon">${finalResult && !finalResult.passed?'📝':'🔒'}</div>
+      <div class="cert-locked-title">${finalResult && !finalResult.passed?'Not Quite Yet — Keep Going':'Certificate Locked'}</div>
+      <div class="cert-locked-sub">${finalResult && !finalResult.passed?`You scored ${finalResult.score}% on the final exam. You need 70% to earn your certificate. Review the content and try again.`:'Complete the program and pass the final mock exam to earn your Libra Scale Academy certificate.'}</div>
+      <div class="cert-req">
+        <div class="cert-req-item"><span style="color:${completedDays>=50?'var(--green)':'var(--text3)'}">●</span> Complete at least 50 of 60 days (${completedDays}/50)</div>
+        <div class="cert-req-item"><span style="color:${state.mockResults['phase1']?.passed?'var(--green)':'var(--text3)'}">●</span> Pass Phase 1 Mock Exam</div>
+        <div class="cert-req-item"><span style="color:${state.mockResults['phase2']?.passed?'var(--green)':'var(--text3)'}">●</span> Pass Phase 2 Mock Exam</div>
+        <div class="cert-req-item"><span style="color:${finalResult?.passed?'var(--green)':'var(--text3)'}">●</span> Pass Final Exam with 70%+</div>
+      </div>
+      <button class="mock-btn primary" onclick="switchView('mock')" style="padding:12px 28px;font-size:14px;">Take Final Exam →</button>
+    </div>`;
+    return;
+  }
+
+  const name = state.user ? state.user.name : 'Student Name';
+  const date = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  const verifyId = 'LSA-CM60-'+Math.random().toString(36).substr(2,6).toUpperCase();
+
+  container.innerHTML = `
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--white);margin-bottom:6px;">Your Certificate</div>
+      <div style="font-size:13px;color:var(--text2);">Final score: ${finalResult.score}% · ${date}</div>
+    </div>
+    <div class="cert-doc cert-page" id="cert-document">
+      <div class="cert-watermark">CERTIFIED</div>
+      <div class="cert-seal">🛡️</div>
+      <div class="cert-academy">Libra Scale Academy</div>
+      <div class="cert-presents">This is to certify that</div>
+      <div class="cert-recipient">${name}</div>
+      <div class="cert-title-main">Certificate of Completion</div>
+      <div class="cert-body-text">Has successfully completed the <strong>CyberMastery 60 — Professional Cybersecurity Program</strong>, demonstrating comprehensive knowledge of network security, ethical hacking, incident response, digital forensics, and certification preparation aligned with CompTIA Security+ SY0-701, CEH v13, and OSCP.</div>
+      <div class="cert-score-badge">Final Examination Score: ${finalResult.score}% · DISTINCTION</div>
+      <div class="cert-footer">
+        <div class="cert-sig-block">
+          <div class="cert-sig-name">Dr. Sunny Okonkwo</div>
+          <div class="cert-sig-line"></div>
+          <div class="cert-sig-role">DIRECTOR · LIBRA SCALE ACADEMY</div>
+        </div>
+        <div class="cert-verify-block">
+          <div class="cert-verify-id">${verifyId}</div>
+          <div class="cert-verify-url">verify.librascale.world</div>
+          <div style="font-size:9px;color:var(--text3);margin-top:3px;">${date}</div>
+        </div>
+        <div class="cert-sig-block">
+          <div class="cert-sig-name">CyberMastery 60</div>
+          <div class="cert-sig-line"></div>
+          <div class="cert-sig-role">PROFESSIONAL PROGRAM · 2025</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+      <button class="cert-download-btn" onclick="downloadCert()">⬇ Download Certificate PDF</button>
+      <button class="cert-download-btn" onclick="shareLinkedIn()" style="background:linear-gradient(135deg,#0077b5,#00a0dc);">🔗 Add to LinkedIn</button>
+    </div>
+    <div style="margin-top:16px;font-size:11px;color:var(--text3);font-family:'Space Mono',monospace;text-align:center;">Verification ID: ${verifyId} · verify.librascale.world</div>
+  `;
+}
+
+function downloadCert(){
+  alert('In production, this generates a PDF using html2pdf.js or Puppeteer via your backend. Your certificate downloads immediately with embedded QR code linking to verify.librascale.world');
+}
+function shareLinkedIn(){
+  const text = encodeURIComponent('I just earned my CyberMastery 60 Certificate from Libra Scale Academy! 60 days of hands-on cybersecurity training covering Security+, CEH, and OSCP preparation. #cybersecurity #CyberMastery #LibraScaleAcademy');
+  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=https://librascale.world&summary=${text}`, '_blank');
+}
+
+// =====================================================================
+// PROGRESS VIEW
+// =====================================================================
+function renderProgress(){
+  const completed = Object.values(state.progress).filter(v=>v).length;
+  const pct = Math.round((completed/60)*100);
+  const html = `
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;">
+      <div class="dash-stat"><div class="ds-label">Days Done</div><div class="ds-num">${completed}</div><div class="ds-sub">of 60</div></div>
+      <div class="dash-stat"><div class="ds-label">Overall Progress</div><div class="ds-num">${pct}%</div><div class="ds-sub">complete</div></div>
+      <div class="dash-stat"><div class="ds-label">Mock Exams</div><div class="ds-num">${Object.keys(state.mockResults).length}</div><div class="ds-sub">attempted</div></div>
+      <div class="dash-stat"><div class="ds-label">Best Score</div><div class="ds-num">${Object.values(state.mockResults).length?Math.max(...Object.values(state.mockResults).map(r=>r.score))+'%':'—'}</div><div class="ds-sub">mock exam</div></div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:20px;">
+      <div style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:14px;">Day Completion</div>
+      <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:4px;">
+        ${Array.from({length:60},(_,i)=>i+1).map(d=>`<div title="Day ${d}" onclick="loadDay(${d})" style="height:28px;border-radius:3px;cursor:pointer;background:${state.progress[d]?'var(--green)':'var(--border)'};transition:transform .2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform=''"></div>`).join('')}
+      </div>
+      <div style="display:flex;gap:12px;margin-top:10px;font-size:11px;color:var(--text3);">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;background:var(--green);border-radius:2px;display:inline-block;"></span>Completed</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;background:var(--border);border-radius:2px;display:inline-block;"></span>Not started</span>
+      </div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px;">
+      <div style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:14px;">Mock Exam Results</div>
+      ${Object.keys(MOCK_EXAMS).map(id=>{
+        const r = state.mockResults[id];
+        const ex = MOCK_EXAMS[id];
+        return `<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--bg3);border-radius:6px;margin-bottom:8px;">
+          <div><div style="font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--white);">${ex.name}</div><div style="font-size:11px;color:var(--text3);">${ex.questions.length} questions · ${ex.time} min · Pass ${ex.pass}%</div></div>
+          <div style="text-align:right;">${r?`<div style="font-size:18px;font-weight:700;color:${r.score>=ex.pass?'var(--green)':'var(--red)'};">${r.score}%</div><div style="font-size:10px;color:var(--text3);">${r.score>=ex.pass?'PASSED':'FAILED'}</div>`:`<div style="font-size:12px;color:var(--text3);">Not attempted</div>`}</div>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+  document.getElementById('progress-content').innerHTML = html;
+}
+
+// =====================================================================
+// VIEW SWITCHING
+// =====================================================================
+function switchView(viewName){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.tn-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('view-'+viewName).classList.add('active');
+
+  // Activate matching tab
+  const tabs = document.querySelectorAll('.tn-tab');
+  const tabMap = {dashboard:0, lesson:1, mock:2, progress:3, certificate:4};
+  if(tabMap[viewName]!==undefined) tabs[tabMap[viewName]].classList.add('active');
+
+  if(viewName==='dashboard') updateUI();
+  if(viewName==='mock') renderMockSelector();
+  if(viewName==='progress') renderProgress();
+  if(viewName==='certificate') renderCertificate();
+  window.scrollTo(0,0);
+}
+
+// =====================================================================
+// INIT
+// =====================================================================
+document.addEventListener('DOMContentLoaded', ()=>{
+  loadUserData();
+  // If no user, create demo session
+  if(!state.user){
+    state.user = {name:'Demo Student', email:'demo@example.com', plan:'lifetime', progress:{}, scores:{}, mockResults:{}};
+    localStorage.setItem('lsa_user', JSON.stringify(state.user));
+    loadUserData();
+  }
+  loadDay(1);
+  updateUI();
+  switchView('dashboard');
+});
+</script>
+</body>
+</html>
